@@ -1,0 +1,3 @@
+ALTER TABLE [Tareas] ADD [TareaEstado] smallint NOT NULL CONSTRAINT TareaEstadoTareas_DEFAULT DEFAULT convert(int, 0)
+ALTER TABLE [Tareas] DROP CONSTRAINT TareaEstadoTareas_DEFAULT
+
