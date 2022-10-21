@@ -1,7 +1,7 @@
 /*
 				   File: type_SdtSDT_SweetAlert
 			Description: SDT_SweetAlert
-				 Author: Nemo 🐠 for C# version 17.0.8.158023
+				 Author: Nemo 🐠 for C# version 17.0.11.163677
 		   Program type: Callable routine
 			  Main DBMS: 
 */
@@ -840,6 +840,8 @@ namespace GeneXus.Programs
 		{
 			return true;
 		}
+
+
 
 		#endregion
 

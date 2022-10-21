@@ -72,7 +72,7 @@ namespace GeneXus.Programs {
          objverificacioncuenta.AV10Result = false ;
          objverificacioncuenta.context.SetSubmitInitialConfig(context);
          objverificacioncuenta.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objverificacioncuenta);
+         Submit( executePrivateCatch,objverificacioncuenta);
          aP2_Result=this.AV10Result;
       }
 
@@ -101,6 +101,7 @@ namespace GeneXus.Programs {
             A6UsuarioEmail = P000D2_A6UsuarioEmail[0];
             A3UsuarioId = P000D2_A3UsuarioId[0];
             AV11ok1 = true;
+            AV14UsuarioId = A3UsuarioId;
             /* Exit For each command. Update data (if necessary), close cursors & exit. */
             if (true) break;
             pr_default.readNext(0);
@@ -130,6 +131,7 @@ namespace GeneXus.Programs {
          if ( ( AV11ok1 ) && ( AV12ok2 ) )
          {
             AV10Result = true;
+            AV13websession.Set("UsuarioId", StringUtil.Trim( StringUtil.Str( (decimal)(AV14UsuarioId), 4, 0)));
          }
          else
          {
@@ -163,6 +165,7 @@ namespace GeneXus.Programs {
          P000D3_n7UsuarioPassword = new bool[] {false} ;
          P000D3_A3UsuarioId = new short[1] ;
          A7UsuarioPassword = "";
+         AV13websession = context.GetSession();
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.verificacioncuenta__default(),
             new Object[][] {
                 new Object[] {
@@ -178,6 +181,7 @@ namespace GeneXus.Programs {
       }
 
       private short A3UsuarioId ;
+      private short AV14UsuarioId ;
       private string AV9UsuarioPassword ;
       private string scmdbuf ;
       private string A7UsuarioPassword ;
@@ -196,6 +200,7 @@ namespace GeneXus.Programs {
       private bool[] P000D3_n7UsuarioPassword ;
       private short[] P000D3_A3UsuarioId ;
       private bool aP2_Result ;
+      private IGxSession AV13websession ;
    }
 
    public class verificacioncuenta__default : DataStoreHelperBase, IDataStoreHelper

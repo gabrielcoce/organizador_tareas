@@ -355,6 +355,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Mode_SetNull( )
       {
          gxTv_SdtTableros_Mode = "";
+         SetDirty("Mode");
          return  ;
       }
 
@@ -382,6 +383,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Initialized_SetNull( )
       {
          gxTv_SdtTableros_Initialized = 0;
+         SetDirty("Initialized");
          return  ;
       }
 
@@ -409,6 +411,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Tableroid_Z_SetNull( )
       {
          gxTv_SdtTableros_Tableroid_Z = 0;
+         SetDirty("Tableroid_Z");
          return  ;
       }
 
@@ -436,6 +439,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Tableronombre_Z_SetNull( )
       {
          gxTv_SdtTableros_Tableronombre_Z = "";
+         SetDirty("Tableronombre_Z");
          return  ;
       }
 
@@ -483,6 +487,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Tablerofechacreacion_Z_SetNull( )
       {
          gxTv_SdtTableros_Tablerofechacreacion_Z = (DateTime)(DateTime.MinValue);
+         SetDirty("Tablerofechacreacion_Z");
          return  ;
       }
 
@@ -510,6 +515,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Propietarioid_Z_SetNull( )
       {
          gxTv_SdtTableros_Propietarioid_Z = 0;
+         SetDirty("Propietarioid_Z");
          return  ;
       }
 
@@ -537,6 +543,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Tableroestado_Z_SetNull( )
       {
          gxTv_SdtTableros_Tableroestado_Z = false;
+         SetDirty("Tableroestado_Z");
          return  ;
       }
 
@@ -564,6 +571,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTableros_Tablerovisibilidad_Z_SetNull( )
       {
          gxTv_SdtTableros_Tablerovisibilidad_Z = false;
+         SetDirty("Tablerovisibilidad_Z");
          return  ;
       }
 

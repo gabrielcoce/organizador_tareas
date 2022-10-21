@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CallableObject guid="94ce3fbc-0ec1-429f-b4d5-55b5f1afc818" name="Tests.getNumeroIntegrantesTestData" description="get Numero Integrantes Test Data" namespace="GeneXus.Programs">
+  <Signature name="parm">
+    <Parameter name="ReturnValue" accessor="out" collection="true">
+      <Field name="getNumeroIntegrantesTestSDT" description="get Numero Integrantes Test SDT">
+        <Fields>
+          <Field name="TestCaseId" description="Test case identifier">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>VarChar</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>40</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="TableroId" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="count" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="Expectedcount" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="Msgcount" description="Message to show for assertion over field count">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>VarChar</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>100</Value>
+              </Property>
+            </Properties>
+          </Field>
+        </Fields>
+      </Field>
+    </Parameter>
+  </Signature>
+</CallableObject>

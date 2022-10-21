@@ -103,7 +103,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
       }
 
       protected void SendCloseFormHiddens( )
@@ -125,7 +125,7 @@ namespace GeneXus.Programs {
          {
             disableOutput();
          }
-         context.AddJavascriptSource("masterpage.js", "?20229620121693", false, true);
+         context.AddJavascriptSource("masterpage.js", "?202210201712321", false, true);
          context.WriteHtmlTextNl( "</body>") ;
          context.WriteHtmlTextNl( "</html>") ;
          if ( context.isSpaRequest( ) )
@@ -185,7 +185,7 @@ namespace GeneXus.Programs {
                return  ;
             }
             /* Text block */
-            GxWebStd.gx_label_ctrl( context, lblTxtscrip1_Internalname, lblTxtscrip1_Caption, "", "", lblTxtscrip1_Jsonclick, "'"+""+"'"+",true,"+"'"+"E_MPAGE."+"'", "", "TextBlock", 0, "", 1, 1, 0, 2, "HLP_MasterPage.htm");
+            GxWebStd.gx_label_ctrl( context, lblScript1_Internalname, lblScript1_Caption, "", "", lblScript1_Jsonclick, "'"+""+"'"+",true,"+"'"+"E_MPAGE."+"'", "", "TextBlockMaster", 0, "", 1, 1, 0, 1, "HLP_MasterPage.htm");
             if ( context.isSpaRequest( ) )
             {
                enableOutput();
@@ -212,7 +212,9 @@ namespace GeneXus.Programs {
                enableJsOutput();
             }
             /* Text block */
-            GxWebStd.gx_label_ctrl( context, lblTxtscript2_Internalname, lblTxtscript2_Caption, "", "", lblTxtscript2_Jsonclick, "'"+""+"'"+",true,"+"'"+"E_MPAGE."+"'", "", "TextBlock", 0, "", 1, 1, 0, 2, "HLP_MasterPage.htm");
+            GxWebStd.gx_label_ctrl( context, lblScript2_Internalname, lblScript2_Caption, "", "", lblScript2_Jsonclick, "'"+""+"'"+",true,"+"'"+"E_MPAGE."+"'", "", "TextBlockMaster", 0, "", 1, 1, 0, 1, "HLP_MasterPage.htm");
+            /* Text block */
+            GxWebStd.gx_label_ctrl( context, lblJs_Internalname, lblJs_Caption, "", "", lblJs_Jsonclick, "'"+""+"'"+",true,"+"'"+"E_MPAGE."+"'", "", "TextBlock", 0, "", 1, 1, 0, 1, "HLP_MasterPage.htm");
          }
          wbLoad = true;
       }
@@ -343,11 +345,7 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
-            {
-               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
-            }
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -455,7 +453,7 @@ namespace GeneXus.Programs {
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
          }
          else
          {
@@ -474,33 +472,42 @@ namespace GeneXus.Programs {
       {
          /* Start Routine */
          returnInSub = false;
+         lblJs_Caption = "<script type='text/javascript'>"+StringUtil.NewLine( )+"(() => {"+StringUtil.NewLine( )+"if (window.localStorage) {"+StringUtil.NewLine( )+"if (!localStorage.getItem('reload')) {"+StringUtil.NewLine( )+"localStorage['reload'] = true;"+StringUtil.NewLine( )+"window.location.reload();"+StringUtil.NewLine( )+"} else {"+StringUtil.NewLine( )+"localStorage.removeItem('reload');"+StringUtil.NewLine( )+"}"+StringUtil.NewLine( )+"}"+StringUtil.NewLine( )+"})();"+StringUtil.NewLine( )+"</script>"+StringUtil.NewLine( );
+         AssignProp("", true, lblJs_Internalname, "Caption", lblJs_Caption, true);
+         AV26Usuarios.Load((short)(NumberUtil.Val( AV24websession.Get("UsuarioId"), ".")));
+         if ( StringUtil.StrCmp(AV24websession.Get("UsuarioId"), "") == 0 )
+         {
+            CallWebObject(formatLink("ingreso.aspx") );
+            context.wjLocDisableFrm = 1;
+         }
+         AV19rolid = 1;
          AV5vRuta = AV6HttpRequest.BaseURL;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Headerrawhtml = "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\" name=\"viewport\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"bower_components/font-awesome/css/font-awesome.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"bower_components/Ionicons/css/ionicons.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"dist/css/AdminLTE.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"dist/css/skins/_all-skins.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"bower_components/morris.js/morris.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"bower_components/jvectormap/jquery-jvectormap.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"bower_components/bootstrap-daterangepicker/daterangepicker.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\""+AV5vRuta+"plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic\">"+StringUtil.NewLine( )+"<script>window.onload = function(){document.body.className = \"form-horizontal Form form-horizontal-fx hold-transition skin-blue sidebar-mini\";}</script>";
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/jquery/dist/jquery.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/jquery-ui/jquery-ui.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/raphael/raphael.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/jquery-sparkline/dist/jquery.sparkline.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/jvectormap/jquery-jvectormap-1.2.2.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/jvectormap/jquery-jvectormap-world-mill-en.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/jquery-knob/dist/jquery.knob.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/moment/min/moment.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/bootstrap-daterangepicker/daterangepicker.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/jquery-slimscroll/jquery.slimscroll.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"bower_components/fastclick/lib/fastclick.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"dist/js/adminlte.min.js") ;
-         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"dist/js/demo.js") ;
-         AV7vScript = "<div class=\"wrapper\">" + StringUtil.NewLine( ) + "<header class=\"main-header\">" + StringUtil.NewLine( ) + "<a href=\"index2.html\" class=\"logo\">" + StringUtil.NewLine( ) + "<span class=\"logo-mini\"><b>A</b>LT</span>" + StringUtil.NewLine( ) + "<span class=\"logo-lg\"><b>Admin</b>LTE</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<nav class=\"navbar navbar-static-top\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"sidebar-toggle\" data-toggle=\"push-menu\" role=\"button\">" + StringUtil.NewLine( ) + " <span class=\"sr-only\"></span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<div class=\"navbar-custom-menu\">" + StringUtil.NewLine( ) + "<ul class=\"nav navbar-nav\">" + StringUtil.NewLine( ) + "<li class=\"dropdown notifications-menu\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-bell-o\"></i>" + StringUtil.NewLine( ) + "<span class=\"label label-warning\">5</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"dropdown-menu\">" + StringUtil.NewLine( ) + "<li class=\"header\">Tienes 5 Notificaciones</li>" + StringUtil.NewLine( ) + "<li>" + StringUtil.NewLine( ) + "<ul class=\"menu\">" + StringUtil.NewLine( ) + "<li>" + StringUtil.NewLine( ) + "<a href=\"#\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-users text-aqua\"></i> 5 new members joined today" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"footer\"><a href=\"#\">Ver Todo</a></li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"dropdown user user-menu\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">" + StringUtil.NewLine( ) + "<img src=\"dist/img/user2-160x160.jpg\" class=\"user-image\" alt=\"User Image\">" + StringUtil.NewLine( ) + "<span class=\"hidden-xs\">Alexander Pierce</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"dropdown-menu\">" + StringUtil.NewLine( ) + "<li class=\"user-header\">" + StringUtil.NewLine( ) + "<img src=\"dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Alexander Pierce - Web Developer" + StringUtil.NewLine( ) + "<small>Member since Nov. 2012</small>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"user-body\">" + StringUtil.NewLine( ) + "<div class=\"row\">" + StringUtil.NewLine( ) + "<div class=\"col-xs-4 text-center\">" + StringUtil.NewLine( ) + "<a href=\"#\">Followers</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"col-xs-4 text-center\">" + StringUtil.NewLine( ) + "<a href=\"#\">Sales</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"col-xs-4 text-center\">" + StringUtil.NewLine( ) + "<a href=\"#\">Friends</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"user-footer\">" + StringUtil.NewLine( ) + "<div class=\"pull-left\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"btn btn-default btn-flat\">Profile</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"pull-right\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"btn btn-default btn-flat\">Sign out</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</nav>" + StringUtil.NewLine( ) + "</header>" + StringUtil.NewLine( ) + "<aside class=\"main-sidebar\" style=\"max-height: 100%;\">" + StringUtil.NewLine( ) + "<section class=\"sidebar\">" + StringUtil.NewLine( ) + "<div class=\"user-panel\">" + StringUtil.NewLine( ) + "<div class=\"pull-left image\">" + StringUtil.NewLine( ) + "<img src=\"dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"pull-left info\">" + StringUtil.NewLine( ) + "<p>Alexander Pierce</p>" + StringUtil.NewLine( ) + "<a href=\"#\"><i class=\"fa fa-circle text-success\"></i> Online</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<ul class=\"sidebar-menu\" data-widget=\"tree\">" + StringUtil.NewLine( ) + "<li class=\"header\">PERFIL</li>";
-         AV9vScript11 += "<li class=\"active treeview\">" + StringUtil.NewLine( ) + "<a href=\"#\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-dashboard\"></i> <span>" + "Datos personales" + "</span>" + StringUtil.NewLine( ) + "<span class=\"pull-right-container\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-angle-left pull-right\"></i>" + StringUtil.NewLine( ) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li></li>" + StringUtil.NewLine( ) + "<li class=\"header\">TRÁMITES</li>";
-         AssignAttri("", true, "AV9vScript11", AV9vScript11);
-         AV9vScript11 += "<li class=\"active treeview\">" + StringUtil.NewLine( ) + "<a href=\"#\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-dashboard\"></i> <span>" + "Gestiones activas" + "</span>" + StringUtil.NewLine( ) + "<span class=\"pull-right-container\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-angle-left pull-right\"></i>" + StringUtil.NewLine( ) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li></li>" + StringUtil.NewLine( ) + "<li class=\"header\">MAIN NAVIGATION</li>" + StringUtil.NewLine( ) + "<li class=\"active treeview\" style=\"height: auto;\">" + StringUtil.NewLine( ) + "<a href=\"#\">" + StringUtil.NewLine( ) + "<i class=\"fa fa-files-o\"></i> <span>Dashboard</span>" + StringUtil.NewLine( ) + "<span class=\"pull-right-container\">" + StringUtil.NewLine( ) + "<span class=\"label label-primary pull-right\">4</span>" + StringUtil.NewLine( ) + "<i class=\"fa fa-angle-left pull-right\"></i>" + StringUtil.NewLine( ) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"treeview-menu\" style=\"display: none;\">" + StringUtil.NewLine( ) + "<li><a href=\"index.html\"><i class=\"fa fa-circle-o\"></i> Dashboard v1</a></li>" + StringUtil.NewLine( ) + "<li class=\"active\"><a href=\"index2.html\"><i class=\"fa fa-circle-o\"></i> Dashboard v2</a></li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( );
-         AssignAttri("", true, "AV9vScript11", AV9vScript11);
-         AV7vScript += AV9vScript11 + "</ul>" + StringUtil.NewLine( ) + "</section>" + StringUtil.NewLine( ) + "</aside>" + StringUtil.NewLine( ) + "<div class=\"content-wrapper\" >" + StringUtil.NewLine( ) + "<section class=\"content-header\">" + StringUtil.NewLine( ) + "<ol class=\"breadcrumb\" style=\"position:static;\">" + StringUtil.NewLine( ) + "<li><a href=\"#\"><i class=\"fa fa-dashboard\"></i> Position</a></li>" + StringUtil.NewLine( ) + "<li class=\"active\">" + (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Caption + "</li>" + StringUtil.NewLine( ) + "</ol>" + StringUtil.NewLine( ) + "</section>" + StringUtil.NewLine( ) + "<section class=\"content\" >";
-         AV8vScript2 = "  </section></div>" + StringUtil.NewLine( ) + "<footer class=\"main-footer\">" + StringUtil.NewLine( ) + "<div class=\"pull-right hidden-xs\">" + StringUtil.NewLine( ) + "<b>Version</b> 1.1.0" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<strong>Copyright © 2022 <a href=\"#\">Ministerio de Cultura y Deportes</a>.</strong> Todos los derechos reservados." + StringUtil.NewLine( ) + "</footer>" + StringUtil.NewLine( ) + "</div>";
-         lblTxtscrip1_Caption = AV7vScript;
-         AssignProp("", true, lblTxtscrip1_Internalname, "Caption", lblTxtscrip1_Caption, true);
-         lblTxtscript2_Caption = AV8vScript2;
-         AssignProp("", true, lblTxtscript2_Internalname, "Caption", lblTxtscript2_Caption, true);
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Headerrawhtml = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.4, user-scalable=no\">"+StringUtil.NewLine( )+"<meta name=\"theme-color\" content=\"#343a40\">"+StringUtil.NewLine( )+"<link rel=\"icon\" type=\"image/x-icon\" href=\"Resources/valogoxs.png\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/fontawesome-free/css/all.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/icheck-bootstrap/icheck-bootstrap.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/jqvmap/jqvmap.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"dist/css/adminlte.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/overlayScrollbars/css/OverlayScrollbars.min.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/daterangepicker/daterangepicker.css\">"+StringUtil.NewLine( )+"<link rel=\"stylesheet\" href=\"plugins/summernote/summernote-bs4.min.css\">"+StringUtil.NewLine( )+"<style type=\"text/css\">/* Chart.js */@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style>";
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add("https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.6/lottie.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/jquery/jquery.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/jquery-ui/jquery-ui.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/bootstrap/js/bootstrap.bundle.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/chart.js/Chart.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/sparklines/sparkline.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/jqvmap/jquery.vmap.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/jquery-knob/jquery.knob.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/moment/moment.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/daterangepicker/daterangepicker.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/summernote/summernote-bs4.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js") ;
+         (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Add(AV5vRuta+"dist/js/adminlte.js") ;
+         AV7vScript = "<div class=\"wrapper\">" + StringUtil.NewLine( ) + "<nav class=\"main-header navbar navbar-expand navbar-dark navbar-light\" style=\"border-radius:0px; margin-bottom:0px;\">" + StringUtil.NewLine( ) + "<ul class=\"navbar-nav\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a class=\"nav-link\" data-widget=\"pushmenu\" href=\"#\" role=\"button\"><i class=\"fas fa-bars\" style=\"margin-left:10px;\"></i></a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item d-none d-sm-inline-block\">" + StringUtil.NewLine( ) + "<a href=\"https://umg.edu.gt\" class=\"nav-link\" target=\"_blank\">Portal Universidad Mariano Gálvez</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "<ul class=\"navbar-nav ml-auto\">" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</nav>" + StringUtil.NewLine( ) + "<aside class=\"main-sidebar sidebar-dark-primary elevation-4\">" + StringUtil.NewLine( ) + "<a href=\"index3.html\" class=\"brand-link\">" + StringUtil.NewLine( ) + "<img src=\"umg.png\" alt=\"Tableros\" class=\"brand-image\" style=\"opacity: .8\">" + StringUtil.NewLine( ) + "<span class=\"brand-text font-weight-light\">Tableros</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<div class=\"sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition\"><div class=\"os-resize-observer-host observed\"><div class=\"os-resize-observer\" style=\"left: 0px; right: auto;\"></div></div><div class=\"os-size-auto-observer observed\" style=\"height: calc(100% + 1px); float: left;\"><div class=\"os-resize-observer\"></div></div><div class=\"os-content-glue\" style=\"margin: 0px -8px; width: 249px; height: 871px;\"></div><div class=\"os-padding\"><div class=\"os-viewport os-viewport-native-scrollbars-invisible\" style=\"overflow-y: scroll;\"><div class=\"os-content\" style=\"padding: 0px 8px; height: 100%; width: 100%;\">" + StringUtil.NewLine( ) + "<div class=\"user-panel mt-3 pb-3 mb-3 d-flex\">" + StringUtil.NewLine( ) + "<div class=\"image\">" + StringUtil.NewLine( ) + "<img src=\"dist/img/avatar.png\" class=\"img-circle elevation-1\" style=\"height:3.1rem; width:3.1rem;\" alt=\"User Image\">" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"info\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"d-block\">" + StringUtil.Trim( AV26Usuarios.gxTpr_Usuarionombre) + " " + StringUtil.Trim( AV26Usuarios.gxTpr_Usuarioapellido) + "</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<nav class=\"mt-2\">" + StringUtil.NewLine( ) + "<ul class=\"nav nav-pills nav-sidebar flex-column\" data-widget=\"treeview\" role=\"menu\" data-accordion=\"false\">" + StringUtil.NewLine( );
+         if ( AV20Config.gxTpr_Version == 1 )
+         {
+            AV7vScript += StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1101,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-tachometer-alt\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Dashboard" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-user\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Mi cuenta" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1102,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"far fa-address-card nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Perfil de Usuario</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-header\">TABLEROS</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-arrow-alt-right\"></i>" + StringUtil.NewLine( ) + "<span class=\"badge badge-info right\">" + StringUtil.Str( (decimal)(0), 10, 0) + " </span>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Todos los tableros" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1103,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"fas fa-inbox nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Mis tableros</p>" + StringUtil.NewLine( ) + "<span class=\"badge badge-secondary right\">" + StringUtil.Str( (decimal)(0), 10, 0) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1104,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"fas fa-star nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Tableros de invitado</p>" + StringUtil.NewLine( ) + "<span class=\"badge badge-secondary right\">" + StringUtil.Str( (decimal)(0), 10, 0) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-sign-out-alt\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Salir" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1105,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"far fa-power-off nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Cerrar sesión</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( );
+         }
+         AV7vScript += StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</nav>" + StringUtil.NewLine( ) + "</div></div></div><div class=\"os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden\"><div class=\"os-scrollbar-track\"><div class=\"os-scrollbar-handle\" style=\"width: 100%; transform: translate(0px, 0px);\"></div></div></div><div class=\"os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden\"><div class=\"os-scrollbar-track\"><div class=\"os-scrollbar-handle\" style=\"height: 64.1648%; transform: translate(0px, 0px);\"></div></div></div><div class=\"os-scrollbar-corner\"></div></div>" + StringUtil.NewLine( ) + "</aside>" + StringUtil.NewLine( ) + "<div class=\"content-wrapper\" style=\"min-height: 815px;\">" + StringUtil.NewLine( ) + "<!-- Content Header (Page header) -->" + StringUtil.NewLine( ) + "<section class=\"content-header\">" + StringUtil.NewLine( ) + "<div class=\"container-fluid\">" + StringUtil.NewLine( ) + "<div class=\"row mb-2\">" + StringUtil.NewLine( ) + "<div class=\"col-sm-6\">" + StringUtil.NewLine( ) + "<h1>" + (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Caption + "</h1>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"col-sm-6\">" + StringUtil.NewLine( ) + "<ol class=\"breadcrumb float-sm-right\">" + StringUtil.NewLine( ) + "<li class=\"breadcrumb-item\"><a href=\"paginadeinicio.aspx\"><i class=\"fas fa-home\"></i></a></li>" + StringUtil.NewLine( ) + "<li class=\"breadcrumb-item active\">" + (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Caption + "</li>" + StringUtil.NewLine( ) + "</ol>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div><!-- /.container-fluid -->" + StringUtil.NewLine( ) + "</section>" + StringUtil.NewLine( ) + "<!-- Main content -->" + StringUtil.NewLine( ) + "<section class=\"content\">" + StringUtil.NewLine( ) + "<div class=\"container-fluid\">" + StringUtil.NewLine( ) + "<div class=\"row\">" + StringUtil.NewLine( );
+         AV8vScript2 = "</div>" + StringUtil.NewLine( ) + "</section>" + StringUtil.NewLine( ) + "<!-- /.content -->" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<footer class=\"main-footer\">" + StringUtil.NewLine( ) + "<strong><a href=\"https://umg.edu.gt\" target=\"_blank\">Universidad Mariano Gálvez de Guatemala</a> © 2022 </strong>" + StringUtil.NewLine( ) + "Todos los derechos reservados" + StringUtil.NewLine( ) + "<div class=\"float-right d-none d-sm-inline-block\">" + StringUtil.NewLine( ) + "<b>Version</b> 1.0.0" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</footer>" + StringUtil.NewLine( );
+         lblScript1_Caption = AV7vScript;
+         AssignProp("", true, lblScript1_Internalname, "Caption", lblScript1_Caption, true);
+         lblScript2_Caption = AV8vScript2;
+         AssignProp("", true, lblScript2_Internalname, "Caption", lblScript2_Caption, true);
       }
 
       protected void nextLoad( )
@@ -557,7 +564,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)(getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Item(idxLst))), "?20229620121696", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)(getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Item(idxLst))), "?202210201712324", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -574,7 +581,7 @@ namespace GeneXus.Programs {
       {
          if ( nGXWrapped != 1 )
          {
-            context.AddJavascriptSource("masterpage.js", "?20229620121696", false, true);
+            context.AddJavascriptSource("masterpage.js", "?202210201712324", false, true);
          }
          /* End function include_jscripts */
       }
@@ -586,8 +593,9 @@ namespace GeneXus.Programs {
 
       protected void init_default_properties( )
       {
-         lblTxtscrip1_Internalname = "TXTSCRIP1_MPAGE";
-         lblTxtscript2_Internalname = "TXTSCRIPT2_MPAGE";
+         lblScript1_Internalname = "SCRIPT1_MPAGE";
+         lblScript2_Internalname = "SCRIPT2_MPAGE";
+         lblJs_Internalname = "JS_MPAGE";
          (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Internalname = "FORM_MPAGE";
       }
 
@@ -598,8 +606,11 @@ namespace GeneXus.Programs {
             disableJsOutput();
          }
          init_default_properties( ) ;
-         lblTxtscript2_Caption = "Script2";
-         lblTxtscrip1_Caption = "Script1";
+         lblJs_Caption = "js";
+         lblScript2_Jsonclick = "";
+         lblScript2_Caption = "Script2";
+         lblScript1_Jsonclick = "";
+         lblScript1_Caption = "Script1";
          Contholder1.setDataArea(getDataAreaObject());
          if ( context.isSpaRequest( ) )
          {
@@ -638,16 +649,17 @@ namespace GeneXus.Programs {
          Contholder1 = new GXDataAreaControl();
          GXKey = "";
          sPrefix = "";
-         lblTxtscrip1_Jsonclick = "";
-         lblTxtscript2_Jsonclick = "";
+         lblJs_Jsonclick = "";
          sEvt = "";
          EvtGridId = "";
          EvtRowId = "";
          sEvtType = "";
+         AV26Usuarios = new SdtUsuarios(context);
+         AV24websession = context.GetSession();
          AV5vRuta = "";
          AV6HttpRequest = new GxHttpRequest( context);
          AV7vScript = "";
-         AV9vScript11 = "";
+         AV20Config = new SdtConfig(context);
          AV8vScript2 = "";
          BackMsgLst = new msglist();
          LclMsgLst = new msglist();
@@ -662,18 +674,21 @@ namespace GeneXus.Programs {
       private short wbEnd ;
       private short wbStart ;
       private short nDonePA ;
-      private short gxcookieaux ;
+      private short AV19rolid ;
       private short nGotPars ;
       private short nGXWrapped ;
       private int idxLst ;
       private string GXKey ;
       private string sPrefix ;
-      private string lblTxtscrip1_Internalname ;
-      private string lblTxtscrip1_Caption ;
-      private string lblTxtscrip1_Jsonclick ;
-      private string lblTxtscript2_Internalname ;
-      private string lblTxtscript2_Caption ;
-      private string lblTxtscript2_Jsonclick ;
+      private string lblScript1_Internalname ;
+      private string lblScript1_Caption ;
+      private string lblScript1_Jsonclick ;
+      private string lblScript2_Internalname ;
+      private string lblScript2_Caption ;
+      private string lblScript2_Jsonclick ;
+      private string lblJs_Internalname ;
+      private string lblJs_Caption ;
+      private string lblJs_Jsonclick ;
       private string sEvt ;
       private string EvtGridId ;
       private string EvtRowId ;
@@ -686,15 +701,17 @@ namespace GeneXus.Programs {
       private bool gxdyncontrolsrefreshing ;
       private bool returnInSub ;
       private string AV7vScript ;
-      private string AV9vScript11 ;
       private string AV8vScript2 ;
       private string AV5vRuta ;
+      private IGxSession AV24websession ;
       private IGxDataStore dsDefault ;
       private GXDataAreaControl Contholder1 ;
       private msglist BackMsgLst ;
       private msglist LclMsgLst ;
       private GxHttpRequest AV6HttpRequest ;
       private GXWebForm Form ;
+      private SdtConfig AV20Config ;
+      private SdtUsuarios AV26Usuarios ;
    }
 
 }

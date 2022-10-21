@@ -118,11 +118,7 @@ namespace GeneXus.Programs {
                enableJsOutput();
             }
          }
-         if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
-         {
-            gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
-         }
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
          toggleJsOutput = isJsOutputEnabled( );
          if ( context.isSpaRequest( ) )
          {
@@ -140,7 +136,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Tareas Comentarios", 0) ;
          }
@@ -414,7 +410,7 @@ namespace GeneXus.Programs {
          StyleString = "";
          ClassString = "Attribute";
          StyleString = "";
-         GxWebStd.gx_html_textarea( context, edtComentarioTexto_Internalname, StringUtil.RTrim( A28ComentarioTexto), "", TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,49);\"", 0, 1, edtComentarioTexto_Enabled, 0, 80, "chr", 3, "row", StyleString, ClassString, "", "", "200", -1, 0, "", "", -1, true, "", "'"+""+"'"+",false,"+"'"+""+"'", 0, "HLP_TareasComentarios.htm");
+         GxWebStd.gx_html_textarea( context, edtComentarioTexto_Internalname, StringUtil.RTrim( A28ComentarioTexto), "", TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,49);\"", 0, 1, edtComentarioTexto_Enabled, 0, 80, "chr", 3, "row", 1, StyleString, ClassString, "", "", "200", -1, 0, "", "", -1, true, "", "'"+""+"'"+",false,"+"'"+""+"'", 0, "HLP_TareasComentarios.htm");
          GxWebStd.gx_div_end( context, "left", "top", "div");
          GxWebStd.gx_div_end( context, "left", "top", "div");
          GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -617,7 +613,7 @@ namespace GeneXus.Programs {
             }
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
             standaloneNotModal( ) ;
          }
          else
@@ -1735,18 +1731,18 @@ namespace GeneXus.Programs {
          MasterPageObj.master_styles();
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?20229920475552", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
          }
-         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1940340), false, true);
+         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1848160), false, true);
          context.WriteHtmlText( Form.Headerrawhtml) ;
          context.CloseHtmlHeader();
          if ( context.isSpaRequest( ) )
@@ -1779,7 +1775,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
       }
 
       protected void SendCloseFormHiddens( )
@@ -1905,7 +1901,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20229920475554", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022101613111135", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1921,7 +1917,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("tareascomentarios.js", "?20229920475555", false, true);
+         context.AddJavascriptSource("tareascomentarios.js", "?2022101613111136", false, true);
          /* End function include_jscripts */
       }
 
@@ -2278,7 +2274,6 @@ namespace GeneXus.Programs {
       private short A9TableroId ;
       private short A12TareaId ;
       private short A26ComentaristaId ;
-      private short gxcookieaux ;
       private short IsConfirmed ;
       private short IsModified ;
       private short AnyError ;

@@ -74,7 +74,7 @@ namespace GeneXus.Programs {
          objintercalarrol.AV8rol = aP2_rol;
          objintercalarrol.context.SetSubmitInitialConfig(context);
          objintercalarrol.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objintercalarrol);
+         Submit( executePrivateCatch,objintercalarrol);
          aP0_TableroId=this.A9TableroId;
          aP1_ParticipanteTableroId=this.A18ParticipanteTableroId;
          aP2_rol=this.AV8rol;

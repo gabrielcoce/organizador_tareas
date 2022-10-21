@@ -103,11 +103,7 @@ namespace GeneXus.Programs {
                enableJsOutput();
             }
          }
-         if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
-         {
-            gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
-         }
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
          toggleJsOutput = isJsOutputEnabled( );
          if ( context.isSpaRequest( ) )
          {
@@ -125,7 +121,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Tableros", 0) ;
          }
@@ -578,7 +574,7 @@ namespace GeneXus.Programs {
             AssignAttri("", false, "A35TableroVisibilidad", A35TableroVisibilidad);
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
             standaloneNotModal( ) ;
          }
          else
@@ -1536,7 +1532,7 @@ namespace GeneXus.Programs {
             pr_default.execute(14, new Object[] {A9TableroId});
             if ( (pr_default.getStatus(14) != 101) )
             {
-               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Actividades"}), "CannotDeleteReferencedRecord", 1, "");
+               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Listas"}), "CannotDeleteReferencedRecord", 1, "");
                AnyError = 1;
             }
             pr_default.close(14);
@@ -1544,18 +1540,10 @@ namespace GeneXus.Programs {
             pr_default.execute(15, new Object[] {A9TableroId});
             if ( (pr_default.getStatus(15) != 101) )
             {
-               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Tareas Comentarios"}), "CannotDeleteReferencedRecord", 1, "");
+               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Tareas"}), "CannotDeleteReferencedRecord", 1, "");
                AnyError = 1;
             }
             pr_default.close(15);
-            /* Using cursor T000318 */
-            pr_default.execute(16, new Object[] {A9TableroId});
-            if ( (pr_default.getStatus(16) != 101) )
-            {
-               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Listas"}), "CannotDeleteReferencedRecord", 1, "");
-               AnyError = 1;
-            }
-            pr_default.close(16);
          }
       }
 
@@ -1596,13 +1584,13 @@ namespace GeneXus.Programs {
 
       public void ScanStart033( )
       {
-         /* Using cursor T000319 */
-         pr_default.execute(17);
+         /* Using cursor T000318 */
+         pr_default.execute(16);
          RcdFound3 = 0;
-         if ( (pr_default.getStatus(17) != 101) )
+         if ( (pr_default.getStatus(16) != 101) )
          {
             RcdFound3 = 1;
-            A9TableroId = T000319_A9TableroId[0];
+            A9TableroId = T000318_A9TableroId[0];
             AssignAttri("", false, "A9TableroId", StringUtil.LTrimStr( (decimal)(A9TableroId), 4, 0));
          }
          /* Load Subordinate Levels */
@@ -1611,19 +1599,19 @@ namespace GeneXus.Programs {
       protected void ScanNext033( )
       {
          /* Scan next routine */
-         pr_default.readNext(17);
+         pr_default.readNext(16);
          RcdFound3 = 0;
-         if ( (pr_default.getStatus(17) != 101) )
+         if ( (pr_default.getStatus(16) != 101) )
          {
             RcdFound3 = 1;
-            A9TableroId = T000319_A9TableroId[0];
+            A9TableroId = T000318_A9TableroId[0];
             AssignAttri("", false, "A9TableroId", StringUtil.LTrimStr( (decimal)(A9TableroId), 4, 0));
          }
       }
 
       protected void ScanEnd033( )
       {
-         pr_default.close(17);
+         pr_default.close(16);
       }
 
       protected void AfterConfirm033( )
@@ -1710,18 +1698,18 @@ namespace GeneXus.Programs {
          MasterPageObj.master_styles();
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?20229920474221", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
          }
-         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1940340), false, true);
+         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1848160), false, true);
          context.WriteHtmlText( Form.Headerrawhtml) ;
          context.CloseHtmlHeader();
          if ( context.isSpaRequest( ) )
@@ -1754,7 +1742,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
       }
 
       protected void SendCloseFormHiddens( )
@@ -1883,7 +1871,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20229920474224", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161311380", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1899,7 +1887,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("tableros.js", "?20229920474224", false, true);
+         context.AddJavascriptSource("tableros.js", "?202210161311380", false, true);
          /* End function include_jscripts */
       }
 
@@ -2055,15 +2043,15 @@ namespace GeneXus.Programs {
 
       public void Valid_Propietarioid( )
       {
-         /* Using cursor T000320 */
-         pr_default.execute(18, new Object[] {A17PropietarioId});
-         if ( (pr_default.getStatus(18) == 101) )
+         /* Using cursor T000319 */
+         pr_default.execute(17, new Object[] {A17PropietarioId});
+         if ( (pr_default.getStatus(17) == 101) )
          {
             GX_msglist.addItem("No existe 'Propietario'.", "ForeignKeyNotFound", 1, "PROPIETARIOID");
             AnyError = 1;
             GX_FocusControl = edtPropietarioId_Internalname;
          }
-         pr_default.close(18);
+         pr_default.close(17);
          dynload_actions( ) ;
          /*  Sending validation outputs */
       }
@@ -2101,7 +2089,7 @@ namespace GeneXus.Programs {
       protected void CloseOpenCursors( )
       {
          pr_default.close(1);
-         pr_default.close(18);
+         pr_default.close(17);
       }
 
       public override void initialize( )
@@ -2171,20 +2159,16 @@ namespace GeneXus.Programs {
          T000315_A9TableroId = new short[1] ;
          T000315_A36EtiquetaId = new short[1] ;
          T000316_A9TableroId = new short[1] ;
-         T000316_A12TareaId = new short[1] ;
-         T000316_A30ActividadId = new short[1] ;
+         T000316_A21ListaId = new short[1] ;
          T000317_A9TableroId = new short[1] ;
          T000317_A12TareaId = new short[1] ;
-         T000317_A27ComentarioId = new short[1] ;
          T000318_A9TableroId = new short[1] ;
-         T000318_A21ListaId = new short[1] ;
-         T000319_A9TableroId = new short[1] ;
          sDynURL = "";
          FormProcess = "";
          bodyStyle = "";
          ZZ10TableroNombre = "";
          ZZ11TableroFechaCreacion = (DateTime)(DateTime.MinValue);
-         T000320_A17PropietarioId = new short[1] ;
+         T000319_A17PropietarioId = new short[1] ;
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.tableros__default(),
             new Object[][] {
                 new Object[] {
@@ -2227,19 +2211,16 @@ namespace GeneXus.Programs {
                T000315_A9TableroId, T000315_A36EtiquetaId
                }
                , new Object[] {
-               T000316_A9TableroId, T000316_A12TareaId, T000316_A30ActividadId
+               T000316_A9TableroId, T000316_A21ListaId
                }
                , new Object[] {
-               T000317_A9TableroId, T000317_A12TareaId, T000317_A27ComentarioId
+               T000317_A9TableroId, T000317_A12TareaId
                }
                , new Object[] {
-               T000318_A9TableroId, T000318_A21ListaId
+               T000318_A9TableroId
                }
                , new Object[] {
-               T000319_A9TableroId
-               }
-               , new Object[] {
-               T000320_A17PropietarioId
+               T000319_A17PropietarioId
                }
             }
          );
@@ -2250,7 +2231,6 @@ namespace GeneXus.Programs {
       private short Z17PropietarioId ;
       private short GxWebError ;
       private short A17PropietarioId ;
-      private short gxcookieaux ;
       private short IsConfirmed ;
       private short IsModified ;
       private short AnyError ;
@@ -2388,15 +2368,11 @@ namespace GeneXus.Programs {
       private short[] T000315_A9TableroId ;
       private short[] T000315_A36EtiquetaId ;
       private short[] T000316_A9TableroId ;
-      private short[] T000316_A12TareaId ;
-      private short[] T000316_A30ActividadId ;
+      private short[] T000316_A21ListaId ;
       private short[] T000317_A9TableroId ;
       private short[] T000317_A12TareaId ;
-      private short[] T000317_A27ComentarioId ;
       private short[] T000318_A9TableroId ;
-      private short[] T000318_A21ListaId ;
-      private short[] T000319_A9TableroId ;
-      private short[] T000320_A17PropietarioId ;
+      private short[] T000319_A17PropietarioId ;
       private GXWebForm Form ;
    }
 
@@ -2424,7 +2400,6 @@ namespace GeneXus.Programs {
          ,new ForEachCursor(def[15])
          ,new ForEachCursor(def[16])
          ,new ForEachCursor(def[17])
-         ,new ForEachCursor(def[18])
        };
     }
 
@@ -2509,13 +2484,9 @@ namespace GeneXus.Programs {
           };
           Object[] prmT000318;
           prmT000318 = new Object[] {
-          new ParDef("@TableroId",GXType.Int16,4,0)
           };
           Object[] prmT000319;
           prmT000319 = new Object[] {
-          };
-          Object[] prmT000320;
-          prmT000320 = new Object[] {
           new ParDef("@PropietarioId",GXType.Int16,4,0)
           };
           def= new CursorDef[] {
@@ -2533,11 +2504,10 @@ namespace GeneXus.Programs {
              ,new CursorDef("T000313", "SELECT TOP 1 [TableroId], [RegistroInvitadoId] FROM [Invitados] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000313,1, GxCacheFrequency.OFF ,true,true )
              ,new CursorDef("T000314", "SELECT TOP 1 [TableroId], [ParticipanteTableroId] FROM [Participantes] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000314,1, GxCacheFrequency.OFF ,true,true )
              ,new CursorDef("T000315", "SELECT TOP 1 [TableroId], [EtiquetaId] FROM [TablerosEtiquetas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000315,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("T000316", "SELECT TOP 1 [TableroId], [TareaId], [ActividadId] FROM [Actividades] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000316,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("T000317", "SELECT TOP 1 [TableroId], [TareaId], [ComentarioId] FROM [TareasComentarios] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000317,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("T000318", "SELECT TOP 1 [TableroId], [ListaId] FROM [Listas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000318,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("T000319", "SELECT [TableroId] FROM [Tableros] ORDER BY [TableroId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmT000319,100, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("T000320", "SELECT [UsuarioId] AS PropietarioId FROM [Usuarios] WHERE [UsuarioId] = @PropietarioId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000320,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("T000316", "SELECT TOP 1 [TableroId], [ListaId] FROM [Listas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000316,1, GxCacheFrequency.OFF ,true,true )
+             ,new CursorDef("T000317", "SELECT TOP 1 [TableroId], [TareaId] FROM [Tareas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000317,1, GxCacheFrequency.OFF ,true,true )
+             ,new CursorDef("T000318", "SELECT [TableroId] FROM [Tableros] ORDER BY [TableroId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmT000318,100, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("T000319", "SELECT [UsuarioId] AS PropietarioId FROM [Usuarios] WHERE [UsuarioId] = @PropietarioId ",true, GxErrorMask.GX_NOMASK, false, this,prmT000319,1, GxCacheFrequency.OFF ,true,false )
           };
        }
     }
@@ -2602,21 +2572,15 @@ namespace GeneXus.Programs {
              case 14 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((short[]) buf[1])[0] = rslt.getShort(2);
-                ((short[]) buf[2])[0] = rslt.getShort(3);
                 return;
              case 15 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((short[]) buf[1])[0] = rslt.getShort(2);
-                ((short[]) buf[2])[0] = rslt.getShort(3);
                 return;
              case 16 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
-                ((short[]) buf[1])[0] = rslt.getShort(2);
                 return;
              case 17 :
-                ((short[]) buf[0])[0] = rslt.getShort(1);
-                return;
-             case 18 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 return;
        }

@@ -894,6 +894,26 @@ gx.dom_i =(function($){
 		return dim;
 	},
 
+	getScrollbarWidth: function () {							  				
+		var el = document.createElement('div');
+		var style = el.style;
+		style.display = 'block';
+		style.position = 'absolute';
+		style.width = '100px';
+		style.height = '100px';
+		style.left = '-999px';
+		style.top = '-999px';
+		style.overflow = 'scroll';
+		document.body.insertBefore(el, null);
+		var clientWidth = el.clientWidth;
+		if (clientWidth === 0) {
+			document.body.removeChild(el);
+			return undefined;
+		}
+		document.body.removeChild(el);
+		return 100 - clientWidth;
+	},
+
 	getActiveElement: function (doc) {
 			doc = doc || document;
 			var activeElement;
@@ -936,6 +956,7 @@ gx.dom_i =(function($){
 	MASK_CLASS: "gx-mask",
 	UNMASK_CLASS: "gx-unmask",
 	MASK_RELATIVE_CLASS: "gx-masked-relative",
+	MASK_ZINDEX: 2,
 	MASKED_CLASS: "gx-masked",
 	isMaskElement: function(el) {
 		return this.hasClass(el, this.MASK_CLASS);
@@ -952,13 +973,16 @@ gx.dom_i =(function($){
 				$el = $(el);
 
 			$el.css('caret-color', 'transparent');
+		/* 	$el.css('z-index', this.MASK_ZINDEX); */
 			if (!($el.is("body")) || this.getComputedStyle(el)['position'] != 'static') {
 				this.addClass(el, this.MASK_RELATIVE_CLASS);
 			}
+			
+			
 
 			maskEl = document.createElement("div");
 			maskEl.className = this.MASK_CLASS;
-			
+			maskEl.style.zIndex = this.MASK_ZINDEX;
 			if (el.tagName == 'TABLE') {
 				var $maskEl = $(maskEl),
 				$el = $(el);
@@ -970,7 +994,7 @@ gx.dom_i =(function($){
 				el.appendChild(maskEl);
 			}
 			this.addClass(el, this.MASKED_CLASS);
-
+			
 			if (fixHeight && setExpressionSupported) {
 				try {
 					maskEl.style.setExpression('height', 'this.parentNode.' + (el == document.body ? 'scrollHeight' : 'offsetHeight') + ' + "px"');
@@ -981,7 +1005,7 @@ gx.dom_i =(function($){
 				if (browser.isIE && !(browser.ieVersion == 7 && !browser.isCompatMode()) && heightValue == 'auto') {
 					maskEl.style.height = heightValue;
 				}
-			}
+			}			
 			if (browser.isIE() && (ieVersion <= 7 || browser.isCompatMode())) {
 				var $maskEl = $(maskEl);
 				var opacity = this.getComputedStyle(maskEl)['opacity'];
@@ -1473,9 +1497,17 @@ gx.dom_i =(function($){
 			setPopupMinWidth: function () {						
 				var currentPopup = gx.popup.getPopup()
 				if (currentPopup) {
+					var gxParentRuntimeTemplates = true;
 					if (gx.runtimeTemplates) {
-						var minWidth = this.getPopupMinWidth();														
-						$(document.documentElement).css("min-width", gx.dom.addUnits(minWidth));
+						try {
+							gxParentRuntimeTemplates = window.parent.gx.runtimeTemplates;
+						}
+						catch (e) {}
+						if (!gxParentRuntimeTemplates) {
+							//Old popup implementation does not assign initial width on iframe. So we must set it
+							var minWidth = this.getPopupMinWidth();														
+							$(document.documentElement).css("min-width", gx.dom.addUnits(minWidth));
+						}
 						$(document.documentElement).addClass('gx-popup-document');
 					}
 					if (currentPopup.autoresize || currentPopup.autoresize === undefined) {
@@ -1488,30 +1520,32 @@ gx.dom_i =(function($){
 			getPopupMinWidth: function () {
 				var currentPopup = gx.popup.getPopup(),
 					minWidth = SMALL_MIN_SIZE;
-				if (currentPopup) {							
-					minWidth = currentPopup.width;
-					if (currentPopup.autoresize || currentPopup.autoresize === undefined) {
-						var SMALL_MIN_SIZE = 600,
-							MEDIUM_MIN_SIZE = 800,
-							LARGE_MIN_SIZE = 900,
-							EXTRA_SMALL_SIZE_DELTA = 20,
-							EXTRA_SMALL_BREAK_SIZE = 768,
-							SMALL_BREAK_SIZE = 992,
-							MEDIUM_BREAK_SIZE = 1200;
+				if (!currentPopup) {							
+					return minWidth;
+				}
 
-						var windowWidth = $(currentPopup.window).width();
-						minWidth = MEDIUM_MIN_SIZE;
+				minWidth = currentPopup.width;
+				if (currentPopup.autoresize || currentPopup.autoresize === undefined) {
+					var SMALL_MIN_SIZE = 600,
+						MEDIUM_MIN_SIZE = 800,
+						LARGE_MIN_SIZE = 900,
+						EXTRA_SMALL_SIZE_DELTA = 20,
+						EXTRA_SMALL_BREAK_SIZE = 768,
+						SMALL_BREAK_SIZE = 992,
+						MEDIUM_BREAK_SIZE = 1200;
 
-						if (windowWidth >= MEDIUM_BREAK_SIZE) {
-							minWidth = LARGE_MIN_SIZE;
-						}
-						if (windowWidth >= EXTRA_SMALL_BREAK_SIZE && windowWidth < SMALL_BREAK_SIZE) {
-							minWidth = SMALL_MIN_SIZE;
-						}
-						if (windowWidth < EXTRA_SMALL_BREAK_SIZE) {
-							minWidth = windowWidth - EXTRA_SMALL_SIZE_DELTA;
-						}								
-					}							
+					var windowWidth = $(currentPopup.window).width();
+					minWidth = MEDIUM_MIN_SIZE;
+
+					if (windowWidth >= MEDIUM_BREAK_SIZE) {
+						minWidth = LARGE_MIN_SIZE;
+					}
+					if (windowWidth >= EXTRA_SMALL_BREAK_SIZE && windowWidth < SMALL_BREAK_SIZE) {
+						minWidth = SMALL_MIN_SIZE;
+					}
+					if (windowWidth < EXTRA_SMALL_BREAK_SIZE) {
+						minWidth = windowWidth - EXTRA_SMALL_SIZE_DELTA;
+					}								
 				}
 				return minWidth;
 			},
@@ -1807,9 +1841,6 @@ gx.evt_i = (function($) {
 
 	onfocus_impl: function (Ctrl, gxFocusCtrl, gxWCP, gxInMasterPage, gxCurrentRow, gxCurrentGrid, gxAddLines) {
 		var onfocusDeferred = $.Deferred();
-		if (gx.csv.deferredOnchange) {
-			gx.lang.doExecTimeout( gx.csv.deferredOnchange);
-		}						
 		gxCurrentRow = gx.fn.controlRowIndex(Ctrl) || gxCurrentRow;
 		try {
 			gx.grid.clearActiveGrid();
@@ -2285,7 +2316,7 @@ gx.evt_i = (function($) {
 
 	oncontrolvaluechanging: function (event) {
 		var iKeyCode = event.keyCode;
-		if (iKeyCode != 8 && iKeyCode < 32 || (iKeyCode >= 33 && iKeyCode < 46) || (iKeyCode >= 112 && iKeyCode <= 123)) {
+		if (iKeyCode != 8 && iKeyCode < 32 || (iKeyCode >= 33 && iKeyCode < 46) || (iKeyCode >= 112 && iKeyCode <= 123 && iKeyCode != 121)) {
 			return;
 		}
 		var Ctrl = gx.evt.source(event);
@@ -2420,6 +2451,10 @@ gx.evt_i = (function($) {
 		var evel = gx.evt.source(event);
 		var maxlen = evel.getAttribute("maxlength") || (evel.getAttribute("max") ? evel.getAttribute("max").length : 0);
 		var value = typeof (evel.value) == "undefined" ? "" : evel.value;
+		if (gx.evt.isComposing && !event.isComposing) {
+			gx.fx.obs.notify('gx.endcomposing');
+		}
+		gx.evt.isComposing = event.isComposing;
 		if ((evel.type == "" && event.keyCode == 9) || (this.autoSkip && evel.type != "" && !this.isControlKey(this.lastKey) && value.length >= maxlen && maxlen > 0)) {
 			if (!this.skipPromptCtrl) {
 				return;
@@ -2441,7 +2476,14 @@ gx.evt_i = (function($) {
 			if (el == -1)
 				return true;
 			var Control = gx.fn.searchFocus(this.shiftPressed ? el - 1 : el + 1, !this.shiftPressed);
-			gx.fn.setFocus(Control);
+			var checkIfJapaneseInput = function (value) {
+				if (event.isComposing) {
+					Control.value = value
+				}
+			}
+			var previousValue = Control.value
+			gx.fn.setFocus(Control)
+			gx.lang.doCallTimeout(checkIfJapaneseInput,this,[previousValue],50);
 		}
 		gx.grid.handleKeyUpEvt(event);
 	},
@@ -2452,10 +2494,11 @@ gx.evt_i = (function($) {
 	},
 	
 	validKeypressForCtrl: function(Ctrl, event) {
-		if (!Ctrl || Ctrl.type === 'checkbox')
+		if (!Ctrl || (Ctrl.type !== 'text' && Ctrl.type !== "number"))
 			return true;
 			
 		var ctrlSelection = function(Ctrl) {
+			try{
 			if (Ctrl.selectionStart !== null && Ctrl.selectionStart !== undefined) {
 				return Ctrl.selectionEnd - Ctrl.selectionStart;
 			}
@@ -2464,6 +2507,8 @@ gx.evt_i = (function($) {
 					return window.getSelection().toString().length;
 				}
 			}
+			}catch (e) {}
+				
 			return undefined;
 		}
 		var vStruct = gx.O.getValidStructFld(Ctrl);
@@ -2596,7 +2641,7 @@ gx.evt_i = (function($) {
 			gx.evt.setReady(true,"onchange_impl");
 
 			var fireOnblur = (gx.util.browser.isWebkit() && (Ctrl.type == "radio" || Ctrl.type == "checkbox" || Ctrl.type == "file"));
-			var doValidControls = false;
+			var doValidControls = (Ctrl.type == "radio" || Ctrl.type == "checkbox");
 
 			if (changed && vStruct && (gx.fn.lastMainLevelCtrlId(focusControl, vStruct.grid) || vStruct.gxsgprm)) {
 				fireOnblur = true;
@@ -2672,11 +2717,7 @@ gx.evt_i = (function($) {
 					.then(finallyCallback.closure(this));
 			};
 			var atExitFnc = doAll.closure(this);
-			gx.csv.deferredOnchange = gx.lang.doCallTimeout( function () {
-					delete gx.csv.deferredOnchange;
-					gx.evt.fireControlValueChange(gxO, Ctrl, event).always(atExitFnc);
-				}, 
-				this, [], 100);
+			gx.evt.fireControlValueChange(gxO, Ctrl, event).always(atExitFnc);
 		} else {
 			finallyCallback.call(this);
 		}
@@ -2972,6 +3013,24 @@ gx.evt_i = (function($) {
 			fnc.call(ctx);
 		}
 	},
+
+	doAfterComposing: function(fnc, ctx) {
+		if(gx.evt.isComposing) {
+			gx.fx.obs.addObserver('gx.endcomposing', ctx, fnc, {single:true});
+		}
+		else{
+			fnc.call(ctx);
+		}
+	},
+
+	doAfterValidating: function(fnc, ctx) {
+		if (gx.csv.isvalidating()) {
+			gx.fx.obs.addObserver('gx.onaftervalidatecompleted', ctx, fnc, { single: true });
+		} 
+		else {
+			fnc.call(ctx);
+		}
+	},
 	
 	startValidation: function(gxgrid, force) {
 		if (gxgrid || force) {
@@ -2985,6 +3044,7 @@ gx.evt_i = (function($) {
 			gx.csv.validating -= 1;
 			if (gx.csv.validating === 0) {
 				gx.csv.validatingGrid = null;
+				gx.fx.obs.notify('gx.onaftervalidatecompleted');
 			}
 			if (gx.csv.validating < 0) {
 				gx.dbg.logMsg('WARNING! endValidation unexpected condition (gx.csv.validating < 0)');
@@ -4673,9 +4733,10 @@ gx.http_i = (function ($) {
 				}
 			},
 
-			redirect: function (url, disableFrm, forceFullGet, gxO) {
-				gxO = gxO || gx.O;
-				var currentPopup = gx.popup.getPopup();
+			redirect: function (url, disableFrm, forceFullGet, gxO, forceAbsoluteURL) {
+				var forceAbsoluteURL = forceAbsoluteURL === undefined ? true : forceAbsoluteURL,
+					gxO = gxO || gx.O,
+				  currentPopup = gx.popup.getPopup();
 				if (currentPopup != null && gx.util.sameAppUrl(url)) {
 					var currentLvl = currentPopup.window.gx.popup.lvl;
 					if (currentLvl != -1) {
@@ -4684,7 +4745,7 @@ gx.http_i = (function ($) {
 						url += text;
 					}
 				}
-				if (!gx.isabsoluteurl(url)) {
+				if (forceAbsoluteURL && !gx.isabsoluteurl(url)) {
 					url = gx.absoluteurl(url);
 				}
 				
@@ -5061,13 +5122,25 @@ gx.http_i = (function ($) {
 						var userErrorMessage = gx.getMessage("GXM_NetworkError").replace('%1', 'NoStatusCode');
 						if (gx.text.startsWith(e.message, "Blocked a frame with origin")) {
 							//Chrome bug: https://bugs.chromium.org/p/chromium/issues/detail?id=1086707#c7
+							//or situation where the blob file does not exists anymore.
 							internalErrorMessage = "Upload File Changed";
 							userErrorMessage = gx.getMessage("GXM_FileUploadFileChanged");
 							$('input[type="file"]').val('');
 						}
 						gx.dbg.logEx(e, 'gxapi.js', 'FileUpload error: ' + internalErrorMessage);
-						info.error.call(info.obj || window, null, info);
-						gx.util.alert.showError(userErrorMessage);
+						if (info.error)
+							info.error.call(info.obj || window, null, info);
+						else {
+							gx.fx.obs.notify('gx.afterNonFullajax');
+							if (window.gx) {
+								if (typeof (info.onReady) === 'function')
+									info.onReady();
+							}							
+						}	
+						if (info.always) {
+							info.always.call(info.obj || window, null, info);
+						}										
+						gx.util.alert.showError(userErrorMessage);						
 					}
 				}
 			},
@@ -6897,7 +6970,12 @@ gx.fx.obs.addObserver('gx.onload', gx, function () {
 		for (var i = 0, len = containers.length; i < len; i++) {
 			gx.html.multimediaUpload.createControl(containers[i]);
 		}
-		gx.fx.obs.addObserver('gx.multimedia.clear', this, this.clearMultimediaValue);
+		var opts = {}
+		if (this.IsComponent) {
+			var Cmp = gx.pO.getWebComponent(this.CmpContext);
+			opts.observerKey = Cmp && Cmp.getContainer() && Cmp.getContainer().id;
+		}
+		gx.fx.obs.addObserver('gx.multimedia.clear', this, this.clearMultimediaValue, opts);
 	};
 
 	prot.initControlsEnabledFlag = function (vStruct) {
@@ -7042,7 +7120,9 @@ gx.fx.obs.addObserver('gx.onload', gx, function () {
 			else
 				dispatchEvent.apply(this, [domEvt, $target, gxO, fld]);
 		};
-		gx.evt.doAfterProcessing( fnc , this);
+		gx.wr(function() { 
+			gx.evt.doAfterProcessing( fnc , this);
+		}, this);
 	};
 
 	var doubleClickEvtNotSupported = function () {
@@ -10648,57 +10728,17 @@ gx.popup = (function ($) {
 				return false;
 			},
 
-			resizePopupContent: function (width, height) {
-				if (!gx.HTML5 || !this.iFrame)
-					return;
+			resizePopupContentLegacy: function (width, height) {
+				//Deprecated algorithm. Used for non-responsive Webpages.				
 				var frameDoc = gx.dom.iFrameDoc(this.iFrame),
 					docHeight = (height > 0)? height: '100%',
 					docWidth = (width > 0)? width: '100%',
-					$iFrame = $(this.iFrame),
-					fixedSize = width > 0 && height > 0,
-					compatMode = gx.popup.ext.compatMode(),					
-					isResponsive;
+					$iFrame = $(this.iFrame);					
 
-				if (frameDoc) {
-					var mainEl = frameDoc.documentElement;
-					if (mainEl) {
-						if(compatMode) {
-							docWidth = docHeight = "100%";
-						}
-						else
-						{				
-							try {
-								isResponsive = $iFrame[0].contentWindow.gx && $iFrame[0].contentWindow.gx.runtimeTemplates;
-							}
-							catch (e) {}
-							
-							if (!fixedSize) {
-								if (!isResponsive) {
-									$iFrame.width(50);
-								}
-								$(mainEl).width(mainEl.offsetWidth);
-							}
-							else {
-								$(mainEl).width(width);								
-								$(mainEl).height(height);								
-								$(mainEl).css("min-width", '');	
-								$iFrame.width(docWidth);
-								$iFrame.height(docHeight);																
-							}
-							docWidth = Math.max(
-								Math.max(frameDoc.body.scrollWidth, frameDoc.documentElement.scrollWidth),
-								Math.max(frameDoc.body.offsetWidth, frameDoc.documentElement.offsetWidth)								
-							);
-							
-							//We add scrollbar width to popup width in order not to display horizontal scrollbar. 
-							try {
-								docWidth += ($iFrame.height() <= frameDoc.body.offsetHeight)? $.position.scrollbarWidth(): 0;
-							} catch(e) {}
-							
-							docHeight = undefined;
-						}																		
-					}
-				}				
+				if (frameDoc) {										
+					docWidth = docHeight = "100%";
+				}
+
 				$iFrame.width(docWidth);
 				if (docHeight === undefined) {
 					docHeight = Math.max(
@@ -10706,6 +10746,63 @@ gx.popup = (function ($) {
 						Math.max(frameDoc.body.offsetHeight, frameDoc.documentElement.offsetHeight)								
 					);					
 				}
+				$iFrame.height(docHeight);				
+			},
+
+			resizePopupContent: function (width, height) {
+				if (!gx.HTML5 || !this.iFrame)
+					return;
+				if (gx.popup.ext.compatMode()) {
+					this.resizePopupContentLegacy(width, height);
+				}
+				else  {
+					this.resizePopupContentImpl(width, height);
+				}
+			},
+
+			resizePopupContentImpl: function (width, height) {				
+				var frameDoc = gx.dom.iFrameDoc(this.iFrame),					
+					$iFrame = $(this.iFrame),					
+					isResponsive;
+
+				if (width > 0 && height > 0) {  //Fixed size popup
+					$iFrame.width(width);
+					$iFrame.height(height);		
+					return;																			
+				}
+
+				if (!frameDoc) {												
+					return;
+				}
+
+				try {
+					isResponsive = $iFrame[0].contentWindow.gx && $iFrame[0].contentWindow.gx.runtimeTemplates;
+				}
+				catch (e) {}
+								
+				if (!isResponsive) {
+					$iFrame.width(50);
+				}	
+				
+				var docWidth = Math.max(frameDoc.body.scrollWidth, 
+							frameDoc.body.getBoundingClientRect().width, 
+							frameDoc.documentElement.scrollWidth, 
+							frameDoc.documentElement.getBoundingClientRect().width);
+											
+				//We add scrollbar width to popup width in order to "reserve" the space for the horizontal scrollbar. 
+				try {
+					docWidth += ($iFrame.height() < frameDoc.body.offsetHeight)? gx.dom.getScrollbarWidth(): 0;
+				} catch(e) {}
+																
+				if (Math.abs($iFrame.width() - docWidth) > 1){
+					$iFrame.width(docWidth);
+				}
+								
+				var	docHeight = Math.max(frameDoc.body.scrollHeight, 
+								frameDoc.body.getBoundingClientRect().height, 
+								frameDoc.documentElement.scrollHeight, 
+								frameDoc.documentElement.getBoundingClientRect().height);
+				
 				$iFrame.height(docHeight);				
 			},
 			
@@ -11747,7 +11844,7 @@ gx.ajax = (function ($) {
 					if (Command.redirect) {
 						redirect = Command.redirect;
 						redirect.url = gx.ajax.removeGXParms(redirect.url);
-						gx.http.redirect(redirect.url, redirect.forceDisableFrm === 1, redirect.forceDisableFrm === 2, gxO);
+						gx.http.redirect(redirect.url, redirect.forceDisableFrm === 1, redirect.forceDisableFrm === 2, gxO, false);
 					}
 					if (Command.calltarget) {
 						gx.nav.callFromServerRedirect(Command.calltarget.url, Command.calltarget.target);
@@ -12621,7 +12718,18 @@ gx.ajax = (function ($) {
 				}
 				ObjUrl = this.objnameFromUrl(ObjUrl);
 			}			
-			return gx.absoluteurl(ObjUrl);
+			return gx.absoluteurl(this.objToRelativeUrl(ObjUrl));
+		},
+
+		objToRelativeUrl: function (ObjName) {
+			if (ObjName != null && !gx.isabsoluteurl(ObjName)) {
+				if (gx.servletBasePath === '')
+					return ObjName;
+				else
+					return gx.servletBasePath + '/' + ObjName;
+			} else {
+				return ObjName;
+			}
 		},
 
 		objnameFromUrl: function (url) {
@@ -12919,6 +13027,7 @@ gx.util.balloon = {
 					label = gx.dom.byId(this.balloonid);
 					if (label) {
 						label.innerHTML = text;
+						label.className= cssClass;
 						created = false;
 					}
 					else

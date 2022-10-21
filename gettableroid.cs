@@ -63,7 +63,7 @@ namespace GeneXus.Programs {
          objgettableroid.AV8TableroId = 0 ;
          objgettableroid.context.SetSubmitInitialConfig(context);
          objgettableroid.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objgettableroid);
+         Submit( executePrivateCatch,objgettableroid);
          aP0_TableroId=this.AV8TableroId;
       }
 

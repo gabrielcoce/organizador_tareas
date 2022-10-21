@@ -74,7 +74,7 @@ namespace GeneXus.Programs {
          objanadirusuariocolaborador.AV14result = aP2_result;
          objanadirusuariocolaborador.context.SetSubmitInitialConfig(context);
          objanadirusuariocolaborador.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objanadirusuariocolaborador);
+         Submit( executePrivateCatch,objanadirusuariocolaborador);
          aP0_TableroId=this.A9TableroId;
          aP1_RegistroInvitadoId=this.AV10RegistroInvitadoId;
          aP2_result=this.AV14result;

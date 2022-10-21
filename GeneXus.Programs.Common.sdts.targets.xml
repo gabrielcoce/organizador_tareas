@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<ItemGroup>
+</ItemGroup>
+
+<ItemGroup>
+ 	<Compile Include="$(WebDirectory)\type_SdtConfig.cs" />
+ 	<Compile Include="$(WebDirectory)\type_SdtLinkList_LinkItem.cs" />
+ 	<Compile Include="$(WebDirectory)\type_SdtParticipantesGrid.cs" />
+ 	<Compile Include="$(WebDirectory)\type_SdtSDT_SweetAlert.cs" />
+ 	<Compile Include="$(WebDirectory)\tests\type_SdtAnadirUsuarioColaboradorTestSDT.cs" />
+ 	<Compile Include="$(WebDirectory)\tests\type_SdtgetNumeroIntegrantesTestSDT.cs" />
+ 	<Compile Include="$(WebDirectory)\tests\type_SdtIntercalarRolTestSDT.cs" />
+
+</ItemGroup>
+
+</Project>

@@ -1,0 +1,1 @@
+<%@ServiceHost Service= "GeneXus.AI.genexusai.text.inference.cloud.keyphrases_services,genexusai" %>

@@ -103,7 +103,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
       }
 
       protected void SendCloseFormHiddens( )
@@ -131,7 +131,7 @@ namespace GeneXus.Programs {
          {
             WebComp_Wcrecentlinks.componentjscripts();
          }
-         context.AddJavascriptSource("rwdmasterpage.js", "?20229101193610", false, true);
+         context.AddJavascriptSource("rwdmasterpage.js", "?202210161311499", false, true);
          context.WriteHtmlTextNl( "</body>") ;
          context.WriteHtmlTextNl( "</html>") ;
          if ( context.isSpaRequest( ) )
@@ -449,11 +449,7 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
-            {
-               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
-            }
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -574,7 +570,7 @@ namespace GeneXus.Programs {
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
          }
          else
          {
@@ -687,7 +683,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)(getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Item(idxLst))), "?20229101193613", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)(getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Item(idxLst))), "?20221016131159", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -702,7 +698,7 @@ namespace GeneXus.Programs {
 
       protected void include_jscripts( )
       {
-         context.AddJavascriptSource("rwdmasterpage.js", "?20229101193613", false, true);
+         context.AddJavascriptSource("rwdmasterpage.js", "?20221016131159", false, true);
          /* End function include_jscripts */
       }
 
@@ -788,7 +784,6 @@ namespace GeneXus.Programs {
       private short wbStart ;
       private short nCmpId ;
       private short nDonePA ;
-      private short gxcookieaux ;
       private short nGotPars ;
       private short nGXWrapped ;
       private int idxLst ;

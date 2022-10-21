@@ -1,0 +1,1 @@
+<%@ServiceHost Service= "GeneXus.AI.genexusai.audio.inference.cloud.texttospeech_services,genexusai" %>

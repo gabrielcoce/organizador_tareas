@@ -1,3 +1,4 @@
+links
 appmasterpage
 recentlinks
 promptmasterpage
@@ -27,6 +28,19 @@ aceptarinvitacion
 listadotareas
 anadirtarea
 listadoactividades
+anadiractividad
+inicio
+finalizadowc
+sininiciarwc
+enprocesowc
+comentarioswc
+listadoactividadesf
+centropruebas
+perfilusuario
+paginainicio
+dashboardinvitado
+gx00d0
+pruebaenvio
 roles
 usuarios
 tableros
@@ -37,4 +51,5 @@ tareascomentarios
 actividades
 tablerosetiquetas
 invitados
+correo
 GeneXus.Programs.Common

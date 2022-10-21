@@ -68,7 +68,7 @@ namespace GeneXus.Programs {
          objvisibilidadtablero.AV8dir = aP1_dir;
          objvisibilidadtablero.context.SetSubmitInitialConfig(context);
          objvisibilidadtablero.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objvisibilidadtablero);
+         Submit( executePrivateCatch,objvisibilidadtablero);
          aP0_TableroId=this.A9TableroId;
          aP1_dir=this.AV8dir;
       }

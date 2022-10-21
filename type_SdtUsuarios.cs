@@ -163,13 +163,13 @@ namespace GeneXus.Programs {
          }
          if ( sdt.IsDirty("UsuarioNombre") )
          {
-            gxTv_SdtUsuarios_Usuarionombre_N = 0;
+            gxTv_SdtUsuarios_Usuarionombre_N = (short)(sdt.gxTv_SdtUsuarios_Usuarionombre_N);
             gxTv_SdtUsuarios_N = 0;
             gxTv_SdtUsuarios_Usuarionombre = sdt.gxTv_SdtUsuarios_Usuarionombre ;
          }
          if ( sdt.IsDirty("UsuarioApellido") )
          {
-            gxTv_SdtUsuarios_Usuarioapellido_N = 0;
+            gxTv_SdtUsuarios_Usuarioapellido_N = (short)(sdt.gxTv_SdtUsuarios_Usuarioapellido_N);
             gxTv_SdtUsuarios_N = 0;
             gxTv_SdtUsuarios_Usuarioapellido = sdt.gxTv_SdtUsuarios_Usuarioapellido ;
          }
@@ -180,7 +180,7 @@ namespace GeneXus.Programs {
          }
          if ( sdt.IsDirty("UsuarioPassword") )
          {
-            gxTv_SdtUsuarios_Usuariopassword_N = 0;
+            gxTv_SdtUsuarios_Usuariopassword_N = (short)(sdt.gxTv_SdtUsuarios_Usuariopassword_N);
             gxTv_SdtUsuarios_N = 0;
             gxTv_SdtUsuarios_Usuariopassword = sdt.gxTv_SdtUsuarios_Usuariopassword ;
          }
@@ -245,6 +245,7 @@ namespace GeneXus.Programs {
       {
          gxTv_SdtUsuarios_Usuarionombre_N = 1;
          gxTv_SdtUsuarios_Usuarionombre = "";
+         SetDirty("Usuarionombre");
          return  ;
       }
 
@@ -274,6 +275,7 @@ namespace GeneXus.Programs {
       {
          gxTv_SdtUsuarios_Usuarioapellido_N = 1;
          gxTv_SdtUsuarios_Usuarioapellido = "";
+         SetDirty("Usuarioapellido");
          return  ;
       }
 
@@ -319,6 +321,7 @@ namespace GeneXus.Programs {
       {
          gxTv_SdtUsuarios_Usuariopassword_N = 1;
          gxTv_SdtUsuarios_Usuariopassword = "";
+         SetDirty("Usuariopassword");
          return  ;
       }
 
@@ -378,6 +381,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Mode_SetNull( )
       {
          gxTv_SdtUsuarios_Mode = "";
+         SetDirty("Mode");
          return  ;
       }
 
@@ -405,6 +409,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Initialized_SetNull( )
       {
          gxTv_SdtUsuarios_Initialized = 0;
+         SetDirty("Initialized");
          return  ;
       }
 
@@ -432,6 +437,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarioid_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarioid_Z = 0;
+         SetDirty("Usuarioid_Z");
          return  ;
       }
 
@@ -459,6 +465,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarionombre_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarionombre_Z = "";
+         SetDirty("Usuarionombre_Z");
          return  ;
       }
 
@@ -486,6 +493,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarioapellido_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarioapellido_Z = "";
+         SetDirty("Usuarioapellido_Z");
          return  ;
       }
 
@@ -513,6 +521,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarioemail_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarioemail_Z = "";
+         SetDirty("Usuarioemail_Z");
          return  ;
       }
 
@@ -540,6 +549,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuariopassword_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Usuariopassword_Z = "";
+         SetDirty("Usuariopassword_Z");
          return  ;
       }
 
@@ -567,6 +577,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarioestado_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarioestado_Z = false;
+         SetDirty("Usuarioestado_Z");
          return  ;
       }
 
@@ -594,6 +605,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Rolid_Z_SetNull( )
       {
          gxTv_SdtUsuarios_Rolid_Z = 0;
+         SetDirty("Rolid_Z");
          return  ;
       }
 
@@ -621,6 +633,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarionombre_N_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarionombre_N = 0;
+         SetDirty("Usuarionombre_N");
          return  ;
       }
 
@@ -648,6 +661,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuarioapellido_N_SetNull( )
       {
          gxTv_SdtUsuarios_Usuarioapellido_N = 0;
+         SetDirty("Usuarioapellido_N");
          return  ;
       }
 
@@ -675,6 +689,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtUsuarios_Usuariopassword_N_SetNull( )
       {
          gxTv_SdtUsuarios_Usuariopassword_N = 0;
+         SetDirty("Usuariopassword_N");
          return  ;
       }
 

@@ -68,7 +68,7 @@ namespace GeneXus.Programs {
          objgetinvitadosid.AV8id = aP1_id;
          objgetinvitadosid.context.SetSubmitInitialConfig(context);
          objgetinvitadosid.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objgetinvitadosid);
+         Submit( executePrivateCatch,objgetinvitadosid);
          aP0_TableroId=this.A9TableroId;
          aP1_id=this.AV8id;
       }

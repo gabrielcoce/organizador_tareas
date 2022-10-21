@@ -67,7 +67,7 @@ namespace GeneXus.Programs {
          objgetnumerointegrantes.AV8count = 0 ;
          objgetnumerointegrantes.context.SetSubmitInitialConfig(context);
          objgetnumerointegrantes.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objgetnumerointegrantes);
+         Submit( executePrivateCatch,objgetnumerointegrantes);
          aP1_count=this.AV8count;
       }
 

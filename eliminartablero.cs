@@ -68,7 +68,7 @@ namespace GeneXus.Programs {
          objeliminartablero.AV8dir = aP1_dir;
          objeliminartablero.context.SetSubmitInitialConfig(context);
          objeliminartablero.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objeliminartablero);
+         Submit( executePrivateCatch,objeliminartablero);
          aP0_TableroId=this.A9TableroId;
          aP1_dir=this.AV8dir;
       }

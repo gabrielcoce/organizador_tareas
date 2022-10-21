@@ -74,7 +74,7 @@ namespace GeneXus.Programs {
          objcambiarparticipantesinvitados.AV16Result = aP2_Result;
          objcambiarparticipantesinvitados.context.SetSubmitInitialConfig(context);
          objcambiarparticipantesinvitados.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objcambiarparticipantesinvitados);
+         Submit( executePrivateCatch,objcambiarparticipantesinvitados);
          aP0_TableroId=this.A9TableroId;
          aP1_UsuarioId=this.AV11UsuarioId;
          aP2_Result=this.AV16Result;

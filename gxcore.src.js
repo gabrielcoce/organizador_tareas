@@ -1,5 +1,5 @@
 ﻿/* START OF FILE - ..\GenCommon\js\version.js - */
-/**@preserve GeneXus 17.0.8.157807*/
+/**@preserve GeneXus 17.0.11.162927*/
 /* END OF FILE - ..\GenCommon\js\version.js - */
 /* START OF FILE - ..\GenCommon\js\mustache.js - */
 /*!
@@ -721,6 +721,7 @@ var gx = (function ($) {
 		thousandSeparator: ',',
 		staticDirectory: '/',
 		basePath: '',
+		servletBasePath: '',
 		datepickerImage: null,
 		clientImages: {},
 		blankImage: null,
@@ -930,10 +931,21 @@ var gx = (function ($) {
 				}
 			},
 
-			addHook: function (obj, evt, handler) {
-				this.hooks.push({ c: obj, e: evt, f: handler });
+			addHook: function (obj, evt, handler, options) {
+				this.hooks.push({ c: obj, e: evt, f: handler, o: options });
 			},
 			
+			removeHookByKey: function (key) {
+				$.each(gx.evt.hooks, function (i, hook) {
+					if (hook.o && hook.o.hookKey && key === hook.o.hookKey) {
+						gx.evt.detach(hook.e, hook.o, hook.f);
+						gx.evt.hooks[i] = undefined;
+					}
+				});
+				gx.evt.hooks = gx.evt.hooks.filter(function (hook) {
+					return hook;
+				})
+			},
 			attach: function (obj, evt, unScopedHandler, scope, options) {
 				options = options || {};
 				if (typeof (evt) == "string") {
@@ -941,6 +953,7 @@ var gx = (function ($) {
 					if (scope) {
 						handler = unScopedHandler.closure(scope);
 					}
+					var currentHook = gx.evt.hooks.length;
 
 					if (options.single) {
 						var originalHandler = handler,
@@ -957,6 +970,7 @@ var gx = (function ($) {
 								}
 								gx.evt.detach(obj, evt, originalHandler, options);
 								originalHandler.apply(this, arguments);
+								gx.evt.hooks.splice(currentHook, 1)
 								handlerRan = true;
 							}
 						};
@@ -975,7 +989,7 @@ var gx = (function ($) {
 					else {
 						obj['on' + evt] = handler;
 					}
-					this.addHook(obj, evt, handler);
+					this.addHook(obj, evt, handler, options);
 				}
 				else if (gx.lang.isArray(evt)) {
 					for (var i = 0, len = evt.length; i < len; i++) {
@@ -2781,6 +2795,8 @@ var gx = (function ($) {
 			}
 
 			var path = "";
+			var servletPath = "";
+
 			if (!gx.isRelativeToHost(gxgral) || gx.isabsoluteurl(gxgral)) {
 				var lastIdx = location.pathname.lastIndexOf("/");
 				path = lastIdx > 1 ? location.pathname.substring(1, lastIdx) : "";
@@ -2795,12 +2811,15 @@ var gx = (function ($) {
 				for (var i = 0, len = locationParts.length; i < len; i++) {
 					if (locationParts[i] == gxgralParts[i])
 						path = path + ((path == '') ? '' : '/') + locationParts[i];
+					else if (gx.gen.isJava() && locationParts[i] == "servlet")
+						servletPath = locationParts[i];
 					else
 						break;
 				}
 			}
 
 			gx.basePath = path;
+			gx.servletBasePath = servletPath;
 		},
 
 		objectLoad: function (gxGrids, gxHiddens) {
@@ -2838,7 +2857,7 @@ var gx = (function ($) {
 						if (!loadingObject) {
 							gx.pendingCmps = gx.pendingCmps || 0;
 							gx.pendingCmps += 1;
-							gx.plugdesign.applyTemplateObject({ selector: '#' + container.id, deferred:true}).then(fnc);
+							gx.plugdesign.applyTemplateObject({ selector: '#' + container.id, observerKey: container.id, deferred: true }).then(fnc);
 						}
 					}
 				});
@@ -3247,7 +3266,11 @@ gx.plugdesign = (function($) {
 				if (el) {
 					gx.plugdesign.applyClassMapOnElement(t, el);
 					gx.plugdesign.assingUserAPI(t, el);
-					gx.fx.obs.addObserver('gx.control.onafterpropertychange', this, onAfterPropertyChangeFn, { unique: false });
+					gx.fx.obs.addObserver('gx.control.onafterpropertychange', this, onAfterPropertyChangeFn,
+						{
+							unique: false,
+							observerKey: opts.observerKey
+						});
 				}
 			});
 		},
@@ -4963,9 +4986,9 @@ gx.html = (function ($) {
 									this.tagAtt('class', ClassHTML);
 								if (sOStyle != '')
 									this.tagAtt('style', sOStyle);
-								if (gx.O.DSO) {
-									this.tagAtt('data-gx-readonly', '');
-								}
+
+								this.tagAtt('data-gx-readonly', '');
+
 								if (this.title != '')
 									this.tagAtt('title', this.title);
 								this.tagAtt('id', 'span_' + this.id);
@@ -5007,7 +5030,7 @@ gx.html = (function ($) {
 
 					this.type = gx.html.controls.types.multipleLineEdit;
 
-					this.setProperties = function (sCtrlName, sLinkURL, sTags, nFormat, nVisible, nEnabled, nRTEnabled, nWidth, nWidthUnit, nHeight, nHeightUnit, sStyleString, sClassString, sColumnClass, sColumnHeaderClass, nLength, nAutoresize, nMaxTextLines, sLinkTarget, sPlaceholder, nAutoCorrection, bSendHidden, sDomType, sEventName, nJScriptCode, sValue) {
+					this.setProperties = function (sCtrlName, sLinkURL, sTags, nFormat, nVisible, nEnabled, nRTEnabled, nWidth, nWidthUnit, nHeight, nHeightUnit, bHasTheme, sStyleString, sClassString, sColumnClass, sColumnHeaderClass, nLength, nAutoresize, nMaxTextLines, sLinkTarget, sPlaceholder, nAutoCorrection, bSendHidden, sDomType, sEventName, nJScriptCode, sValue) {
 						this.id = sCtrlName;
 						this.visible = (nVisible != 0);
 						this.enabled = (nEnabled != 0);
@@ -5085,9 +5108,9 @@ gx.html = (function ($) {
 								this.tagAtt('class', this.cssClass);
 							if (sOStyle != '')
 								this.tagAtt('style', sOStyle);
-							if (gx.O.DSO) {
-								this.tagAtt('data-gx-readonly', '');
-							}
+
+							this.tagAtt('data-gx-readonly', '');
+
 							if (this.title != '')
 								this.tagAtt('title', this.title);
 							this.tagAtt('id', 'span_' + this.id);
@@ -5814,7 +5837,7 @@ gx.html = (function ($) {
 
 					this.updateinnerImageProperties = function () {
 						this.innerImage.setProperties(this.id, this.link, this.linkTarget, this.accessKey, this.themeName, this.visible,
-						this.enabled, this.alt, this.title, this.borderWidth, this.autoresize, this.width, this.heightUnit,
+							this.enabled, this.alt, this.title, this.borderWidth, this.autoresize, this.width, this.widthUnit,
 						this.height, this.heightUnit, this.vSpace,
 						this.hSpace, this.jsScrCode, this.usrOnclick, this.eventName, this.style, this.className, this.columnClass, this.columnHeaderClass, 
 						this.align, this.extraImageAttributes, this.useMap, this.jsDynCode, this.imgSrcSet, this.value);
@@ -6690,6 +6713,7 @@ gx.html = (function ($) {
 /* END OF FILE - ..\js\gxhtml.js - */
 /* START OF FILE - ..\GenCommon\js\util\observable.js - */
 gx.util.Observable = function(){
+	var observerKeys = {};
 	return {
 		observers: [],
 		initialObservers: [],
@@ -6700,14 +6724,18 @@ gx.util.Observable = function(){
 		
 		addObserverSync: function( evtName, obj, func, cfg) {
 			cfg = cfg || {};
-			if (cfg.unique === false || this.indexOf( evtName, obj, func) < 0)
-			{
-				this.observers.push({
+			if (cfg.unique === false || this.indexOf(evtName, obj, func) < 0) {
+				var notifyObj = {
 					e:evtName, 
 					o:obj, 
 					f:func, 
 					cfg: cfg
-				});
+				};
+				if (cfg && cfg.observerKey) {
+					observerKeys[cfg.observerKey] = observerKeys[cfg.observerKey] || [];
+					observerKeys[cfg.observerKey].push(notifyObj);
+				}
+				this.observers.push(notifyObj);
 				if (cfg.doNotDelete === true) {
 					this.initialObservers.push({
 						e:evtName, 
@@ -6719,6 +6747,13 @@ gx.util.Observable = function(){
 			}
 		},
 		
+		deleteObserverByKey: function (key) {
+			if (!observerKeys[key]) return;
+			$.each(observerKeys[key], function (i, notifyObj) {
+				gx.fx.obs.deleteObserver(notifyObj.e, notifyObj.o, notifyObj.f);
+			});
+			observerKeys[key] = [];
+		},
 		deleteObserver: function( evtName, obj, func) {
 			new gx.thread.Mutex( this, this.deleteObserverSync, [evtName, obj, func]);
 		},
@@ -6842,6 +6877,20 @@ gx.fx = {
 	},
 
 	firesuggest: function (context, provider, typeahead, suggestParms) {
+		if(gx.evt.isComposing){
+			if(!gx.evt.firesuggestdelayed){
+				gx.evt.firesuggestdelayed=true;
+				gx.evt.doAfterComposing(function(){ 
+					gx.fx.firesuggestimpl(context,provider,typeahead,suggestParms) 
+				},this)
+			}
+		} else {
+			gx.fx.firesuggestimpl(context,provider,typeahead,suggestParms)
+		}
+	},
+
+	firesuggestimpl: function (context, provider, typeahead, suggestParms) {
+		gx.evt.firesuggestdelayed=false;
 		this.updateSuggestParms(suggestParms);
 		if (context.textbox.value) {
 			return provider.requestSuggestions(context.sdtParms, function () {
@@ -8484,7 +8533,7 @@ gx.date = (function () {
 			xdate.assign_date(date);
 			var mill = date.getMilliseconds();
 			date.setMilliseconds(mill + inc);
-			return xdate.getString((this.isANSIDate(sdate) ? 'Y4MD' : undefined));
+			return xdate.getString((this.isANSIDate(sdate) ? 'Y4MD' : ((gx.dateFormat.indexOf("Y4") == -1) ? gx.dateFormat.replace('Y', 'Y4') : gx.dateFormat)));
 		},
 
 		secDiff: function (date1, date2) {
@@ -10216,6 +10265,7 @@ gx.grid = (function ($) {
 					baseGridImpl = this.grid,
 					newGridImpl = gridControl.grid;
 					
+				gridControl.emptyText = this.emptyText;
 				newGridImpl.ControlLvl = this.gridLvl;
 				newGridImpl.GridId = this.gridId;
 				newGridImpl.GridRow = pRowId;
@@ -12702,12 +12752,16 @@ gx.grid = (function ($) {
 				return this.gxComponentContext + this.containerName + "Tbl";
 			},
 
+				this.disposeTemplateObject = function () {
+					gx.fx.obs.deleteObserverByKey(this.getContainerControl().id);
+				},
 			this.applyTemplateObject = function ( opts) {
 				var opts = opts || {};
 				var excludedSelector = (this.isFreestyle && !this.parentObject.IsComponent ? "." + gx.GxObject.WEBCOMPONENT_CLASS_NAME + " *" : "");
 				gx.$.extend( opts, {
 					selector:"#" + this.getContainerControl().id, 
-					excluded: excludedSelector
+						excluded: excludedSelector,
+						observerKey: this.getContainerControl().id
 				});
 				return gx.plugdesign.applyTemplateObject(opts);
 			};
@@ -14047,6 +14101,7 @@ gx.grid.impl = (function ($) {
 			var tableId = this.ownerGrid.getGridInnerTableId(),
 				container = this.container;
 
+			this.ownerGrid.disposeTemplateObject();
 			this.beforeRender();
 
 			if (this.ownerGrid.additiveResponse) {
@@ -14498,20 +14553,29 @@ gx.grid.impl = (function ($) {
 		};
 
 		this.defineEventHandlers = function () {
+			var opts = {}
+			var gxObject;
+			if (this.ownerGrid && this.ownerGrid.parentObject && this.ownerGrid.parentObject.IsComponent) {
+				gxObject = this.ownerGrid.parentObject;
+			}
+			if (gxObject) {
+				var Cmp = gx.pO.getWebComponent(gxObject.CmpContext);
+				opts.hookKey = Cmp && Cmp.getContainer() && Cmp.getContainer().id;
+			}
 			if (!this.gxIsFreestyle){
-				gx.evt.attach(this.container, 'mouseover', this.mouseOverHandler, this);
-				gx.evt.attach(this.container, 'mouseout', this.mouseOutHandler, this);
+				gx.evt.attach(this.container, 'mouseover', this.mouseOverHandler, this, opts);
+				gx.evt.attach(this.container, 'mouseout', this.mouseOutHandler, this, opts);
 			}				
 
 			if (this.isGxTrn() && (this.ownerGrid.deleteMethod == gx.grid.deleteMethods.menu))
-				gx.evt.attach(this.container, 'contextmenu', this.contextMenuHandler, this);
+				gx.evt.attach(this.container, 'contextmenu', this.contextMenuHandler, this, opts);
 
-			gx.evt.attach(this.container, 'mousedown', this.mouseDownHandler.closure(this, [], true), this);
+			gx.evt.attach(this.container, 'mousedown', this.mouseDownHandler.closure(this, [], true), this, opts);
 			
-			gx.evt.attach(this.container, 'click', this.clickHandler, this);
+			gx.evt.attach(this.container, 'click', this.clickHandler, this, opts);
 
 			if (this.isGxTrn())
-				gx.evt.attach(this.container, 'keydown', this.keyDownHandler, this);
+				gx.evt.attach(this.container, 'keydown', this.keyDownHandler, this, opts);
 		};
 
 		this.isGridRow = function (el) {
@@ -14703,13 +14767,19 @@ gx.grid.impl = (function ($) {
 			if (this.gxOnLineActivate && !this.ownerGrid.isLoading) {
 				gx.csv.instanciatedRowGrid = this.ownerGrid;
 				if (!skipEventFire) {
-					var gxO = this.parentGxObject;
-					if (gxO.fullAjax) {
-						var isServerEvent = gxO.isServerEvent(this.gxOnLineActivate);						
-						gx.evt.dispatcher.dispatch(gxO.getServerEventName(this.gxOnLineActivate), gxO, this.ownerGrid.gridId, row.gxId, isServerEvent);
-					}
-					else
-						gxO[this.gxOnLineActivate].call(gxO, row.gxId);
+					var gxO = this.parentGxObject,
+						fnc = function() {
+					gx.evt.doAfterProcessing( function() {
+						if (gxO.fullAjax)	{
+							var isServerEvent = gxO.isServerEvent(this.gxOnLineActivate);						
+							gx.evt.dispatcher.dispatch(gxO.getServerEventName(this.gxOnLineActivate), gxO, this.ownerGrid.gridId, row.gxId, isServerEvent);
+						}
+						else {
+							gxO[this.gxOnLineActivate].call(gxO, row.gxId);
+						}
+						}, this);
+					};
+					gx.lang.doCallTimeout( fnc, this, [], 100);						
 				}
 			}
 		}
@@ -16980,7 +17050,7 @@ gx.fn = (function($) {
 						}						
 					} else {
 						if ((gx.dom.isEditControl(Control) || Control.type === "textarea" || Control.type === "file" || Control.tagName === "SELECT") && Control.type !== "password") {
-							var spanVal = this.getRONode(Control.id, pValueFalse);
+							var spanVal = this.getRONode(Control.id, pValueFalse, vStruct.fmt);
 							if (gx.fn.isVisible(Control, 0) || (spanVal && gx.fn.isVisible(spanVal, 0))) {
 								if (spanVal) this.setVisible(spanVal, pValueFalse);
 								this.setEnabledProperty(Control, !pValueFalse);//1.SetEnabled. Debe ejecutarse antes de la setVisible(Control, !pValueFalse), caso textarea multiline que pasa a disabled en el cliente.
@@ -17231,6 +17301,14 @@ gx.fn = (function($) {
 		},
 
 		setEnabled: function (el, Value) {
+			var fncSetROAtt = function( el, Value) {
+					if (gx.lang.booleanValue(Value)) {
+						el.removeAttribute('data-gx-readonly');					
+					}
+					else {
+						el.setAttribute('data-gx-readonly', '');
+					}
+			};
 			if (!gx.lang.booleanValue(Value)) {
 				gx.dom.addClass(el, "gx-disabled");
 			}
@@ -17247,6 +17325,7 @@ gx.fn = (function($) {
 					if (el.type == 'radio') {
 						var $parent = $(el).parent().closest('.gx-radio-button');
 						parent = $parent[0];
+						fncSetROAtt( el, Value);
 					}
 				} catch (e) { }
 				if (gx.lang.booleanValue(Value)) {
@@ -17279,6 +17358,8 @@ gx.fn = (function($) {
 						}
 					}
 				}
+			} else {
+				fncSetROAtt( el, Value);
 			}
 		},
 
@@ -17314,7 +17395,12 @@ gx.fn = (function($) {
 			return (gx.O.DSO || cssClass === '' || cssClass.indexOf('Readonly') === 0) ? cssClass : 'Readonly' + cssClass;
 		},
 		
-		getRONode: function (id, create) {
+		getRONode: function (id, create, fmt) {
+			var fmt = fmt === undefined ? gx.html.controls.formats.TEXT : fmt;			
+			if (fmt === gx.html.controls.formats.RAW_HTML || fmt === gx.html.controls.formats.HTML)			
+			{
+				return null;
+			}
 			if (gx.lang.emptyObject(id))
 				return null;
 			var el = gx.dom.byId(id);
@@ -17326,9 +17412,7 @@ gx.fn = (function($) {
 				return null;
 			var span = document.createElement('SPAN')
 			span.setAttribute('id', roelid);
-			if (gx.O.DSO) {
-				span.setAttribute('data-gx-readonly', '');
-			}
+			span.setAttribute('data-gx-readonly', '');
 			this.setVisible(span, false);
 			span.className = gx.fn.prefixROClass( el.className);
 			var controlValue;
@@ -17789,8 +17873,6 @@ gx.fn = (function($) {
 				gridId = (vStruct && vStruct.grid)? vStruct.grid: 0;
 			
 			var afterValidationFn = (function (forced) {	
-				if (!forced && gx.csv.validatingGrid !== gridId)
-					return;
 				Control = this.restoreLostCtrlOnGridRefresh(gridIdx, Control, checked);
 				gx.fn.setControlOldValue(Control, Control.value);
 				Control.checked = checked;
@@ -17805,7 +17887,7 @@ gx.fn = (function($) {
 				}
 			}).closure(this);
 
-			if (gx.pO.supportAjaxEvents) {
+			if (gridId && gx.pO.supportAjaxEvents) {
 				gx.fx.obs.addObserver('gx.onaftervalidate', this, function( gxEvtKind) { if(gxEvtKind !== gx.evt.types.VALUECHANGED) afterValidationFn();}, { single: true });
 			}
 
@@ -18035,6 +18117,10 @@ gx.fn = (function($) {
 		initOld: function (Ctrl) {
 			if (gx.oldValues[Ctrl.id] == undefined)
 				gx.oldValues[Ctrl.id] = Ctrl.value;
+		},
+
+		hasUnicode: function(value) {
+			return /[^\u0000-\u00ff]/.test(value);
 		},
 
 		setFocusOnError: function (ControlId) {
@@ -18708,7 +18794,7 @@ gx.fn = (function($) {
 			catch (e) {
 				gx.dbg.logEx(e, 'gxfrmutl.js', 'removeGridRow');
 			}
-			gx.csv.validGridRow(GridId, CurrentRow);
+			gx.evt.doAfterValidating(function(){gx.csv.validGridRow(GridId, CurrentRow);});			
 		},
 
 		controlFiresEvent: function(vStruct) {
@@ -19428,6 +19514,10 @@ gx.fn = (function($) {
 									Cmp = gx.dom.byId(Component);
 								}
 								if (!gx.lang.emptyObject(Cmp)) {
+                  if(Cmp.id){
+										gx.fx.obs.deleteObserverByKey(Cmp.id);
+										gx.evt.removeHookByKey(Cmp.id);
+                  }
 									gx.html.setInnerHtml(Cmp, cmpHtml, false, isPostback);
 									var cmpType = gx.fn.cmpContextFromCtrl(Component);
 									var cmpName = cleanComponentName(gx.fn.getHidden(cmpType + '_CMPPGM'));
@@ -20481,13 +20571,13 @@ gx.uc = (function ($) {
 								control = ctrlName + "_" + gRow;
 							}
 							if (member) {
-								UC.ParentObject[varName][member] = gx.fn.getControlValue(control);
+								UC.ParentObject[varName][member] = gx.fn.getControlValue(control)[member];
 							}
 							else {
 								UC.ParentObject[varName] = gx.fn.getControlValue(control);
 							}
 						}
-						var value = UC.ParentObject[varName];
+						var value = (member) ? UC.ParentObject[varName][member]: UC.ParentObject[varName];
 						if (UC.useGxDateForBindings) {
 							var varControlMap = gx.fn.getVarControlMapForVar(varName);
 							if (varControlMap.type === "date" || varControlMap.type === "dtime") {
@@ -21369,6 +21459,9 @@ gx.spa = (function ($) {
 		},
 
 		handlePopState: function (event) {
+			if (!event.state){
+				return;
+			}
 			/* jshint unused:vars */
 			var state = event.state,
 				placeholder = this.getContentPlaceholder();
@@ -23270,7 +23363,13 @@ gx.ui.controls = (function ($) {
 														'{{> navbarDropDowntemplate}}' + 
 													'{{/Children.length}}' + 
 													'{{^Children.length}}' + 
-														'<span class="gx-navbar-textblock {{Class}} navbar-text" data-gx-tpl-applied-navbar-textblock-text title="{{TooltipText}}">{{Caption}}</a>' + 
+														'{{#EventName}}' +
+															'<a href="#" data-event-name="{{EventName}}" data-key="{{_$Key}}" class="gx-navbar-textblock {{Class}}" data-gx-tpl-applied-navbar-textblock-link title="{{TooltipText}}">{{Caption}}</a>' +
+														'{{/EventName}}' +
+														'{{^EventName}}' +
+															'<span class="gx-navbar-textblock {{Class}} navbar-text" data-gx-tpl-applied-navbar-textblock-text title="{{TooltipText}}">{{Caption}}</span>' +
+														'{{/EventName}}' +
+														'</span>' +
 													'{{/Children.length}}' + 
 												'{{/Link}}' + 
 												'</li>';
@@ -23292,17 +23391,27 @@ gx.ui.controls = (function ($) {
 														'</div>' + 
 													'{{/Children.length}}' + 
 													'{{^Children.length}}' + 
-														'<span class="{{Class}}" title="{{TooltipText}}">{{Caption}}</span>' + 
+														'<span class="{{Class}}" title="{{TooltipText}}">' +
+															'{{#EventName}}' +
+																'<a href="#" data-event-name="{{EventName}}" data-key="{{_$Key}}">{{Caption}}</a>' +
+															'{{/EventName}}' +
+															'{{^EventName}}' +
+																'{{Caption}}' +
+															'{{/EventName}}' +
+														'</span>' +
 													'{{/Children.length}}' + 
 												'{{/Link}}' +
 											'{{/Children}}';
 					
 					return function ($) {
-						this.preProcessItems = function (pItems) {
+						this.preProcessItems = function (pItems, parentKey) {
 							var i, len;
-							for (i=0, len = pItems.length; i<len; i++) {
+							for (i = 0, len = pItems.length; i < len; i++) {
+								var key = (parentKey ? parentKey + " " : "") + i.toString();
+
+								pItems[i]._$Key = key;
 								if (pItems[i].Children) {
-									this.preProcessItems(pItems[i].Children);
+									this.preProcessItems(pItems[i].Children, key);
 								}
 								else {
 									pItems[i].Children = [];
@@ -23319,6 +23428,28 @@ gx.ui.controls = (function ($) {
 							this.items = pItems || [];
 						};
 
+						this.getItemPressed = function () {
+							return this.itemPressed || {};
+						};
+
+						this.setItemPressed = function (item) {
+							this.itemPressed = item;
+						};
+
+						this.assignItemPressed = function (key) {
+							var path = key.split(" "),
+								items = this.getItems(),
+								item,
+								i;
+
+							for (i = 0; i < path.length; i++) {
+								var index = parseInt(path[i], 10);
+
+								item = item ? item.Children[index] : items[index];
+							}
+							this.setItemPressed(item);
+						}
+						
 						this.getType = (function (me) {
 							var actionGroupType;
 							return function () {
@@ -23379,14 +23510,27 @@ gx.ui.controls = (function ($) {
 						};
 
 						this.show = function() {
-							var type = this.getType(),
-								itemsToRender = gx.lang.isArray(this.items) ? this.items : [this.items];
+							var containerCtrl = this.getContainerControl();
+							
+							if (containerCtrl) {
+								var type = this.getType(),
+									itemsToRender = gx.lang.isArray(this.items) ? this.items : [this.items],
+									fireEventItems = [],
+									i;
 
-							if (type == "menu") {
-								this.renderMenu(itemsToRender);
-							}
-							else if (type == "toolbar") {
-								this.renderToolbar(itemsToRender);
+								if (type == "menu") {
+									this.renderMenu(itemsToRender);
+									fireEventItems = document.querySelectorAll("[data-gx-dynitem-source='" + this.ContainerName + "'] a[data-event-name]");
+
+								}
+								else if (type == "toolbar") {
+									this.renderToolbar(itemsToRender);
+									fireEventItems = this.getContainerControl().querySelectorAll('a[data-event-name]');
+								}
+								
+								for (i = 0; i < fireEventItems.length; i++) {
+									gx.evt.attach(fireEventItems[i], "click", this.fireEvent, this);
+								}
 							}
 						};
 
@@ -23401,6 +23545,22 @@ gx.ui.controls = (function ($) {
 							}
 							else if (type == "toolbar") {
 								$(this.getContainerControl()).html("");
+							}
+						};
+						
+						this.fireEvent = function (eventInfo) {
+							eventInfo.preventDefault();
+
+							var dataset = eventInfo.currentTarget.dataset,
+								gxO = this.ParentObject,
+								friendlyEventName = gxO.IsMasterPage ? dataset.eventName.toUpperCase() + "_MPAGE" : "'" + dataset.eventName.toUpperCase() + "'",
+								eventName = gxO.getClientEventName(friendlyEventName);
+
+							if (eventName) {
+								this.assignItemPressed(dataset.key);
+								this.execC2VFunctions();
+								
+								gx.evt.dispatcher.dispatch(gxO.getServerEventName(eventName), gxO, 0, 0, gxO.isServerEvent(eventName), undefined, undefined, true);
 							}
 						};
 					};

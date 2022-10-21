@@ -80,6 +80,7 @@ namespace GeneXus.Programs {
          state.Add("gxTpr_Actividadnombre_Z");
          state.Add("gxTpr_Actividadavance_Z");
          state.Add("gxTpr_Actividadestado_Z");
+         state.Add("gxTpr_Actividadpaso_Z");
          return state ;
       }
 
@@ -93,6 +94,7 @@ namespace GeneXus.Programs {
          gxTv_SdtActividades_Actividadnombre = sdt.gxTv_SdtActividades_Actividadnombre ;
          gxTv_SdtActividades_Actividadavance = sdt.gxTv_SdtActividades_Actividadavance ;
          gxTv_SdtActividades_Actividadestado = sdt.gxTv_SdtActividades_Actividadestado ;
+         gxTv_SdtActividades_Actividadpaso = sdt.gxTv_SdtActividades_Actividadpaso ;
          gxTv_SdtActividades_Mode = sdt.gxTv_SdtActividades_Mode ;
          gxTv_SdtActividades_Initialized = sdt.gxTv_SdtActividades_Initialized ;
          gxTv_SdtActividades_Tableroid_Z = sdt.gxTv_SdtActividades_Tableroid_Z ;
@@ -101,6 +103,7 @@ namespace GeneXus.Programs {
          gxTv_SdtActividades_Actividadnombre_Z = sdt.gxTv_SdtActividades_Actividadnombre_Z ;
          gxTv_SdtActividades_Actividadavance_Z = sdt.gxTv_SdtActividades_Actividadavance_Z ;
          gxTv_SdtActividades_Actividadestado_Z = sdt.gxTv_SdtActividades_Actividadestado_Z ;
+         gxTv_SdtActividades_Actividadpaso_Z = sdt.gxTv_SdtActividades_Actividadpaso_Z ;
          return  ;
       }
 
@@ -125,6 +128,7 @@ namespace GeneXus.Programs {
          AddObjectProperty("ActividadNombre", gxTv_SdtActividades_Actividadnombre, false, includeNonInitialized);
          AddObjectProperty("ActividadAvance", gxTv_SdtActividades_Actividadavance, false, includeNonInitialized);
          AddObjectProperty("ActividadEstado", gxTv_SdtActividades_Actividadestado, false, includeNonInitialized);
+         AddObjectProperty("ActividadPaso", gxTv_SdtActividades_Actividadpaso, false, includeNonInitialized);
          if ( includeState )
          {
             AddObjectProperty("Mode", gxTv_SdtActividades_Mode, false, includeNonInitialized);
@@ -135,6 +139,7 @@ namespace GeneXus.Programs {
             AddObjectProperty("ActividadNombre_Z", gxTv_SdtActividades_Actividadnombre_Z, false, includeNonInitialized);
             AddObjectProperty("ActividadAvance_Z", gxTv_SdtActividades_Actividadavance_Z, false, includeNonInitialized);
             AddObjectProperty("ActividadEstado_Z", gxTv_SdtActividades_Actividadestado_Z, false, includeNonInitialized);
+            AddObjectProperty("ActividadPaso_Z", gxTv_SdtActividades_Actividadpaso_Z, false, includeNonInitialized);
          }
          return  ;
       }
@@ -171,6 +176,11 @@ namespace GeneXus.Programs {
             gxTv_SdtActividades_N = 0;
             gxTv_SdtActividades_Actividadestado = sdt.gxTv_SdtActividades_Actividadestado ;
          }
+         if ( sdt.IsDirty("ActividadPaso") )
+         {
+            gxTv_SdtActividades_N = 0;
+            gxTv_SdtActividades_Actividadpaso = sdt.gxTv_SdtActividades_Actividadpaso ;
+         }
          return  ;
       }
 
@@ -193,6 +203,7 @@ namespace GeneXus.Programs {
                this.gxTv_SdtActividades_Actividadnombre_Z_SetNull( );
                this.gxTv_SdtActividades_Actividadavance_Z_SetNull( );
                this.gxTv_SdtActividades_Actividadestado_Z_SetNull( );
+               this.gxTv_SdtActividades_Actividadpaso_Z_SetNull( );
             }
             gxTv_SdtActividades_Tableroid = value;
             SetDirty("Tableroid");
@@ -219,6 +230,7 @@ namespace GeneXus.Programs {
                this.gxTv_SdtActividades_Actividadnombre_Z_SetNull( );
                this.gxTv_SdtActividades_Actividadavance_Z_SetNull( );
                this.gxTv_SdtActividades_Actividadestado_Z_SetNull( );
+               this.gxTv_SdtActividades_Actividadpaso_Z_SetNull( );
             }
             gxTv_SdtActividades_Tareaid = value;
             SetDirty("Tareaid");
@@ -245,6 +257,7 @@ namespace GeneXus.Programs {
                this.gxTv_SdtActividades_Actividadnombre_Z_SetNull( );
                this.gxTv_SdtActividades_Actividadavance_Z_SetNull( );
                this.gxTv_SdtActividades_Actividadestado_Z_SetNull( );
+               this.gxTv_SdtActividades_Actividadpaso_Z_SetNull( );
             }
             gxTv_SdtActividades_Actividadid = value;
             SetDirty("Actividadid");
@@ -286,7 +299,7 @@ namespace GeneXus.Programs {
 
       [  SoapElement( ElementName = "ActividadEstado" )]
       [  XmlElement( ElementName = "ActividadEstado"   )]
-      public short gxTpr_Actividadestado
+      public bool gxTpr_Actividadestado
       {
          get {
             return gxTv_SdtActividades_Actividadestado ;
@@ -296,6 +309,22 @@ namespace GeneXus.Programs {
             gxTv_SdtActividades_N = 0;
             gxTv_SdtActividades_Actividadestado = value;
             SetDirty("Actividadestado");
+         }
+
+      }
+
+      [  SoapElement( ElementName = "ActividadPaso" )]
+      [  XmlElement( ElementName = "ActividadPaso"   )]
+      public short gxTpr_Actividadpaso
+      {
+         get {
+            return gxTv_SdtActividades_Actividadpaso ;
+         }
+
+         set {
+            gxTv_SdtActividades_N = 0;
+            gxTv_SdtActividades_Actividadpaso = value;
+            SetDirty("Actividadpaso");
          }
 
       }
@@ -319,6 +348,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Mode_SetNull( )
       {
          gxTv_SdtActividades_Mode = "";
+         SetDirty("Mode");
          return  ;
       }
 
@@ -346,6 +376,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Initialized_SetNull( )
       {
          gxTv_SdtActividades_Initialized = 0;
+         SetDirty("Initialized");
          return  ;
       }
 
@@ -373,6 +404,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Tableroid_Z_SetNull( )
       {
          gxTv_SdtActividades_Tableroid_Z = 0;
+         SetDirty("Tableroid_Z");
          return  ;
       }
 
@@ -400,6 +432,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Tareaid_Z_SetNull( )
       {
          gxTv_SdtActividades_Tareaid_Z = 0;
+         SetDirty("Tareaid_Z");
          return  ;
       }
 
@@ -427,6 +460,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Actividadid_Z_SetNull( )
       {
          gxTv_SdtActividades_Actividadid_Z = 0;
+         SetDirty("Actividadid_Z");
          return  ;
       }
 
@@ -454,6 +488,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Actividadnombre_Z_SetNull( )
       {
          gxTv_SdtActividades_Actividadnombre_Z = "";
+         SetDirty("Actividadnombre_Z");
          return  ;
       }
 
@@ -481,6 +516,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtActividades_Actividadavance_Z_SetNull( )
       {
          gxTv_SdtActividades_Actividadavance_Z = 0;
+         SetDirty("Actividadavance_Z");
          return  ;
       }
 
@@ -491,7 +527,7 @@ namespace GeneXus.Programs {
 
       [  SoapElement( ElementName = "ActividadEstado_Z" )]
       [  XmlElement( ElementName = "ActividadEstado_Z"   )]
-      public short gxTpr_Actividadestado_Z
+      public bool gxTpr_Actividadestado_Z
       {
          get {
             return gxTv_SdtActividades_Actividadestado_Z ;
@@ -507,11 +543,40 @@ namespace GeneXus.Programs {
 
       public void gxTv_SdtActividades_Actividadestado_Z_SetNull( )
       {
-         gxTv_SdtActividades_Actividadestado_Z = 0;
+         gxTv_SdtActividades_Actividadestado_Z = false;
+         SetDirty("Actividadestado_Z");
          return  ;
       }
 
       public bool gxTv_SdtActividades_Actividadestado_Z_IsNull( )
+      {
+         return false ;
+      }
+
+      [  SoapElement( ElementName = "ActividadPaso_Z" )]
+      [  XmlElement( ElementName = "ActividadPaso_Z"   )]
+      public short gxTpr_Actividadpaso_Z
+      {
+         get {
+            return gxTv_SdtActividades_Actividadpaso_Z ;
+         }
+
+         set {
+            gxTv_SdtActividades_N = 0;
+            gxTv_SdtActividades_Actividadpaso_Z = value;
+            SetDirty("Actividadpaso_Z");
+         }
+
+      }
+
+      public void gxTv_SdtActividades_Actividadpaso_Z_SetNull( )
+      {
+         gxTv_SdtActividades_Actividadpaso_Z = 0;
+         SetDirty("Actividadpaso_Z");
+         return  ;
+      }
+
+      public bool gxTv_SdtActividades_Actividadpaso_Z_IsNull( )
       {
          return false ;
       }
@@ -541,16 +606,18 @@ namespace GeneXus.Programs {
       private short gxTv_SdtActividades_Tareaid ;
       private short gxTv_SdtActividades_Actividadid ;
       private short gxTv_SdtActividades_Actividadavance ;
-      private short gxTv_SdtActividades_Actividadestado ;
+      private short gxTv_SdtActividades_Actividadpaso ;
       private short gxTv_SdtActividades_Initialized ;
       private short gxTv_SdtActividades_Tableroid_Z ;
       private short gxTv_SdtActividades_Tareaid_Z ;
       private short gxTv_SdtActividades_Actividadid_Z ;
       private short gxTv_SdtActividades_Actividadavance_Z ;
-      private short gxTv_SdtActividades_Actividadestado_Z ;
+      private short gxTv_SdtActividades_Actividadpaso_Z ;
       private string gxTv_SdtActividades_Actividadnombre ;
       private string gxTv_SdtActividades_Mode ;
       private string gxTv_SdtActividades_Actividadnombre_Z ;
+      private bool gxTv_SdtActividades_Actividadestado ;
+      private bool gxTv_SdtActividades_Actividadestado_Z ;
    }
 
    [DataContract(Name = @"Actividades", Namespace = "ProyectoUMG")]
@@ -636,14 +703,28 @@ namespace GeneXus.Programs {
 
       [DataMember( Name = "ActividadEstado" , Order = 5 )]
       [GxSeudo()]
-      public Nullable<short> gxTpr_Actividadestado
+      public bool gxTpr_Actividadestado
       {
          get {
             return sdt.gxTpr_Actividadestado ;
          }
 
          set {
-            sdt.gxTpr_Actividadestado = (short)(value.HasValue ? value.Value : 0);
+            sdt.gxTpr_Actividadestado = value;
+         }
+
+      }
+
+      [DataMember( Name = "ActividadPaso" , Order = 6 )]
+      [GxSeudo()]
+      public Nullable<short> gxTpr_Actividadpaso
+      {
+         get {
+            return sdt.gxTpr_Actividadpaso ;
+         }
+
+         set {
+            sdt.gxTpr_Actividadpaso = (short)(value.HasValue ? value.Value : 0);
          }
 
       }
@@ -669,7 +750,7 @@ namespace GeneXus.Programs {
          }
       }
 
-      [DataMember( Name = "gx_md5_hash", Order = 6 )]
+      [DataMember( Name = "gx_md5_hash", Order = 7 )]
       public string Hash
       {
          get {

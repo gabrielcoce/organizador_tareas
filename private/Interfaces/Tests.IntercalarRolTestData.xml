@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CallableObject guid="fbd01417-d84b-4efa-a225-8c0bccd6c064" name="Tests.IntercalarRolTestData" description="Intercalar Rol Test Data" namespace="GeneXus.Programs">
+  <Signature name="parm">
+    <Parameter name="ReturnValue" accessor="out" collection="true">
+      <Field name="IntercalarRolTestSDT" description="Intercalar Rol Test SDT">
+        <Fields>
+          <Field name="TestCaseId" description="Test case identifier">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>VarChar</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>40</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="TableroId" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="ExpectedTableroId" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="MsgTableroId" description="Message to show for assertion over field TableroId">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>VarChar</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>100</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="ParticipanteTableroId" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="ExpectedParticipanteTableroId" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="MsgParticipanteTableroId" description="Message to show for assertion over field ParticipanteTableroId">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>VarChar</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>100</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="rol" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="Expectedrol" description="">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>Numeric</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>4</Value>
+              </Property>
+              <Property>
+                <Name>Picture</Name>
+                <Value>ZZZ9</Value>
+              </Property>
+            </Properties>
+          </Field>
+          <Field name="Msgrol" description="Message to show for assertion over field rol">
+            <Properties>
+              <Property>
+                <Name>Type</Name>
+                <Value>VarChar</Value>
+              </Property>
+              <Property>
+                <Name>Length</Name>
+                <Value>100</Value>
+              </Property>
+            </Properties>
+          </Field>
+        </Fields>
+      </Field>
+    </Parameter>
+  </Signature>
+</CallableObject>

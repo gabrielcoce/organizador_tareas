@@ -68,7 +68,7 @@ namespace GeneXus.Programs {
          objgettareaid.AV9TareaId = 0 ;
          objgettareaid.context.SetSubmitInitialConfig(context);
          objgettareaid.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objgettareaid);
+         Submit( executePrivateCatch,objgettareaid);
          aP0_TableroId=this.A9TableroId;
          aP1_TareaId=this.AV9TareaId;
       }

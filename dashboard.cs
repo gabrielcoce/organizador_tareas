@@ -132,7 +132,7 @@ namespace GeneXus.Programs {
          INITWEB( ) ;
          if ( ! isAjaxCallMode( ) )
          {
-            MasterPageObj = (GXMasterPage) ClassLoader.GetInstance("rwdmasterpage", "GeneXus.Programs.rwdmasterpage", new Object[] {new GxContext( context.handle, context.DataStores, context.HttpContext)});
+            MasterPageObj = (GXMasterPage) ClassLoader.GetInstance("masterpage", "GeneXus.Programs.masterpage", new Object[] {new GxContext( context.handle, context.DataStores, context.HttpContext)});
             MasterPageObj.setDataArea(this,false);
             ValidateSpaRequest();
             MasterPageObj.webExecute();
@@ -202,11 +202,11 @@ namespace GeneXus.Programs {
          }
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?20229820162067", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
@@ -246,7 +246,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
       }
 
       protected void SendCloseFormHiddens( )
@@ -404,7 +404,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Dashboard", 0) ;
          }
@@ -538,11 +538,7 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
-            {
-               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
-            }
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -653,7 +649,7 @@ namespace GeneXus.Programs {
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
          }
          else
          {
@@ -768,7 +764,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20229820162070", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161311496", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -784,7 +780,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("dashboard.js", "?20229820162071", false, true);
+         context.AddJavascriptSource("dashboard.js", "?202210161311497", false, true);
          /* End function include_jscripts */
       }
 
@@ -896,7 +892,6 @@ namespace GeneXus.Programs {
       private short wbStart ;
       private short nCmpId ;
       private short nDonePA ;
-      private short gxcookieaux ;
       private short AV9Count ;
       private short A17PropietarioId ;
       private short nGXWrapped ;

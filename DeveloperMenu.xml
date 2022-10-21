@@ -64,6 +64,12 @@
       <ObjLink>invitados.aspx</ObjLink>
    </Object>
    <Object>
+      <ObjCls>0</ObjCls>
+      <ObjName>Correo</ObjName>
+      <ObjDesc>Correo</ObjDesc>
+      <ObjLink>correo.aspx</ObjLink>
+   </Object>
+   <Object>
       <ObjCls>13</ObjCls>
       <ObjName>Ingreso</ObjName>
       <ObjDesc>Ingreso</ObjDesc>
@@ -86,5 +92,41 @@
       <ObjName>AnadirTablero</ObjName>
       <ObjDesc>Anadir Tablero</ObjDesc>
       <ObjLink>anadirtablero.aspx</ObjLink>
+   </Object>
+   <Object>
+      <ObjCls>13</ObjCls>
+      <ObjName>Inicio</ObjName>
+      <ObjDesc>Inicio</ObjDesc>
+      <ObjLink>inicio.aspx</ObjLink>
+   </Object>
+   <Object>
+      <ObjCls>13</ObjCls>
+      <ObjName>CentroPruebas</ObjName>
+      <ObjDesc>Centro Pruebas</ObjDesc>
+      <ObjLink>centropruebas.aspx</ObjLink>
+   </Object>
+   <Object>
+      <ObjCls>13</ObjCls>
+      <ObjName>PerfilUsuario</ObjName>
+      <ObjDesc>Perfil Usuario</ObjDesc>
+      <ObjLink>perfilusuario.aspx</ObjLink>
+   </Object>
+   <Object>
+      <ObjCls>13</ObjCls>
+      <ObjName>PaginaInicio</ObjName>
+      <ObjDesc>Pagina Inicio</ObjDesc>
+      <ObjLink>paginainicio.aspx</ObjLink>
+   </Object>
+   <Object>
+      <ObjCls>13</ObjCls>
+      <ObjName>DashboardInvitado</ObjName>
+      <ObjDesc>Dashboard Invitado</ObjDesc>
+      <ObjLink>dashboardinvitado.aspx</ObjLink>
+   </Object>
+   <Object>
+      <ObjCls>13</ObjCls>
+      <ObjName>Pruebaenvio</ObjName>
+      <ObjDesc>Pruebaenvio</ObjDesc>
+      <ObjLink>pruebaenvio.aspx</ObjLink>
    </Object>
 </Objects>

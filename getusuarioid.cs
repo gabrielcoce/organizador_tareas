@@ -63,7 +63,7 @@ namespace GeneXus.Programs {
          objgetusuarioid.AV8UsuarioId = 0 ;
          objgetusuarioid.context.SetSubmitInitialConfig(context);
          objgetusuarioid.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objgetusuarioid);
+         Submit( executePrivateCatch,objgetusuarioid);
          aP0_UsuarioId=this.AV8UsuarioId;
       }
 

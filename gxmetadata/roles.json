@@ -1,0 +1,4 @@
+{
+
+"GxObject":{"ObjectType":"BusinessComponent","Name":"Roles","idConnectivitySupport":"idInherit","Structure":{"Levels":[{"Name":"Roles","ParentLevel":"","LevelName":"Roles","Description":"Roles","Attributes":[{"Name":"RolId","Caption":"Rol Id","default":"0","IsKey":"true","ReadOnly":"false","AttributeType":"int","Description":"Rol Id","Length":"4","Decimals":"0","Signed":"false","AllowDBNulls":"false","InternalName":"RolId","InputPicture":"ZZZ9","Type":"xs:int"},{"Name":"RolNombre","Caption":"Rol Nombre","default":"","IsKey":"false","ReadOnly":"false","AttributeType":"char","Description":"Rol Nombre","Length":"20","Decimals":"0","Signed":"false","AllowDBNulls":"false","InternalName":"RolNombre","DescriptionAtt":"true","InputPicture":"","Type":"xs:string"}]}]},"Relations":{"ManyToOne":{"references":[]}}}
+}

@@ -204,7 +204,7 @@ namespace GeneXus.Programs {
          }
          if ( sdt.IsDirty("ResponsableId") )
          {
-            gxTv_SdtTareas_Responsableid_N = 0;
+            gxTv_SdtTareas_Responsableid_N = (short)(sdt.gxTv_SdtTareas_Responsableid_N);
             gxTv_SdtTareas_N = 0;
             gxTv_SdtTareas_Responsableid = sdt.gxTv_SdtTareas_Responsableid ;
          }
@@ -322,6 +322,7 @@ namespace GeneXus.Programs {
       {
          gxTv_SdtTareas_Responsableid_N = 1;
          gxTv_SdtTareas_Responsableid = 0;
+         SetDirty("Responsableid");
          return  ;
       }
 
@@ -453,6 +454,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Mode_SetNull( )
       {
          gxTv_SdtTareas_Mode = "";
+         SetDirty("Mode");
          return  ;
       }
 
@@ -480,6 +482,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Initialized_SetNull( )
       {
          gxTv_SdtTareas_Initialized = 0;
+         SetDirty("Initialized");
          return  ;
       }
 
@@ -507,6 +510,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Tableroid_Z_SetNull( )
       {
          gxTv_SdtTareas_Tableroid_Z = 0;
+         SetDirty("Tableroid_Z");
          return  ;
       }
 
@@ -534,6 +538,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Tareaid_Z_SetNull( )
       {
          gxTv_SdtTareas_Tareaid_Z = 0;
+         SetDirty("Tareaid_Z");
          return  ;
       }
 
@@ -561,6 +566,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Tareanombre_Z_SetNull( )
       {
          gxTv_SdtTareas_Tareanombre_Z = "";
+         SetDirty("Tareanombre_Z");
          return  ;
       }
 
@@ -588,6 +594,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Responsableid_Z_SetNull( )
       {
          gxTv_SdtTareas_Responsableid_Z = 0;
+         SetDirty("Responsableid_Z");
          return  ;
       }
 
@@ -635,6 +642,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Tareafechainicio_Z_SetNull( )
       {
          gxTv_SdtTareas_Tareafechainicio_Z = (DateTime)(DateTime.MinValue);
+         SetDirty("Tareafechainicio_Z");
          return  ;
       }
 
@@ -682,6 +690,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Tareafechafin_Z_SetNull( )
       {
          gxTv_SdtTareas_Tareafechafin_Z = (DateTime)(DateTime.MinValue);
+         SetDirty("Tareafechafin_Z");
          return  ;
       }
 
@@ -709,6 +718,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Tareaestado_Z_SetNull( )
       {
          gxTv_SdtTareas_Tareaestado_Z = 0;
+         SetDirty("Tareaestado_Z");
          return  ;
       }
 
@@ -736,6 +746,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtTareas_Responsableid_N_SetNull( )
       {
          gxTv_SdtTareas_Responsableid_N = 0;
+         SetDirty("Responsableid_N");
          return  ;
       }
 

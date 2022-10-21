@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gxtest4>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;TestResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Name /&gt;
+  &lt;TestType&gt;Web&lt;/TestType&gt;
+  &lt;Result&gt;WARNING&lt;/Result&gt;
+  &lt;Start xsi:nil="true" /&gt;
+  &lt;End xsi:nil="true" /&gt;
+  &lt;RetriesMade&gt;0&lt;/RetriesMade&gt;
+  &lt;RetriesOnError&gt;0&lt;/RetriesOnError&gt;
+  &lt;ContinueOnError&gt;true&lt;/ContinueOnError&gt;
+  &lt;ErrorMsg /&gt;
+  &lt;ErrorStack /&gt;
+  &lt;ElapsedTime&gt;0&lt;/ElapsedTime&gt;
+  &lt;Browser&gt;Chrome&lt;/Browser&gt;
+  &lt;BrowserVersion /&gt;
+&lt;/TestResult&gt;</gxtest4>

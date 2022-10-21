@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Objects xmlns="qv">
+  <Object name="Tests.AnadirUsuarioColaboradorTestData" id="1" type="DataProvider" xmlns="qv">
+    <DefaultOutput type="OutputTypePivotTable" xmlns="qv" />
+  </Object>
+  <Object name="Tests.IntercalarRolTestData" id="2" type="DataProvider" xmlns="qv">
+    <DefaultOutput type="OutputTypePivotTable" xmlns="qv" />
+  </Object>
+  <Object name="Tests.getNumeroIntegrantesTestData" id="3" type="DataProvider" xmlns="qv">
+    <DefaultOutput type="OutputTypePivotTable" xmlns="qv" />
+  </Object>
+</Objects>

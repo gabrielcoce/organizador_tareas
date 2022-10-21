@@ -108,41 +108,12 @@ namespace GeneXus.Programs {
             }
             else if ( StringUtil.StrCmp(gxfirstwebparm, "gxajaxNewRow_"+"Grid1") == 0 )
             {
-               nRC_GXsfl_64 = (int)(NumberUtil.Val( GetPar( "nRC_GXsfl_64"), "."));
-               nGXsfl_64_idx = (int)(NumberUtil.Val( GetPar( "nGXsfl_64_idx"), "."));
-               sGXsfl_64_idx = GetPar( "sGXsfl_64_idx");
-               setAjaxCallMode();
-               if ( ! IsValidAjaxCall( true) )
-               {
-                  GxWebError = 1;
-                  return  ;
-               }
-               gxnrGrid1_newrow( ) ;
+               gxnrGrid1_newrow_invoke( ) ;
                return  ;
             }
             else if ( StringUtil.StrCmp(gxfirstwebparm, "gxajaxGridRefresh_"+"Grid1") == 0 )
             {
-               subGrid1_Rows = (int)(NumberUtil.Val( GetPar( "subGrid1_Rows"), "."));
-               AV6cTableroId = (short)(NumberUtil.Val( GetPar( "cTableroId"), "."));
-               AV7cParticipanteTableroId = (short)(NumberUtil.Val( GetPar( "cParticipanteTableroId"), "."));
-               AV8cRegistroFecha = context.localUtil.ParseDTimeParm( GetPar( "cRegistroFecha"));
-               AV12cParticipanteRolId = (short)(NumberUtil.Val( GetPar( "cParticipanteRolId"), "."));
-               AV13cParticipanteTableroEstado = StringUtil.StrToBool( GetPar( "cParticipanteTableroEstado"));
-               setAjaxCallMode();
-               if ( ! IsValidAjaxCall( true) )
-               {
-                  GxWebError = 1;
-                  return  ;
-               }
-               gxgrGrid1_refresh( subGrid1_Rows, AV6cTableroId, AV7cParticipanteTableroId, AV8cRegistroFecha, AV12cParticipanteRolId, AV13cParticipanteTableroEstado) ;
-               GxWebStd.gx_hidden_field( context, "ADVANCEDCONTAINER_Class", StringUtil.RTrim( divAdvancedcontainer_Class));
-               GxWebStd.gx_hidden_field( context, "BTNTOGGLE_Class", StringUtil.RTrim( bttBtntoggle_Class));
-               GxWebStd.gx_hidden_field( context, "TABLEROIDFILTERCONTAINER_Class", StringUtil.RTrim( divTableroidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "PARTICIPANTETABLEROIDFILTERCONTAINER_Class", StringUtil.RTrim( divParticipantetableroidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "REGISTROFECHAFILTERCONTAINER_Class", StringUtil.RTrim( divRegistrofechafiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "PARTICIPANTEROLIDFILTERCONTAINER_Class", StringUtil.RTrim( divParticipanterolidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "PARTICIPANTETABLEROESTADOFILTERCONTAINER_Class", StringUtil.RTrim( divParticipantetableroestadofiltercontainer_Class));
-               AddString( context.getJSONResponse( )) ;
+               gxgrGrid1_refresh_invoke( ) ;
                return  ;
             }
             else
@@ -176,6 +147,40 @@ namespace GeneXus.Programs {
          {
             context.PushCurrentUrl();
          }
+      }
+
+      protected void gxnrGrid1_newrow_invoke( )
+      {
+         nRC_GXsfl_64 = (int)(NumberUtil.Val( GetPar( "nRC_GXsfl_64"), "."));
+         nGXsfl_64_idx = (int)(NumberUtil.Val( GetPar( "nGXsfl_64_idx"), "."));
+         sGXsfl_64_idx = GetPar( "sGXsfl_64_idx");
+         setAjaxCallMode();
+         if ( ! IsValidAjaxCall( true) )
+         {
+            GxWebError = 1;
+            return  ;
+         }
+         gxnrGrid1_newrow( ) ;
+         /* End function gxnrGrid1_newrow_invoke */
+      }
+
+      protected void gxgrGrid1_refresh_invoke( )
+      {
+         subGrid1_Rows = (int)(NumberUtil.Val( GetPar( "subGrid1_Rows"), "."));
+         AV6cTableroId = (short)(NumberUtil.Val( GetPar( "cTableroId"), "."));
+         AV7cParticipanteTableroId = (short)(NumberUtil.Val( GetPar( "cParticipanteTableroId"), "."));
+         AV8cRegistroFecha = context.localUtil.ParseDTimeParm( GetPar( "cRegistroFecha"));
+         AV12cParticipanteRolId = (short)(NumberUtil.Val( GetPar( "cParticipanteRolId"), "."));
+         AV13cParticipanteTableroEstado = StringUtil.StrToBool( GetPar( "cParticipanteTableroEstado"));
+         setAjaxCallMode();
+         if ( ! IsValidAjaxCall( true) )
+         {
+            GxWebError = 1;
+            return  ;
+         }
+         gxgrGrid1_refresh( subGrid1_Rows, AV6cTableroId, AV7cParticipanteTableroId, AV8cRegistroFecha, AV12cParticipanteRolId, AV13cParticipanteTableroEstado) ;
+         AddString( context.getJSONResponse( )) ;
+         /* End function gxgrGrid1_refresh_invoke */
       }
 
       public override void webExecute( )
@@ -258,18 +263,18 @@ namespace GeneXus.Programs {
          }
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?20229920475177", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
          }
-         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1940340), false, true);
+         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1848160), false, true);
          context.WriteHtmlText( Form.Headerrawhtml) ;
          context.CloseHtmlHeader();
          if ( context.isSpaRequest( ) )
@@ -601,109 +606,7 @@ namespace GeneXus.Programs {
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "left", "top", "", "", "div");
             /*  Grid Control  */
             Grid1Container.SetWrapped(nGXWrapped);
-            if ( Grid1Container.GetWrapped() == 1 )
-            {
-               context.WriteHtmlText( "<div id=\""+"Grid1Container"+"DivS\" data-gxgridid=\"64\">") ;
-               sStyleString = "";
-               GxWebStd.gx_table_start( context, subGrid1_Internalname, subGrid1_Internalname, "", "PromptGrid", 0, "", "", 1, 2, sStyleString, "", "", 0);
-               /* Subfile titles */
-               context.WriteHtmlText( "<tr") ;
-               context.WriteHtmlTextNl( ">") ;
-               if ( subGrid1_Backcolorstyle == 0 )
-               {
-                  subGrid1_Titlebackstyle = 0;
-                  if ( StringUtil.Len( subGrid1_Class) > 0 )
-                  {
-                     subGrid1_Linesclass = subGrid1_Class+"Title";
-                  }
-               }
-               else
-               {
-                  subGrid1_Titlebackstyle = 1;
-                  if ( subGrid1_Backcolorstyle == 1 )
-                  {
-                     subGrid1_Titlebackcolor = subGrid1_Allbackcolor;
-                     if ( StringUtil.Len( subGrid1_Class) > 0 )
-                     {
-                        subGrid1_Linesclass = subGrid1_Class+"UniformTitle";
-                     }
-                  }
-                  else
-                  {
-                     if ( StringUtil.Len( subGrid1_Class) > 0 )
-                     {
-                        subGrid1_Linesclass = subGrid1_Class+"Title";
-                     }
-                  }
-               }
-               context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"SelectionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Tablero Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Tablero Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"DescriptionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Fecha") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Rol Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Tablero Estado") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlTextNl( "</tr>") ;
-               Grid1Container.AddObjectProperty("GridName", "Grid1");
-            }
-            else
-            {
-               if ( isAjaxCallMode( ) )
-               {
-                  Grid1Container = new GXWebGrid( context);
-               }
-               else
-               {
-                  Grid1Container.Clear();
-               }
-               Grid1Container.SetWrapped(nGXWrapped);
-               Grid1Container.AddObjectProperty("GridName", "Grid1");
-               Grid1Container.AddObjectProperty("Header", subGrid1_Header);
-               Grid1Container.AddObjectProperty("Class", "PromptGrid");
-               Grid1Container.AddObjectProperty("Cellpadding", StringUtil.LTrim( StringUtil.NToC( (decimal)(1), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Cellspacing", StringUtil.LTrim( StringUtil.NToC( (decimal)(2), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Backcolorstyle", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Backcolorstyle), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("CmpContext", "");
-               Grid1Container.AddObjectProperty("InMasterPage", "false");
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.convertURL( AV5LinkSelection));
-               Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtavLinkselection_Link));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A9TableroId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A18ParticipanteTableroId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.localUtil.TToC( A20RegistroFecha, 10, 8, 0, 3, "/", ":", " "));
-               Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtRegistroFecha_Link));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A39ParticipanteRolId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.BoolToStr( A42ParticipanteTableroEstado));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Container.AddObjectProperty("Selectedindex", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectedindex), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowselection", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowselection), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Selectioncolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectioncolor), 9, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowhover", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowhovering), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Hovercolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Hoveringcolor), 9, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowcollapsing", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowcollapsing), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Collapsed", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Collapsed), 1, 0, ".", "")));
-            }
+            StartGridControl64( ) ;
          }
          if ( wbEnd == 64 )
          {
@@ -720,7 +623,7 @@ namespace GeneXus.Programs {
                Grid1Container.AddObjectProperty("GRID1_nFirstRecordOnPage", GRID1_nFirstRecordOnPage);
                sStyleString = "";
                context.WriteHtmlText( "<div id=\""+"Grid1Container"+"Div\" "+sStyleString+">"+"</div>") ;
-               context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container);
+               context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container, subGrid1_Internalname);
                if ( ! context.isAjaxRequest( ) && ! context.isSpaRequest( ) )
                {
                   GxWebStd.gx_hidden_field( context, "Grid1ContainerData", Grid1Container.ToJavascriptSource());
@@ -768,7 +671,7 @@ namespace GeneXus.Programs {
                   Grid1Container.AddObjectProperty("GRID1_nFirstRecordOnPage", GRID1_nFirstRecordOnPage);
                   sStyleString = "";
                   context.WriteHtmlText( "<div id=\""+"Grid1Container"+"Div\" "+sStyleString+">"+"</div>") ;
-                  context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container);
+                  context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container, subGrid1_Internalname);
                   if ( ! context.isAjaxRequest( ) && ! context.isSpaRequest( ) )
                   {
                      GxWebStd.gx_hidden_field( context, "Grid1ContainerData", Grid1Container.ToJavascriptSource());
@@ -796,7 +699,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Selection List Participantes", 0) ;
          }
@@ -1516,7 +1419,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20229920475211", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161248111", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1532,7 +1435,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("gx00b0.js", "?20229920475211", false, true);
+         context.AddJavascriptSource("gx00b0.js", "?202210161248111", false, true);
          /* End function include_jscripts */
       }
 
@@ -1710,6 +1613,113 @@ namespace GeneXus.Programs {
          /* End function init_web_controls */
       }
 
+      protected void StartGridControl64( )
+      {
+         if ( Grid1Container.GetWrapped() == 1 )
+         {
+            context.WriteHtmlText( "<div id=\""+"Grid1Container"+"DivS\" data-gxgridid=\"64\">") ;
+            sStyleString = "";
+            GxWebStd.gx_table_start( context, subGrid1_Internalname, subGrid1_Internalname, "", "PromptGrid", 0, "", "", 1, 2, sStyleString, "", "", 0);
+            /* Subfile titles */
+            context.WriteHtmlText( "<tr") ;
+            context.WriteHtmlTextNl( ">") ;
+            if ( subGrid1_Backcolorstyle == 0 )
+            {
+               subGrid1_Titlebackstyle = 0;
+               if ( StringUtil.Len( subGrid1_Class) > 0 )
+               {
+                  subGrid1_Linesclass = subGrid1_Class+"Title";
+               }
+            }
+            else
+            {
+               subGrid1_Titlebackstyle = 1;
+               if ( subGrid1_Backcolorstyle == 1 )
+               {
+                  subGrid1_Titlebackcolor = subGrid1_Allbackcolor;
+                  if ( StringUtil.Len( subGrid1_Class) > 0 )
+                  {
+                     subGrid1_Linesclass = subGrid1_Class+"UniformTitle";
+                  }
+               }
+               else
+               {
+                  if ( StringUtil.Len( subGrid1_Class) > 0 )
+                  {
+                     subGrid1_Linesclass = subGrid1_Class+"Title";
+                  }
+               }
+            }
+            context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"SelectionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Tablero Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Tablero Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"DescriptionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Fecha") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Rol Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Tablero Estado") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlTextNl( "</tr>") ;
+            Grid1Container.AddObjectProperty("GridName", "Grid1");
+         }
+         else
+         {
+            if ( isAjaxCallMode( ) )
+            {
+               Grid1Container = new GXWebGrid( context);
+            }
+            else
+            {
+               Grid1Container.Clear();
+            }
+            Grid1Container.SetWrapped(nGXWrapped);
+            Grid1Container.AddObjectProperty("GridName", "Grid1");
+            Grid1Container.AddObjectProperty("Header", subGrid1_Header);
+            Grid1Container.AddObjectProperty("Class", "PromptGrid");
+            Grid1Container.AddObjectProperty("Cellpadding", StringUtil.LTrim( StringUtil.NToC( (decimal)(1), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Cellspacing", StringUtil.LTrim( StringUtil.NToC( (decimal)(2), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Backcolorstyle", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Backcolorstyle), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("CmpContext", "");
+            Grid1Container.AddObjectProperty("InMasterPage", "false");
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.convertURL( AV5LinkSelection));
+            Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtavLinkselection_Link));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A9TableroId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A18ParticipanteTableroId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.localUtil.TToC( A20RegistroFecha, 10, 8, 0, 3, "/", ":", " "));
+            Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtRegistroFecha_Link));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A39ParticipanteRolId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.BoolToStr( A42ParticipanteTableroEstado));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Container.AddObjectProperty("Selectedindex", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectedindex), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowselection", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowselection), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Selectioncolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectioncolor), 9, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowhover", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowhovering), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Hovercolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Hoveringcolor), 9, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowcollapsing", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowcollapsing), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Collapsed", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Collapsed), 1, 0, ".", "")));
+         }
+      }
+
       protected void init_default_properties( )
       {
          lblLbltableroidfilter_Internalname = "LBLTABLEROIDFILTER";
@@ -1750,17 +1760,17 @@ namespace GeneXus.Programs {
             disableJsOutput();
          }
          init_default_properties( ) ;
+         subGrid1_Allowcollapsing = 0;
+         subGrid1_Allowselection = 0;
+         subGrid1_Header = "";
          chkavCparticipantetableroestado.Caption = "Participante Tablero Estado";
          chkParticipanteTableroEstado.Caption = "";
          edtParticipanteRolId_Jsonclick = "";
          edtRegistroFecha_Jsonclick = "";
+         edtRegistroFecha_Link = "";
          edtParticipanteTableroId_Jsonclick = "";
          edtTableroId_Jsonclick = "";
-         subGrid1_Allowcollapsing = 0;
-         subGrid1_Allowselection = 0;
-         edtRegistroFecha_Link = "";
          edtavLinkselection_Link = "";
-         subGrid1_Header = "";
          subGrid1_Class = "PromptGrid";
          subGrid1_Backcolorstyle = 0;
          chkavCparticipantetableroestado.Enabled = 1;
@@ -1776,11 +1786,6 @@ namespace GeneXus.Programs {
          edtavCtableroid_Jsonclick = "";
          edtavCtableroid_Enabled = 1;
          edtavCtableroid_Visible = 1;
-         Form.Headerrawhtml = "";
-         Form.Background = "";
-         Form.Textcolor = 0;
-         Form.Backcolor = (int)(0xFFFFFF);
-         Form.Caption = "Selection List Participantes";
          divParticipantetableroestadofiltercontainer_Class = "AdvancedContainerItem";
          divParticipanterolidfiltercontainer_Class = "AdvancedContainerItem";
          divRegistrofechafiltercontainer_Class = "AdvancedContainerItem";
@@ -1788,6 +1793,11 @@ namespace GeneXus.Programs {
          divTableroidfiltercontainer_Class = "AdvancedContainerItem";
          bttBtntoggle_Class = "BtnToggle";
          divAdvancedcontainer_Class = "AdvancedContainerVisible";
+         Form.Headerrawhtml = "";
+         Form.Background = "";
+         Form.Textcolor = 0;
+         Form.Backcolor = (int)(0xFFFFFF);
+         Form.Caption = "Selection List Participantes";
          subGrid1_Rows = 10;
          if ( context.isSpaRequest( ) )
          {
@@ -1803,33 +1813,33 @@ namespace GeneXus.Programs {
       public override void InitializeDynEvents( )
       {
          setEventMetadata("REFRESH","{handler:'Refresh',iparms:[{av:'GRID1_nFirstRecordOnPage'},{av:'GRID1_nEOF'},{av:'subGrid1_Rows',ctrl:'GRID1',prop:'Rows'},{av:'AV6cTableroId',fld:'vCTABLEROID',pic:'ZZZ9'},{av:'AV7cParticipanteTableroId',fld:'vCPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV8cRegistroFecha',fld:'vCREGISTROFECHA',pic:'99/99/99 99:99'},{av:'AV12cParticipanteRolId',fld:'vCPARTICIPANTEROLID',pic:'ZZZ9'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("REFRESH",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("'TOGGLE'","{handler:'E160N1',iparms:[{av:'divAdvancedcontainer_Class',ctrl:'ADVANCEDCONTAINER',prop:'Class'},{ctrl:'BTNTOGGLE',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("'TOGGLE'",",oparms:[{av:'divAdvancedcontainer_Class',ctrl:'ADVANCEDCONTAINER',prop:'Class'},{ctrl:'BTNTOGGLE',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("LBLTABLEROIDFILTER.CLICK","{handler:'E110N1',iparms:[{av:'divTableroidfiltercontainer_Class',ctrl:'TABLEROIDFILTERCONTAINER',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("LBLTABLEROIDFILTER.CLICK",",oparms:[{av:'divTableroidfiltercontainer_Class',ctrl:'TABLEROIDFILTERCONTAINER',prop:'Class'},{av:'edtavCtableroid_Visible',ctrl:'vCTABLEROID',prop:'Visible'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("LBLPARTICIPANTETABLEROIDFILTER.CLICK","{handler:'E120N1',iparms:[{av:'divParticipantetableroidfiltercontainer_Class',ctrl:'PARTICIPANTETABLEROIDFILTERCONTAINER',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("LBLPARTICIPANTETABLEROIDFILTER.CLICK",",oparms:[{av:'divParticipantetableroidfiltercontainer_Class',ctrl:'PARTICIPANTETABLEROIDFILTERCONTAINER',prop:'Class'},{av:'edtavCparticipantetableroid_Visible',ctrl:'vCPARTICIPANTETABLEROID',prop:'Visible'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("LBLREGISTROFECHAFILTER.CLICK","{handler:'E130N1',iparms:[{av:'divRegistrofechafiltercontainer_Class',ctrl:'REGISTROFECHAFILTERCONTAINER',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("LBLREGISTROFECHAFILTER.CLICK",",oparms:[{av:'divRegistrofechafiltercontainer_Class',ctrl:'REGISTROFECHAFILTERCONTAINER',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("LBLPARTICIPANTEROLIDFILTER.CLICK","{handler:'E140N1',iparms:[{av:'divParticipanterolidfiltercontainer_Class',ctrl:'PARTICIPANTEROLIDFILTERCONTAINER',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("LBLPARTICIPANTEROLIDFILTER.CLICK",",oparms:[{av:'divParticipanterolidfiltercontainer_Class',ctrl:'PARTICIPANTEROLIDFILTERCONTAINER',prop:'Class'},{av:'edtavCparticipanterolid_Visible',ctrl:'vCPARTICIPANTEROLID',prop:'Visible'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("LBLPARTICIPANTETABLEROESTADOFILTER.CLICK","{handler:'E150N1',iparms:[{av:'divParticipantetableroestadofiltercontainer_Class',ctrl:'PARTICIPANTETABLEROESTADOFILTERCONTAINER',prop:'Class'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("LBLPARTICIPANTETABLEROESTADOFILTER.CLICK",",oparms:[{av:'divParticipantetableroestadofiltercontainer_Class',ctrl:'PARTICIPANTETABLEROESTADOFILTERCONTAINER',prop:'Class'},{av:'chkavCparticipantetableroestado.Visible',ctrl:'vCPARTICIPANTETABLEROESTADO',prop:'Visible'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("ENTER","{handler:'E190N2',iparms:[{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9',hsh:true},{av:'A18ParticipanteTableroId',fld:'PARTICIPANTETABLEROID',pic:'ZZZ9',hsh:true},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("ENTER",",oparms:[{av:'AV9pTableroId',fld:'vPTABLEROID',pic:'ZZZ9'},{av:'AV10pParticipanteTableroId',fld:'vPPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
+         setEventMetadata("REFRESH",",oparms:[]}");
+         setEventMetadata("'TOGGLE'","{handler:'E160N1',iparms:[{av:'divAdvancedcontainer_Class',ctrl:'ADVANCEDCONTAINER',prop:'Class'},{ctrl:'BTNTOGGLE',prop:'Class'}]");
+         setEventMetadata("'TOGGLE'",",oparms:[{av:'divAdvancedcontainer_Class',ctrl:'ADVANCEDCONTAINER',prop:'Class'},{ctrl:'BTNTOGGLE',prop:'Class'}]}");
+         setEventMetadata("LBLTABLEROIDFILTER.CLICK","{handler:'E110N1',iparms:[{av:'divTableroidfiltercontainer_Class',ctrl:'TABLEROIDFILTERCONTAINER',prop:'Class'}]");
+         setEventMetadata("LBLTABLEROIDFILTER.CLICK",",oparms:[{av:'divTableroidfiltercontainer_Class',ctrl:'TABLEROIDFILTERCONTAINER',prop:'Class'},{av:'edtavCtableroid_Visible',ctrl:'vCTABLEROID',prop:'Visible'}]}");
+         setEventMetadata("LBLPARTICIPANTETABLEROIDFILTER.CLICK","{handler:'E120N1',iparms:[{av:'divParticipantetableroidfiltercontainer_Class',ctrl:'PARTICIPANTETABLEROIDFILTERCONTAINER',prop:'Class'}]");
+         setEventMetadata("LBLPARTICIPANTETABLEROIDFILTER.CLICK",",oparms:[{av:'divParticipantetableroidfiltercontainer_Class',ctrl:'PARTICIPANTETABLEROIDFILTERCONTAINER',prop:'Class'},{av:'edtavCparticipantetableroid_Visible',ctrl:'vCPARTICIPANTETABLEROID',prop:'Visible'}]}");
+         setEventMetadata("LBLREGISTROFECHAFILTER.CLICK","{handler:'E130N1',iparms:[{av:'divRegistrofechafiltercontainer_Class',ctrl:'REGISTROFECHAFILTERCONTAINER',prop:'Class'}]");
+         setEventMetadata("LBLREGISTROFECHAFILTER.CLICK",",oparms:[{av:'divRegistrofechafiltercontainer_Class',ctrl:'REGISTROFECHAFILTERCONTAINER',prop:'Class'}]}");
+         setEventMetadata("LBLPARTICIPANTEROLIDFILTER.CLICK","{handler:'E140N1',iparms:[{av:'divParticipanterolidfiltercontainer_Class',ctrl:'PARTICIPANTEROLIDFILTERCONTAINER',prop:'Class'}]");
+         setEventMetadata("LBLPARTICIPANTEROLIDFILTER.CLICK",",oparms:[{av:'divParticipanterolidfiltercontainer_Class',ctrl:'PARTICIPANTEROLIDFILTERCONTAINER',prop:'Class'},{av:'edtavCparticipanterolid_Visible',ctrl:'vCPARTICIPANTEROLID',prop:'Visible'}]}");
+         setEventMetadata("LBLPARTICIPANTETABLEROESTADOFILTER.CLICK","{handler:'E150N1',iparms:[{av:'divParticipantetableroestadofiltercontainer_Class',ctrl:'PARTICIPANTETABLEROESTADOFILTERCONTAINER',prop:'Class'}]");
+         setEventMetadata("LBLPARTICIPANTETABLEROESTADOFILTER.CLICK",",oparms:[{av:'divParticipantetableroestadofiltercontainer_Class',ctrl:'PARTICIPANTETABLEROESTADOFILTERCONTAINER',prop:'Class'},{av:'chkavCparticipantetableroestado.Visible',ctrl:'vCPARTICIPANTETABLEROESTADO',prop:'Visible'}]}");
+         setEventMetadata("ENTER","{handler:'E190N2',iparms:[{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9',hsh:true},{av:'A18ParticipanteTableroId',fld:'PARTICIPANTETABLEROID',pic:'ZZZ9',hsh:true}]");
+         setEventMetadata("ENTER",",oparms:[{av:'AV9pTableroId',fld:'vPTABLEROID',pic:'ZZZ9'},{av:'AV10pParticipanteTableroId',fld:'vPPARTICIPANTETABLEROID',pic:'ZZZ9'}]}");
          setEventMetadata("GRID1_FIRSTPAGE","{handler:'subgrid1_firstpage',iparms:[{av:'GRID1_nFirstRecordOnPage'},{av:'GRID1_nEOF'},{av:'subGrid1_Rows',ctrl:'GRID1',prop:'Rows'},{av:'AV6cTableroId',fld:'vCTABLEROID',pic:'ZZZ9'},{av:'AV7cParticipanteTableroId',fld:'vCPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV8cRegistroFecha',fld:'vCREGISTROFECHA',pic:'99/99/99 99:99'},{av:'AV12cParticipanteRolId',fld:'vCPARTICIPANTEROLID',pic:'ZZZ9'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("GRID1_FIRSTPAGE",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
+         setEventMetadata("GRID1_FIRSTPAGE",",oparms:[]}");
          setEventMetadata("GRID1_PREVPAGE","{handler:'subgrid1_previouspage',iparms:[{av:'GRID1_nFirstRecordOnPage'},{av:'GRID1_nEOF'},{av:'subGrid1_Rows',ctrl:'GRID1',prop:'Rows'},{av:'AV6cTableroId',fld:'vCTABLEROID',pic:'ZZZ9'},{av:'AV7cParticipanteTableroId',fld:'vCPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV8cRegistroFecha',fld:'vCREGISTROFECHA',pic:'99/99/99 99:99'},{av:'AV12cParticipanteRolId',fld:'vCPARTICIPANTEROLID',pic:'ZZZ9'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("GRID1_PREVPAGE",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
+         setEventMetadata("GRID1_PREVPAGE",",oparms:[]}");
          setEventMetadata("GRID1_NEXTPAGE","{handler:'subgrid1_nextpage',iparms:[{av:'GRID1_nFirstRecordOnPage'},{av:'GRID1_nEOF'},{av:'subGrid1_Rows',ctrl:'GRID1',prop:'Rows'},{av:'AV6cTableroId',fld:'vCTABLEROID',pic:'ZZZ9'},{av:'AV7cParticipanteTableroId',fld:'vCPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV8cRegistroFecha',fld:'vCREGISTROFECHA',pic:'99/99/99 99:99'},{av:'AV12cParticipanteRolId',fld:'vCPARTICIPANTEROLID',pic:'ZZZ9'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("GRID1_NEXTPAGE",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
+         setEventMetadata("GRID1_NEXTPAGE",",oparms:[]}");
          setEventMetadata("GRID1_LASTPAGE","{handler:'subgrid1_lastpage',iparms:[{av:'GRID1_nFirstRecordOnPage'},{av:'GRID1_nEOF'},{av:'subGrid1_Rows',ctrl:'GRID1',prop:'Rows'},{av:'AV6cTableroId',fld:'vCTABLEROID',pic:'ZZZ9'},{av:'AV7cParticipanteTableroId',fld:'vCPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV8cRegistroFecha',fld:'vCREGISTROFECHA',pic:'99/99/99 99:99'},{av:'AV12cParticipanteRolId',fld:'vCPARTICIPANTEROLID',pic:'ZZZ9'},{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("GRID1_LASTPAGE",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("VALIDV_CREGISTROFECHA","{handler:'Validv_Cregistrofecha',iparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("VALIDV_CREGISTROFECHA",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
-         setEventMetadata("NULL","{handler:'Valid_Participantetableroestado',iparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]");
-         setEventMetadata("NULL",",oparms:[{av:'AV13cParticipanteTableroEstado',fld:'vCPARTICIPANTETABLEROESTADO',pic:''}]}");
+         setEventMetadata("GRID1_LASTPAGE",",oparms:[]}");
+         setEventMetadata("VALIDV_CREGISTROFECHA","{handler:'Validv_Cregistrofecha',iparms:[]");
+         setEventMetadata("VALIDV_CREGISTROFECHA",",oparms:[]}");
+         setEventMetadata("NULL","{handler:'Valid_Participantetableroestado',iparms:[]");
+         setEventMetadata("NULL",",oparms:[]}");
          return  ;
       }
 
@@ -1870,16 +1880,14 @@ namespace GeneXus.Programs {
          bttBtntoggle_Jsonclick = "";
          Grid1Container = new GXWebGrid( context);
          sStyleString = "";
-         subGrid1_Linesclass = "";
-         Grid1Column = new GXWebColumn();
-         AV5LinkSelection = "";
-         A20RegistroFecha = (DateTime)(DateTime.MinValue);
          bttBtn_cancel_Jsonclick = "";
          sEvt = "";
          EvtGridId = "";
          EvtRowId = "";
          sEvtType = "";
+         AV5LinkSelection = "";
          AV16Linkselection_GXI = "";
+         A20RegistroFecha = (DateTime)(DateTime.MinValue);
          scmdbuf = "";
          H000N2_A42ParticipanteTableroEstado = new bool[] {false} ;
          H000N2_A39ParticipanteRolId = new short[1] ;
@@ -1891,9 +1899,11 @@ namespace GeneXus.Programs {
          Grid1Row = new GXWebRow();
          BackMsgLst = new msglist();
          LclMsgLst = new msglist();
+         subGrid1_Linesclass = "";
          sImgUrl = "";
          ROClassString = "";
          GXCCtl = "";
+         Grid1Column = new GXWebColumn();
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.gx00b0__default(),
             new Object[][] {
                 new Object[] {
@@ -1920,22 +1930,22 @@ namespace GeneXus.Programs {
       private short gxajaxcallmode ;
       private short wbEnd ;
       private short wbStart ;
-      private short subGrid1_Backcolorstyle ;
-      private short subGrid1_Titlebackstyle ;
       private short A9TableroId ;
       private short A18ParticipanteTableroId ;
       private short A39ParticipanteRolId ;
+      private short nDonePA ;
+      private short gxcookieaux ;
+      private short subGrid1_Backcolorstyle ;
+      private short nGXWrapped ;
+      private short subGrid1_Backstyle ;
+      private short subGrid1_Titlebackstyle ;
       private short subGrid1_Allowselection ;
       private short subGrid1_Allowhovering ;
       private short subGrid1_Allowcollapsing ;
       private short subGrid1_Collapsed ;
-      private short nDonePA ;
-      private short gxcookieaux ;
-      private short nGXWrapped ;
-      private short subGrid1_Backstyle ;
       private int nRC_GXsfl_64 ;
-      private int nGXsfl_64_idx=1 ;
       private int subGrid1_Rows ;
+      private int nGXsfl_64_idx=1 ;
       private int edtavCtableroid_Enabled ;
       private int edtavCtableroid_Visible ;
       private int edtavCparticipantetableroid_Enabled ;
@@ -1943,16 +1953,16 @@ namespace GeneXus.Programs {
       private int edtavCregistrofecha_Enabled ;
       private int edtavCparticipanterolid_Enabled ;
       private int edtavCparticipanterolid_Visible ;
-      private int subGrid1_Titlebackcolor ;
-      private int subGrid1_Allbackcolor ;
-      private int subGrid1_Selectedindex ;
-      private int subGrid1_Selectioncolor ;
-      private int subGrid1_Hoveringcolor ;
       private int subGrid1_Islastpage ;
       private int GXPagingFrom2 ;
       private int GXPagingTo2 ;
       private int idxLst ;
       private int subGrid1_Backcolor ;
+      private int subGrid1_Allbackcolor ;
+      private int subGrid1_Titlebackcolor ;
+      private int subGrid1_Selectedindex ;
+      private int subGrid1_Selectioncolor ;
+      private int subGrid1_Hoveringcolor ;
       private long GRID1_nFirstRecordOnPage ;
       private long GRID1_nCurrentRecord ;
       private long GRID1_nRecordCount ;
@@ -2006,11 +2016,6 @@ namespace GeneXus.Programs {
       private string bttBtntoggle_Jsonclick ;
       private string sStyleString ;
       private string subGrid1_Internalname ;
-      private string subGrid1_Class ;
-      private string subGrid1_Linesclass ;
-      private string subGrid1_Header ;
-      private string edtavLinkselection_Link ;
-      private string edtRegistroFecha_Link ;
       private string bttBtn_cancel_Internalname ;
       private string bttBtn_cancel_Jsonclick ;
       private string sEvt ;
@@ -2026,23 +2031,28 @@ namespace GeneXus.Programs {
       private string scmdbuf ;
       private string AV11ADVANCED_LABEL_TEMPLATE ;
       private string sGXsfl_64_fel_idx="0001" ;
+      private string subGrid1_Class ;
+      private string subGrid1_Linesclass ;
+      private string edtavLinkselection_Link ;
       private string sImgUrl ;
       private string ROClassString ;
       private string edtTableroId_Jsonclick ;
       private string edtParticipanteTableroId_Jsonclick ;
+      private string edtRegistroFecha_Link ;
       private string edtRegistroFecha_Jsonclick ;
       private string edtParticipanteRolId_Jsonclick ;
       private string GXCCtl ;
+      private string subGrid1_Header ;
       private DateTime AV8cRegistroFecha ;
       private DateTime A20RegistroFecha ;
       private bool entryPointCalled ;
       private bool toggleJsOutput ;
       private bool AV13cParticipanteTableroEstado ;
       private bool wbLoad ;
-      private bool A42ParticipanteTableroEstado ;
       private bool Rfr0gs ;
       private bool wbErr ;
       private bool bGXsfl_64_Refreshing=false ;
+      private bool A42ParticipanteTableroEstado ;
       private bool gxdyncontrolsrefreshing ;
       private bool returnInSub ;
       private bool AV5LinkSelection_IsBlob ;

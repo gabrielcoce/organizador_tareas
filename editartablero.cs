@@ -111,12 +111,6 @@ namespace GeneXus.Programs {
                }
                gxfirstwebparm = gxfirstwebparm_bkp;
             }
-            if ( ! entryPointCalled && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-            {
-               A9TableroId = (short)(NumberUtil.Val( gxfirstwebparm, "."));
-               AssignAttri("", false, "A9TableroId", StringUtil.LTrimStr( (decimal)(A9TableroId), 4, 0));
-               GxWebStd.gx_hidden_field( context, "gxhash_TABLEROID", GetSecureSignedToken( "", context.localUtil.Format( (decimal)(A9TableroId), "ZZZ9"), context));
-            }
             if ( toggleJsOutput )
             {
                if ( context.isSpaRequest( ) )
@@ -141,7 +135,7 @@ namespace GeneXus.Programs {
          INITWEB( ) ;
          if ( ! isAjaxCallMode( ) )
          {
-            MasterPageObj = (GXMasterPage) ClassLoader.GetInstance("rwdmasterpage", "GeneXus.Programs.rwdmasterpage", new Object[] {new GxContext( context.handle, context.DataStores, context.HttpContext)});
+            MasterPageObj = (GXMasterPage) ClassLoader.GetInstance("masterpage", "GeneXus.Programs.masterpage", new Object[] {new GxContext( context.handle, context.DataStores, context.HttpContext)});
             MasterPageObj.setDataArea(this,false);
             ValidateSpaRequest();
             MasterPageObj.webExecute();
@@ -211,11 +205,11 @@ namespace GeneXus.Programs {
          }
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?20229920474556", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
@@ -245,7 +239,9 @@ namespace GeneXus.Programs {
          context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
          context.WriteHtmlText( FormProcess+">") ;
          context.skipLines(1);
-         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("editartablero.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) +"\">") ;
+         GXKey = Crypto.GetSiteKey( );
+         GXEncryptionTmp = "editartablero.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
+         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("editartablero.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey)+"\">") ;
          GxWebStd.gx_hidden_field( context, "_EventName", "");
          GxWebStd.gx_hidden_field( context, "_EventGridId", "");
          GxWebStd.gx_hidden_field( context, "_EventRowId", "");
@@ -261,7 +257,7 @@ namespace GeneXus.Programs {
       protected void send_integrity_footer_hashes( )
       {
          GxWebStd.gx_hidden_field( context, "gxhash_TABLEROID", GetSecureSignedToken( "", context.localUtil.Format( (decimal)(A9TableroId), "ZZZ9"), context));
-         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+         GXKey = Crypto.GetSiteKey( );
       }
 
       protected void SendCloseFormHiddens( )
@@ -340,7 +336,9 @@ namespace GeneXus.Programs {
 
       public override string GetSelfLink( )
       {
-         return formatLink("editartablero.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"})  ;
+         GXKey = Crypto.GetSiteKey( );
+         GXEncryptionTmp = "editartablero.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
+         return formatLink("editartablero.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey) ;
       }
 
       public override string GetPgmname( )
@@ -472,7 +470,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Editar Tablero", 0) ;
          }
@@ -598,11 +596,51 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
+            GXKey = Crypto.GetSiteKey( );
+            if ( ( StringUtil.StrCmp(context.GetRequestQueryString( ), "") != 0 ) && ( GxWebError == 0 ) && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
             {
-               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
+               GXDecQS = UriDecrypt64( context.GetRequestQueryString( ), GXKey);
+               if ( ( StringUtil.StrCmp(StringUtil.Right( GXDecQS, 6), Crypto.CheckSum( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), 6)) == 0 ) && ( StringUtil.StrCmp(StringUtil.Substring( GXDecQS, 1, StringUtil.Len( "editartablero.aspx")), "editartablero.aspx") == 0 ) )
+               {
+                  SetQueryString( StringUtil.Right( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), (short)(StringUtil.Len( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)))-StringUtil.Len( "editartablero.aspx")))) ;
+               }
+               else
+               {
+                  GxWebError = 1;
+                  context.HttpContext.Response.StatusDescription = 403.ToString();
+                  context.HttpContext.Response.StatusCode = 403;
+                  context.WriteHtmlText( "<title>403 Forbidden</title>") ;
+                  context.WriteHtmlText( "<h1>403 Forbidden</h1>") ;
+                  context.WriteHtmlText( "<p /><hr />") ;
+                  GXUtil.WriteLog("send_http_error_code " + 403.ToString());
+               }
             }
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            if ( ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+            {
+               if ( nGotPars == 0 )
+               {
+                  entryPointCalled = false;
+                  gxfirstwebparm = GetFirstPar( "TableroId");
+                  toggleJsOutput = isJsOutputEnabled( );
+                  if ( context.isSpaRequest( ) )
+                  {
+                     disableJsOutput();
+                  }
+                  if ( ! entryPointCalled && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+                  {
+                     A9TableroId = (short)(NumberUtil.Val( gxfirstwebparm, "."));
+                     AssignAttri("", false, "A9TableroId", StringUtil.LTrimStr( (decimal)(A9TableroId), 4, 0));
+                     GxWebStd.gx_hidden_field( context, "gxhash_TABLEROID", GetSecureSignedToken( "", context.localUtil.Format( (decimal)(A9TableroId), "ZZZ9"), context));
+                  }
+                  if ( toggleJsOutput )
+                  {
+                     if ( context.isSpaRequest( ) )
+                     {
+                        enableJsOutput();
+                     }
+                  }
+               }
+            }
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -730,7 +768,7 @@ namespace GeneXus.Programs {
             AssignAttri("", false, "AV10TableroVisibilidad", AV10TableroVisibilidad);
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
+            GXKey = Crypto.GetSiteKey( );
          }
          else
          {
@@ -894,7 +932,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20229920474570", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161311971", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -910,7 +948,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("editartablero.js", "?20229920474570", false, true);
+         context.AddJavascriptSource("editartablero.js", "?202210161311972", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -1010,6 +1048,7 @@ namespace GeneXus.Programs {
          FormProcess = "";
          bodyStyle = "";
          GXKey = "";
+         GXEncryptionTmp = "";
          AV9Tableros = new SdtTableros(context);
          AV6sdt_sa = new SdtSDT_SweetAlert(context);
          GX_FocusControl = "";
@@ -1028,6 +1067,7 @@ namespace GeneXus.Programs {
          EvtGridId = "";
          EvtRowId = "";
          sEvtType = "";
+         GXDecQS = "";
          scmdbuf = "";
          H000P2_A9TableroId = new short[1] ;
          AV11websession = context.GetSession();
@@ -1053,7 +1093,6 @@ namespace GeneXus.Programs {
       private short wbEnd ;
       private short wbStart ;
       private short nDonePA ;
-      private short gxcookieaux ;
       private short AV5count ;
       private short nGXWrapped ;
       private int edtavTableronombre_Enabled ;
@@ -1064,6 +1103,7 @@ namespace GeneXus.Programs {
       private string FormProcess ;
       private string bodyStyle ;
       private string GXKey ;
+      private string GXEncryptionTmp ;
       private string GX_FocusControl ;
       private string sPrefix ;
       private string divMaintable_Internalname ;
@@ -1091,6 +1131,7 @@ namespace GeneXus.Programs {
       private string EvtGridId ;
       private string EvtRowId ;
       private string sEvtType ;
+      private string GXDecQS ;
       private string scmdbuf ;
       private bool entryPointCalled ;
       private bool toggleJsOutput ;

@@ -2449,8 +2449,8 @@ namespace GeneXus.Programs {
                   {
                      context.WriteHtmlText( GXUtil.HtmlDocType( )) ;
                      context.WriteHtmlText( "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"><title>Close window</title>") ;
-                     context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-                     context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
+                     context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+                     context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
                      context.WriteHtmlText( "</head><body><script type=\"text/javascript\">") ;
                      context.WriteHtmlText( "gx.fn.closeWindowServerScript(") ;
                      context.WriteHtmlText( context.getWebReturnParmsJS( )) ;
@@ -2665,6 +2665,7 @@ namespace GeneXus.Programs {
                                            string sWidthUnit ,
                                            int nHeight ,
                                            string sHeightUnit ,
+                                           short bHasTheme ,
                                            string sStyleString ,
                                            string sClassString ,
                                            string sColumnClassString ,
@@ -2737,14 +2738,17 @@ namespace GeneXus.Programs {
          if ( nEnabled == 0 )
          {
             sStyleString += ((nAutoResize==0) ? ";overflow:hidden;" : "") + ((nVisible==0) ? ";display:none;" : "");
-            if ( ( StringUtil.Len( sClassString) != 0 ) && ( StringUtil.StringSearch( sClassString, "Readonly", 1) != 1 ) )
+            if ( bHasTheme != 0 )
             {
-               sClassString = "Readonly" + sClassString;
+               if ( ( StringUtil.Len( sClassString) != 0 ) && ( StringUtil.StringSearch( sClassString, "Readonly", 1) != 1 ) )
+               {
+                  sClassString = "Readonly" + sClassString;
+               }
             }
             context.WriteHtmlText( "<span") ;
             GxWebStd.ClassAttribute( context, sClassString);
             GxWebStd.StyleAttribute( context, sStyleString);
-            context.WriteHtmlText( " id=\"span_"+sCtrlName+"\"") ;
+            context.WriteHtmlText( " id=\"span_"+sCtrlName+"\""+" data-gx-readonly") ;
             if ( nFormat == 3 )
             {
                context.WriteHtmlText( " data-text-format=\""+nFormat+"\"") ;

@@ -124,6 +124,7 @@ namespace GeneXus.Programs {
             Z31ActividadNombre = A31ActividadNombre;
             Z32ActividadAvance = A32ActividadAvance;
             Z33ActividadEstado = A33ActividadEstado;
+            Z49ActividadPaso = A49ActividadPaso;
          }
          if ( ( GX_JID == 2 ) || ( GX_JID == 0 ) )
          {
@@ -134,6 +135,7 @@ namespace GeneXus.Programs {
             Z31ActividadNombre = A31ActividadNombre;
             Z32ActividadAvance = A32ActividadAvance;
             Z33ActividadEstado = A33ActividadEstado;
+            Z49ActividadPaso = A49ActividadPaso;
             Z9TableroId = A9TableroId;
             Z12TareaId = A12TareaId;
          }
@@ -157,6 +159,7 @@ namespace GeneXus.Programs {
             A31ActividadNombre = BC00095_A31ActividadNombre[0];
             A32ActividadAvance = BC00095_A32ActividadAvance[0];
             A33ActividadEstado = BC00095_A33ActividadEstado[0];
+            A49ActividadPaso = BC00095_A49ActividadPaso[0];
             ZM099( -1) ;
          }
          pr_default.close(3);
@@ -217,6 +220,7 @@ namespace GeneXus.Programs {
             A31ActividadNombre = BC00093_A31ActividadNombre[0];
             A32ActividadAvance = BC00093_A32ActividadAvance[0];
             A33ActividadEstado = BC00093_A33ActividadEstado[0];
+            A49ActividadPaso = BC00093_A49ActividadPaso[0];
             A9TableroId = BC00093_A9TableroId[0];
             A12TareaId = BC00093_A12TareaId[0];
             Z9TableroId = A9TableroId;
@@ -287,7 +291,7 @@ namespace GeneXus.Programs {
                AnyError = 1;
                return  ;
             }
-            if ( (pr_default.getStatus(0) == 101) || ( StringUtil.StrCmp(Z31ActividadNombre, BC00092_A31ActividadNombre[0]) != 0 ) || ( Z32ActividadAvance != BC00092_A32ActividadAvance[0] ) || ( Z33ActividadEstado != BC00092_A33ActividadEstado[0] ) )
+            if ( (pr_default.getStatus(0) == 101) || ( StringUtil.StrCmp(Z31ActividadNombre, BC00092_A31ActividadNombre[0]) != 0 ) || ( Z32ActividadAvance != BC00092_A32ActividadAvance[0] ) || ( Z33ActividadEstado != BC00092_A33ActividadEstado[0] ) || ( Z49ActividadPaso != BC00092_A49ActividadPaso[0] ) )
             {
                GX_msglist.addItem(context.GetMessage( "GXM_waschg", new   object[]  {"Actividades"}), "RecordWasChanged", 1, "");
                AnyError = 1;
@@ -316,7 +320,7 @@ namespace GeneXus.Programs {
                   if ( AnyError == 0 )
                   {
                      /* Using cursor BC00097 */
-                     pr_default.execute(5, new Object[] {A30ActividadId, A31ActividadNombre, A32ActividadAvance, A33ActividadEstado, A9TableroId, A12TareaId});
+                     pr_default.execute(5, new Object[] {A30ActividadId, A31ActividadNombre, A32ActividadAvance, A33ActividadEstado, A49ActividadPaso, A9TableroId, A12TareaId});
                      pr_default.close(5);
                      dsDefault.SmartCacheProvider.SetUpdated("Actividades");
                      if ( (pr_default.getStatus(5) == 1) )
@@ -371,7 +375,7 @@ namespace GeneXus.Programs {
                   if ( AnyError == 0 )
                   {
                      /* Using cursor BC00098 */
-                     pr_default.execute(6, new Object[] {A31ActividadNombre, A32ActividadAvance, A33ActividadEstado, A9TableroId, A12TareaId, A30ActividadId});
+                     pr_default.execute(6, new Object[] {A31ActividadNombre, A32ActividadAvance, A33ActividadEstado, A49ActividadPaso, A9TableroId, A12TareaId, A30ActividadId});
                      pr_default.close(6);
                      dsDefault.SmartCacheProvider.SetUpdated("Actividades");
                      if ( (pr_default.getStatus(6) == 103) )
@@ -499,6 +503,7 @@ namespace GeneXus.Programs {
             A31ActividadNombre = BC000910_A31ActividadNombre[0];
             A32ActividadAvance = BC000910_A32ActividadAvance[0];
             A33ActividadEstado = BC000910_A33ActividadEstado[0];
+            A49ActividadPaso = BC000910_A49ActividadPaso[0];
             A9TableroId = BC000910_A9TableroId[0];
             A12TareaId = BC000910_A12TareaId[0];
          }
@@ -524,6 +529,7 @@ namespace GeneXus.Programs {
             A31ActividadNombre = BC000910_A31ActividadNombre[0];
             A32ActividadAvance = BC000910_A32ActividadAvance[0];
             A33ActividadEstado = BC000910_A33ActividadEstado[0];
+            A49ActividadPaso = BC000910_A49ActividadPaso[0];
             A9TableroId = BC000910_A9TableroId[0];
             A12TareaId = BC000910_A12TareaId[0];
          }
@@ -587,10 +593,12 @@ namespace GeneXus.Programs {
       {
          A31ActividadNombre = "";
          A32ActividadAvance = 0;
-         A33ActividadEstado = 0;
+         A33ActividadEstado = false;
+         A49ActividadPaso = 0;
          Z31ActividadNombre = "";
          Z32ActividadAvance = 0;
-         Z33ActividadEstado = 0;
+         Z33ActividadEstado = false;
+         Z49ActividadPaso = 0;
       }
 
       protected void InitAll099( )
@@ -631,6 +639,7 @@ namespace GeneXus.Programs {
          obj9.gxTpr_Actividadnombre = A31ActividadNombre;
          obj9.gxTpr_Actividadavance = A32ActividadAvance;
          obj9.gxTpr_Actividadestado = A33ActividadEstado;
+         obj9.gxTpr_Actividadpaso = A49ActividadPaso;
          obj9.gxTpr_Tableroid = A9TableroId;
          obj9.gxTpr_Tareaid = A12TareaId;
          obj9.gxTpr_Actividadid = A30ActividadId;
@@ -640,6 +649,7 @@ namespace GeneXus.Programs {
          obj9.gxTpr_Actividadnombre_Z = Z31ActividadNombre;
          obj9.gxTpr_Actividadavance_Z = Z32ActividadAvance;
          obj9.gxTpr_Actividadestado_Z = Z33ActividadEstado;
+         obj9.gxTpr_Actividadpaso_Z = Z49ActividadPaso;
          obj9.gxTpr_Mode = Gx_mode;
          return  ;
       }
@@ -659,6 +669,7 @@ namespace GeneXus.Programs {
          A31ActividadNombre = obj9.gxTpr_Actividadnombre;
          A32ActividadAvance = obj9.gxTpr_Actividadavance;
          A33ActividadEstado = obj9.gxTpr_Actividadestado;
+         A49ActividadPaso = obj9.gxTpr_Actividadpaso;
          A9TableroId = obj9.gxTpr_Tableroid;
          A12TareaId = obj9.gxTpr_Tareaid;
          A30ActividadId = obj9.gxTpr_Actividadid;
@@ -668,6 +679,7 @@ namespace GeneXus.Programs {
          Z31ActividadNombre = obj9.gxTpr_Actividadnombre_Z;
          Z32ActividadAvance = obj9.gxTpr_Actividadavance_Z;
          Z33ActividadEstado = obj9.gxTpr_Actividadestado_Z;
+         Z49ActividadPaso = obj9.gxTpr_Actividadpaso_Z;
          Gx_mode = obj9.gxTpr_Mode;
          return  ;
       }
@@ -1113,7 +1125,8 @@ namespace GeneXus.Programs {
          BC00095_A30ActividadId = new short[1] ;
          BC00095_A31ActividadNombre = new string[] {""} ;
          BC00095_A32ActividadAvance = new short[1] ;
-         BC00095_A33ActividadEstado = new short[1] ;
+         BC00095_A33ActividadEstado = new bool[] {false} ;
+         BC00095_A49ActividadPaso = new short[1] ;
          BC00095_A9TableroId = new short[1] ;
          BC00095_A12TareaId = new short[1] ;
          BC00094_A9TableroId = new short[1] ;
@@ -1123,20 +1136,23 @@ namespace GeneXus.Programs {
          BC00093_A30ActividadId = new short[1] ;
          BC00093_A31ActividadNombre = new string[] {""} ;
          BC00093_A32ActividadAvance = new short[1] ;
-         BC00093_A33ActividadEstado = new short[1] ;
+         BC00093_A33ActividadEstado = new bool[] {false} ;
+         BC00093_A49ActividadPaso = new short[1] ;
          BC00093_A9TableroId = new short[1] ;
          BC00093_A12TareaId = new short[1] ;
          sMode9 = "";
          BC00092_A30ActividadId = new short[1] ;
          BC00092_A31ActividadNombre = new string[] {""} ;
          BC00092_A32ActividadAvance = new short[1] ;
-         BC00092_A33ActividadEstado = new short[1] ;
+         BC00092_A33ActividadEstado = new bool[] {false} ;
+         BC00092_A49ActividadPaso = new short[1] ;
          BC00092_A9TableroId = new short[1] ;
          BC00092_A12TareaId = new short[1] ;
          BC000910_A30ActividadId = new short[1] ;
          BC000910_A31ActividadNombre = new string[] {""} ;
          BC000910_A32ActividadAvance = new short[1] ;
-         BC000910_A33ActividadEstado = new short[1] ;
+         BC000910_A33ActividadEstado = new bool[] {false} ;
+         BC000910_A49ActividadPaso = new short[1] ;
          BC000910_A9TableroId = new short[1] ;
          BC000910_A12TareaId = new short[1] ;
          BackMsgLst = new msglist();
@@ -1145,16 +1161,16 @@ namespace GeneXus.Programs {
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.actividades_bc__default(),
             new Object[][] {
                 new Object[] {
-               BC00092_A30ActividadId, BC00092_A31ActividadNombre, BC00092_A32ActividadAvance, BC00092_A33ActividadEstado, BC00092_A9TableroId, BC00092_A12TareaId
+               BC00092_A30ActividadId, BC00092_A31ActividadNombre, BC00092_A32ActividadAvance, BC00092_A33ActividadEstado, BC00092_A49ActividadPaso, BC00092_A9TableroId, BC00092_A12TareaId
                }
                , new Object[] {
-               BC00093_A30ActividadId, BC00093_A31ActividadNombre, BC00093_A32ActividadAvance, BC00093_A33ActividadEstado, BC00093_A9TableroId, BC00093_A12TareaId
+               BC00093_A30ActividadId, BC00093_A31ActividadNombre, BC00093_A32ActividadAvance, BC00093_A33ActividadEstado, BC00093_A49ActividadPaso, BC00093_A9TableroId, BC00093_A12TareaId
                }
                , new Object[] {
                BC00094_A9TableroId
                }
                , new Object[] {
-               BC00095_A30ActividadId, BC00095_A31ActividadNombre, BC00095_A32ActividadAvance, BC00095_A33ActividadEstado, BC00095_A9TableroId, BC00095_A12TareaId
+               BC00095_A30ActividadId, BC00095_A31ActividadNombre, BC00095_A32ActividadAvance, BC00095_A33ActividadEstado, BC00095_A49ActividadPaso, BC00095_A9TableroId, BC00095_A12TareaId
                }
                , new Object[] {
                BC00096_A9TableroId, BC00096_A12TareaId, BC00096_A30ActividadId
@@ -1166,7 +1182,7 @@ namespace GeneXus.Programs {
                , new Object[] {
                }
                , new Object[] {
-               BC000910_A30ActividadId, BC000910_A31ActividadNombre, BC000910_A32ActividadAvance, BC000910_A33ActividadEstado, BC000910_A9TableroId, BC000910_A12TareaId
+               BC000910_A30ActividadId, BC000910_A31ActividadNombre, BC000910_A32ActividadAvance, BC000910_A33ActividadEstado, BC000910_A49ActividadPaso, BC000910_A9TableroId, BC000910_A12TareaId
                }
                , new Object[] {
                BC000911_A9TableroId
@@ -1191,8 +1207,8 @@ namespace GeneXus.Programs {
       private short GX_JID ;
       private short Z32ActividadAvance ;
       private short A32ActividadAvance ;
-      private short Z33ActividadEstado ;
-      private short A33ActividadEstado ;
+      private short Z49ActividadPaso ;
+      private short A49ActividadPaso ;
       private short RcdFound9 ;
       private short nIsDirty_9 ;
       private int trnEnded ;
@@ -1205,6 +1221,8 @@ namespace GeneXus.Programs {
       private string Z31ActividadNombre ;
       private string A31ActividadNombre ;
       private string sMode9 ;
+      private bool Z33ActividadEstado ;
+      private bool A33ActividadEstado ;
       private bool mustCommit ;
       private SdtActividades bcActividades ;
       private IGxDataStore dsDefault ;
@@ -1212,7 +1230,8 @@ namespace GeneXus.Programs {
       private short[] BC00095_A30ActividadId ;
       private string[] BC00095_A31ActividadNombre ;
       private short[] BC00095_A32ActividadAvance ;
-      private short[] BC00095_A33ActividadEstado ;
+      private bool[] BC00095_A33ActividadEstado ;
+      private short[] BC00095_A49ActividadPaso ;
       private short[] BC00095_A9TableroId ;
       private short[] BC00095_A12TareaId ;
       private short[] BC00094_A9TableroId ;
@@ -1222,19 +1241,22 @@ namespace GeneXus.Programs {
       private short[] BC00093_A30ActividadId ;
       private string[] BC00093_A31ActividadNombre ;
       private short[] BC00093_A32ActividadAvance ;
-      private short[] BC00093_A33ActividadEstado ;
+      private bool[] BC00093_A33ActividadEstado ;
+      private short[] BC00093_A49ActividadPaso ;
       private short[] BC00093_A9TableroId ;
       private short[] BC00093_A12TareaId ;
       private short[] BC00092_A30ActividadId ;
       private string[] BC00092_A31ActividadNombre ;
       private short[] BC00092_A32ActividadAvance ;
-      private short[] BC00092_A33ActividadEstado ;
+      private bool[] BC00092_A33ActividadEstado ;
+      private short[] BC00092_A49ActividadPaso ;
       private short[] BC00092_A9TableroId ;
       private short[] BC00092_A12TareaId ;
       private short[] BC000910_A30ActividadId ;
       private string[] BC000910_A31ActividadNombre ;
       private short[] BC000910_A32ActividadAvance ;
-      private short[] BC000910_A33ActividadEstado ;
+      private bool[] BC000910_A33ActividadEstado ;
+      private short[] BC000910_A49ActividadPaso ;
       private short[] BC000910_A9TableroId ;
       private short[] BC000910_A12TareaId ;
       private msglist BackMsgLst ;
@@ -1300,7 +1322,8 @@ namespace GeneXus.Programs {
           new ParDef("@ActividadId",GXType.Int16,4,0) ,
           new ParDef("@ActividadNombre",GXType.NChar,20,0) ,
           new ParDef("@ActividadAvance",GXType.Int16,3,0) ,
-          new ParDef("@ActividadEstado",GXType.Int16,1,0) ,
+          new ParDef("@ActividadEstado",GXType.Boolean,1,0) ,
+          new ParDef("@ActividadPaso",GXType.Int16,4,0) ,
           new ParDef("@TableroId",GXType.Int16,4,0) ,
           new ParDef("@TareaId",GXType.Int16,4,0)
           };
@@ -1308,7 +1331,8 @@ namespace GeneXus.Programs {
           prmBC00098 = new Object[] {
           new ParDef("@ActividadNombre",GXType.NChar,20,0) ,
           new ParDef("@ActividadAvance",GXType.Int16,3,0) ,
-          new ParDef("@ActividadEstado",GXType.Int16,1,0) ,
+          new ParDef("@ActividadEstado",GXType.Boolean,1,0) ,
+          new ParDef("@ActividadPaso",GXType.Int16,4,0) ,
           new ParDef("@TableroId",GXType.Int16,4,0) ,
           new ParDef("@TareaId",GXType.Int16,4,0) ,
           new ParDef("@ActividadId",GXType.Int16,4,0)
@@ -1331,15 +1355,15 @@ namespace GeneXus.Programs {
           new ParDef("@TareaId",GXType.Int16,4,0)
           };
           def= new CursorDef[] {
-              new CursorDef("BC00092", "SELECT [ActividadId], [ActividadNombre], [ActividadAvance], [ActividadEstado], [TableroId], [TareaId] FROM [Actividades] WITH (UPDLOCK) WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00092,1, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("BC00093", "SELECT [ActividadId], [ActividadNombre], [ActividadAvance], [ActividadEstado], [TableroId], [TareaId] FROM [Actividades] WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00093,1, GxCacheFrequency.OFF ,true,false )
+              new CursorDef("BC00092", "SELECT [ActividadId], [ActividadNombre], [ActividadAvance], [ActividadEstado], [ActividadPaso], [TableroId], [TareaId] FROM [Actividades] WITH (UPDLOCK) WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00092,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC00093", "SELECT [ActividadId], [ActividadNombre], [ActividadAvance], [ActividadEstado], [ActividadPaso], [TableroId], [TareaId] FROM [Actividades] WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00093,1, GxCacheFrequency.OFF ,true,false )
              ,new CursorDef("BC00094", "SELECT [TableroId] FROM [Tareas] WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00094,1, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("BC00095", "SELECT TM1.[ActividadId], TM1.[ActividadNombre], TM1.[ActividadAvance], TM1.[ActividadEstado], TM1.[TableroId], TM1.[TareaId] FROM [Actividades] TM1 WHERE TM1.[TableroId] = @TableroId and TM1.[TareaId] = @TareaId and TM1.[ActividadId] = @ActividadId ORDER BY TM1.[TableroId], TM1.[TareaId], TM1.[ActividadId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC00095,100, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC00095", "SELECT TM1.[ActividadId], TM1.[ActividadNombre], TM1.[ActividadAvance], TM1.[ActividadEstado], TM1.[ActividadPaso], TM1.[TableroId], TM1.[TareaId] FROM [Actividades] TM1 WHERE TM1.[TableroId] = @TableroId and TM1.[TareaId] = @TareaId and TM1.[ActividadId] = @ActividadId ORDER BY TM1.[TableroId], TM1.[TareaId], TM1.[ActividadId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC00095,100, GxCacheFrequency.OFF ,true,false )
              ,new CursorDef("BC00096", "SELECT [TableroId], [TareaId], [ActividadId] FROM [Actividades] WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId  OPTION (FAST 1)",true, GxErrorMask.GX_NOMASK, false, this,prmBC00096,1, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("BC00097", "INSERT INTO [Actividades]([ActividadId], [ActividadNombre], [ActividadAvance], [ActividadEstado], [TableroId], [TareaId]) VALUES(@ActividadId, @ActividadNombre, @ActividadAvance, @ActividadEstado, @TableroId, @TareaId)", GxErrorMask.GX_NOMASK,prmBC00097)
-             ,new CursorDef("BC00098", "UPDATE [Actividades] SET [ActividadNombre]=@ActividadNombre, [ActividadAvance]=@ActividadAvance, [ActividadEstado]=@ActividadEstado  WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId", GxErrorMask.GX_NOMASK,prmBC00098)
+             ,new CursorDef("BC00097", "INSERT INTO [Actividades]([ActividadId], [ActividadNombre], [ActividadAvance], [ActividadEstado], [ActividadPaso], [TableroId], [TareaId]) VALUES(@ActividadId, @ActividadNombre, @ActividadAvance, @ActividadEstado, @ActividadPaso, @TableroId, @TareaId)", GxErrorMask.GX_NOMASK,prmBC00097)
+             ,new CursorDef("BC00098", "UPDATE [Actividades] SET [ActividadNombre]=@ActividadNombre, [ActividadAvance]=@ActividadAvance, [ActividadEstado]=@ActividadEstado, [ActividadPaso]=@ActividadPaso  WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId", GxErrorMask.GX_NOMASK,prmBC00098)
              ,new CursorDef("BC00099", "DELETE FROM [Actividades]  WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId AND [ActividadId] = @ActividadId", GxErrorMask.GX_NOMASK,prmBC00099)
-             ,new CursorDef("BC000910", "SELECT TM1.[ActividadId], TM1.[ActividadNombre], TM1.[ActividadAvance], TM1.[ActividadEstado], TM1.[TableroId], TM1.[TareaId] FROM [Actividades] TM1 WHERE TM1.[TableroId] = @TableroId and TM1.[TareaId] = @TareaId and TM1.[ActividadId] = @ActividadId ORDER BY TM1.[TableroId], TM1.[TareaId], TM1.[ActividadId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000910,100, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC000910", "SELECT TM1.[ActividadId], TM1.[ActividadNombre], TM1.[ActividadAvance], TM1.[ActividadEstado], TM1.[ActividadPaso], TM1.[TableroId], TM1.[TareaId] FROM [Actividades] TM1 WHERE TM1.[TableroId] = @TableroId and TM1.[TareaId] = @TareaId and TM1.[ActividadId] = @ActividadId ORDER BY TM1.[TableroId], TM1.[TareaId], TM1.[ActividadId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000910,100, GxCacheFrequency.OFF ,true,false )
              ,new CursorDef("BC000911", "SELECT [TableroId] FROM [Tareas] WHERE [TableroId] = @TableroId AND [TareaId] = @TareaId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000911,1, GxCacheFrequency.OFF ,true,false )
           };
        }
@@ -1355,17 +1379,19 @@ namespace GeneXus.Programs {
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((string[]) buf[1])[0] = rslt.getString(2, 20);
                 ((short[]) buf[2])[0] = rslt.getShort(3);
-                ((short[]) buf[3])[0] = rslt.getShort(4);
+                ((bool[]) buf[3])[0] = rslt.getBool(4);
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((short[]) buf[5])[0] = rslt.getShort(6);
+                ((short[]) buf[6])[0] = rslt.getShort(7);
                 return;
              case 1 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((string[]) buf[1])[0] = rslt.getString(2, 20);
                 ((short[]) buf[2])[0] = rslt.getShort(3);
-                ((short[]) buf[3])[0] = rslt.getShort(4);
+                ((bool[]) buf[3])[0] = rslt.getBool(4);
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((short[]) buf[5])[0] = rslt.getShort(6);
+                ((short[]) buf[6])[0] = rslt.getShort(7);
                 return;
              case 2 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
@@ -1374,9 +1400,10 @@ namespace GeneXus.Programs {
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((string[]) buf[1])[0] = rslt.getString(2, 20);
                 ((short[]) buf[2])[0] = rslt.getShort(3);
-                ((short[]) buf[3])[0] = rslt.getShort(4);
+                ((bool[]) buf[3])[0] = rslt.getBool(4);
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((short[]) buf[5])[0] = rslt.getShort(6);
+                ((short[]) buf[6])[0] = rslt.getShort(7);
                 return;
              case 4 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
@@ -1387,9 +1414,10 @@ namespace GeneXus.Programs {
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((string[]) buf[1])[0] = rslt.getString(2, 20);
                 ((short[]) buf[2])[0] = rslt.getShort(3);
-                ((short[]) buf[3])[0] = rslt.getShort(4);
+                ((bool[]) buf[3])[0] = rslt.getBool(4);
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((short[]) buf[5])[0] = rslt.getShort(6);
+                ((short[]) buf[6])[0] = rslt.getShort(7);
                 return;
              case 9 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);

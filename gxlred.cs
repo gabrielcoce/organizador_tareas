@@ -54,7 +54,7 @@ namespace GeneXus.Programs {
          objgxlred = new gxlred();
          objgxlred.context.SetSubmitInitialConfig(context);
          objgxlred.initialize();
-         ThreadPool.QueueUserWorkItem( PropagateCulture(new WaitCallback( executePrivateCatch )),objgxlred);
+         Submit( executePrivateCatch,objgxlred);
       }
 
       void executePrivateCatch( object stateInfo )

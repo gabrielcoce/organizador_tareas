@@ -339,6 +339,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Mode_SetNull( )
       {
          gxTv_SdtParticipantes_Mode = "";
+         SetDirty("Mode");
          return  ;
       }
 
@@ -366,6 +367,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Initialized_SetNull( )
       {
          gxTv_SdtParticipantes_Initialized = 0;
+         SetDirty("Initialized");
          return  ;
       }
 
@@ -393,6 +395,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Tableroid_Z_SetNull( )
       {
          gxTv_SdtParticipantes_Tableroid_Z = 0;
+         SetDirty("Tableroid_Z");
          return  ;
       }
 
@@ -420,6 +423,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Participantetableroid_Z_SetNull( )
       {
          gxTv_SdtParticipantes_Participantetableroid_Z = 0;
+         SetDirty("Participantetableroid_Z");
          return  ;
       }
 
@@ -467,6 +471,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Registrofecha_Z_SetNull( )
       {
          gxTv_SdtParticipantes_Registrofecha_Z = (DateTime)(DateTime.MinValue);
+         SetDirty("Registrofecha_Z");
          return  ;
       }
 
@@ -494,6 +499,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Participanterolid_Z_SetNull( )
       {
          gxTv_SdtParticipantes_Participanterolid_Z = 0;
+         SetDirty("Participanterolid_Z");
          return  ;
       }
 
@@ -521,6 +527,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtParticipantes_Participantetableroestado_Z_SetNull( )
       {
          gxTv_SdtParticipantes_Participantetableroestado_Z = false;
+         SetDirty("Participantetableroestado_Z");
          return  ;
       }
 

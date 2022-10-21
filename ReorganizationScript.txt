@@ -1,3 +1,2 @@
-ALTER TABLE [Tareas] ADD [TareaEstado] smallint NOT NULL CONSTRAINT TareaEstadoTareas_DEFAULT DEFAULT convert(int, 0)
-ALTER TABLE [Tareas] DROP CONSTRAINT TareaEstadoTareas_DEFAULT
+CREATE TABLE [Correo] ([CorreoId] smallint NOT NULL IDENTITY(1,1), [CorreoIdentificador] nchar(20) NOT NULL , [CorreoNombre] nchar(20) NOT NULL , [CorreoServidor] nchar(22) NOT NULL , [CorreoPuerto] smallint NOT NULL , [CorreoUsuario] nvarchar(100) NOT NULL , [CorreoContrasena] nchar(20) NOT NULL , PRIMARY KEY([CorreoId]))
 

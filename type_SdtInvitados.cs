@@ -366,6 +366,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Mode_SetNull( )
       {
          gxTv_SdtInvitados_Mode = "";
+         SetDirty("Mode");
          return  ;
       }
 
@@ -393,6 +394,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Initialized_SetNull( )
       {
          gxTv_SdtInvitados_Initialized = 0;
+         SetDirty("Initialized");
          return  ;
       }
 
@@ -420,6 +422,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Tableroid_Z_SetNull( )
       {
          gxTv_SdtInvitados_Tableroid_Z = 0;
+         SetDirty("Tableroid_Z");
          return  ;
       }
 
@@ -447,6 +450,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Registroinvitadoid_Z_SetNull( )
       {
          gxTv_SdtInvitados_Registroinvitadoid_Z = 0;
+         SetDirty("Registroinvitadoid_Z");
          return  ;
       }
 
@@ -474,6 +478,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Registroinvitadousuario_Z_SetNull( )
       {
          gxTv_SdtInvitados_Registroinvitadousuario_Z = 0;
+         SetDirty("Registroinvitadousuario_Z");
          return  ;
       }
 
@@ -501,6 +506,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Registroinvitadoemail_Z_SetNull( )
       {
          gxTv_SdtInvitados_Registroinvitadoemail_Z = "";
+         SetDirty("Registroinvitadoemail_Z");
          return  ;
       }
 
@@ -528,6 +534,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Invitadorolid_Z_SetNull( )
       {
          gxTv_SdtInvitados_Invitadorolid_Z = 0;
+         SetDirty("Invitadorolid_Z");
          return  ;
       }
 
@@ -575,6 +582,7 @@ namespace GeneXus.Programs {
       public void gxTv_SdtInvitados_Registroinvitadofecha_Z_SetNull( )
       {
          gxTv_SdtInvitados_Registroinvitadofecha_Z = (DateTime)(DateTime.MinValue);
+         SetDirty("Registroinvitadofecha_Z");
          return  ;
       }
 

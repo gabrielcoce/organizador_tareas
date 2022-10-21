@@ -499,7 +499,7 @@ namespace GeneXus.Programs {
             pr_default.execute(11, new Object[] {A9TableroId});
             if ( (pr_default.getStatus(11) != 101) )
             {
-               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Actividades"}), "CannotDeleteReferencedRecord", 1, "");
+               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Listas"}), "CannotDeleteReferencedRecord", 1, "");
                AnyError = 1;
             }
             pr_default.close(11);
@@ -507,18 +507,10 @@ namespace GeneXus.Programs {
             pr_default.execute(12, new Object[] {A9TableroId});
             if ( (pr_default.getStatus(12) != 101) )
             {
-               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Tareas Comentarios"}), "CannotDeleteReferencedRecord", 1, "");
+               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Tareas"}), "CannotDeleteReferencedRecord", 1, "");
                AnyError = 1;
             }
             pr_default.close(12);
-            /* Using cursor BC000315 */
-            pr_default.execute(13, new Object[] {A9TableroId});
-            if ( (pr_default.getStatus(13) != 101) )
-            {
-               GX_msglist.addItem(context.GetMessage( "GXM_del", new   object[]  {"Listas"}), "CannotDeleteReferencedRecord", 1, "");
-               AnyError = 1;
-            }
-            pr_default.close(13);
          }
       }
 
@@ -551,18 +543,18 @@ namespace GeneXus.Programs {
 
       public void ScanKeyStart033( )
       {
-         /* Using cursor BC000316 */
-         pr_default.execute(14, new Object[] {A9TableroId});
+         /* Using cursor BC000315 */
+         pr_default.execute(13, new Object[] {A9TableroId});
          RcdFound3 = 0;
-         if ( (pr_default.getStatus(14) != 101) )
+         if ( (pr_default.getStatus(13) != 101) )
          {
             RcdFound3 = 1;
-            A9TableroId = BC000316_A9TableroId[0];
-            A10TableroNombre = BC000316_A10TableroNombre[0];
-            A11TableroFechaCreacion = BC000316_A11TableroFechaCreacion[0];
-            A34TableroEstado = BC000316_A34TableroEstado[0];
-            A35TableroVisibilidad = BC000316_A35TableroVisibilidad[0];
-            A17PropietarioId = BC000316_A17PropietarioId[0];
+            A9TableroId = BC000315_A9TableroId[0];
+            A10TableroNombre = BC000315_A10TableroNombre[0];
+            A11TableroFechaCreacion = BC000315_A11TableroFechaCreacion[0];
+            A34TableroEstado = BC000315_A34TableroEstado[0];
+            A35TableroVisibilidad = BC000315_A35TableroVisibilidad[0];
+            A17PropietarioId = BC000315_A17PropietarioId[0];
          }
          /* Load Subordinate Levels */
       }
@@ -570,7 +562,7 @@ namespace GeneXus.Programs {
       protected void ScanKeyNext033( )
       {
          /* Scan next routine */
-         pr_default.readNext(14);
+         pr_default.readNext(13);
          RcdFound3 = 0;
          ScanKeyLoad033( ) ;
       }
@@ -579,22 +571,22 @@ namespace GeneXus.Programs {
       {
          sMode3 = Gx_mode;
          Gx_mode = "DSP";
-         if ( (pr_default.getStatus(14) != 101) )
+         if ( (pr_default.getStatus(13) != 101) )
          {
             RcdFound3 = 1;
-            A9TableroId = BC000316_A9TableroId[0];
-            A10TableroNombre = BC000316_A10TableroNombre[0];
-            A11TableroFechaCreacion = BC000316_A11TableroFechaCreacion[0];
-            A34TableroEstado = BC000316_A34TableroEstado[0];
-            A35TableroVisibilidad = BC000316_A35TableroVisibilidad[0];
-            A17PropietarioId = BC000316_A17PropietarioId[0];
+            A9TableroId = BC000315_A9TableroId[0];
+            A10TableroNombre = BC000315_A10TableroNombre[0];
+            A11TableroFechaCreacion = BC000315_A11TableroFechaCreacion[0];
+            A34TableroEstado = BC000315_A34TableroEstado[0];
+            A35TableroVisibilidad = BC000315_A35TableroVisibilidad[0];
+            A17PropietarioId = BC000315_A17PropietarioId[0];
          }
          Gx_mode = sMode3;
       }
 
       protected void ScanKeyEnd033( )
       {
-         pr_default.close(14);
+         pr_default.close(13);
       }
 
       protected void AfterConfirm033( )
@@ -1175,19 +1167,15 @@ namespace GeneXus.Programs {
          BC000312_A9TableroId = new short[1] ;
          BC000312_A36EtiquetaId = new short[1] ;
          BC000313_A9TableroId = new short[1] ;
-         BC000313_A12TareaId = new short[1] ;
-         BC000313_A30ActividadId = new short[1] ;
+         BC000313_A21ListaId = new short[1] ;
          BC000314_A9TableroId = new short[1] ;
          BC000314_A12TareaId = new short[1] ;
-         BC000314_A27ComentarioId = new short[1] ;
          BC000315_A9TableroId = new short[1] ;
-         BC000315_A21ListaId = new short[1] ;
-         BC000316_A9TableroId = new short[1] ;
-         BC000316_A10TableroNombre = new string[] {""} ;
-         BC000316_A11TableroFechaCreacion = new DateTime[] {DateTime.MinValue} ;
-         BC000316_A34TableroEstado = new bool[] {false} ;
-         BC000316_A35TableroVisibilidad = new bool[] {false} ;
-         BC000316_A17PropietarioId = new short[1] ;
+         BC000315_A10TableroNombre = new string[] {""} ;
+         BC000315_A11TableroFechaCreacion = new DateTime[] {DateTime.MinValue} ;
+         BC000315_A34TableroEstado = new bool[] {false} ;
+         BC000315_A35TableroVisibilidad = new bool[] {false} ;
+         BC000315_A17PropietarioId = new short[1] ;
          BackMsgLst = new msglist();
          LclMsgLst = new msglist();
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.tableros_bc__default(),
@@ -1223,16 +1211,13 @@ namespace GeneXus.Programs {
                BC000312_A9TableroId, BC000312_A36EtiquetaId
                }
                , new Object[] {
-               BC000313_A9TableroId, BC000313_A12TareaId, BC000313_A30ActividadId
+               BC000313_A9TableroId, BC000313_A21ListaId
                }
                , new Object[] {
-               BC000314_A9TableroId, BC000314_A12TareaId, BC000314_A27ComentarioId
+               BC000314_A9TableroId, BC000314_A12TareaId
                }
                , new Object[] {
-               BC000315_A9TableroId, BC000315_A21ListaId
-               }
-               , new Object[] {
-               BC000316_A9TableroId, BC000316_A10TableroNombre, BC000316_A11TableroFechaCreacion, BC000316_A34TableroEstado, BC000316_A35TableroVisibilidad, BC000316_A17PropietarioId
+               BC000315_A9TableroId, BC000315_A10TableroNombre, BC000315_A11TableroFechaCreacion, BC000315_A34TableroEstado, BC000315_A35TableroVisibilidad, BC000315_A17PropietarioId
                }
             }
          );
@@ -1301,19 +1286,15 @@ namespace GeneXus.Programs {
       private short[] BC000312_A9TableroId ;
       private short[] BC000312_A36EtiquetaId ;
       private short[] BC000313_A9TableroId ;
-      private short[] BC000313_A12TareaId ;
-      private short[] BC000313_A30ActividadId ;
+      private short[] BC000313_A21ListaId ;
       private short[] BC000314_A9TableroId ;
       private short[] BC000314_A12TareaId ;
-      private short[] BC000314_A27ComentarioId ;
       private short[] BC000315_A9TableroId ;
-      private short[] BC000315_A21ListaId ;
-      private short[] BC000316_A9TableroId ;
-      private string[] BC000316_A10TableroNombre ;
-      private DateTime[] BC000316_A11TableroFechaCreacion ;
-      private bool[] BC000316_A34TableroEstado ;
-      private bool[] BC000316_A35TableroVisibilidad ;
-      private short[] BC000316_A17PropietarioId ;
+      private string[] BC000315_A10TableroNombre ;
+      private DateTime[] BC000315_A11TableroFechaCreacion ;
+      private bool[] BC000315_A34TableroEstado ;
+      private bool[] BC000315_A35TableroVisibilidad ;
+      private short[] BC000315_A17PropietarioId ;
       private msglist BackMsgLst ;
       private msglist LclMsgLst ;
    }
@@ -1338,7 +1319,6 @@ namespace GeneXus.Programs {
          ,new ForEachCursor(def[11])
          ,new ForEachCursor(def[12])
          ,new ForEachCursor(def[13])
-         ,new ForEachCursor(def[14])
        };
     }
 
@@ -1413,10 +1393,6 @@ namespace GeneXus.Programs {
           prmBC000315 = new Object[] {
           new ParDef("@TableroId",GXType.Int16,4,0)
           };
-          Object[] prmBC000316;
-          prmBC000316 = new Object[] {
-          new ParDef("@TableroId",GXType.Int16,4,0)
-          };
           def= new CursorDef[] {
               new CursorDef("BC00032", "SELECT [TableroId], [TableroNombre], [TableroFechaCreacion], [TableroEstado], [TableroVisibilidad], [PropietarioId] AS PropietarioId FROM [Tableros] WITH (UPDLOCK) WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00032,1, GxCacheFrequency.OFF ,true,false )
              ,new CursorDef("BC00033", "SELECT [TableroId], [TableroNombre], [TableroFechaCreacion], [TableroEstado], [TableroVisibilidad], [PropietarioId] AS PropietarioId FROM [Tableros] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC00033,1, GxCacheFrequency.OFF ,true,false )
@@ -1429,10 +1405,9 @@ namespace GeneXus.Programs {
              ,new CursorDef("BC000310", "SELECT TOP 1 [TableroId], [RegistroInvitadoId] FROM [Invitados] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000310,1, GxCacheFrequency.OFF ,true,true )
              ,new CursorDef("BC000311", "SELECT TOP 1 [TableroId], [ParticipanteTableroId] FROM [Participantes] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000311,1, GxCacheFrequency.OFF ,true,true )
              ,new CursorDef("BC000312", "SELECT TOP 1 [TableroId], [EtiquetaId] FROM [TablerosEtiquetas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000312,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("BC000313", "SELECT TOP 1 [TableroId], [TareaId], [ActividadId] FROM [Actividades] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000313,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("BC000314", "SELECT TOP 1 [TableroId], [TareaId], [ComentarioId] FROM [TareasComentarios] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000314,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("BC000315", "SELECT TOP 1 [TableroId], [ListaId] FROM [Listas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000315,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("BC000316", "SELECT TM1.[TableroId], TM1.[TableroNombre], TM1.[TableroFechaCreacion], TM1.[TableroEstado], TM1.[TableroVisibilidad], TM1.[PropietarioId] AS PropietarioId FROM [Tableros] TM1 WHERE TM1.[TableroId] = @TableroId ORDER BY TM1.[TableroId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000316,100, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC000313", "SELECT TOP 1 [TableroId], [ListaId] FROM [Listas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000313,1, GxCacheFrequency.OFF ,true,true )
+             ,new CursorDef("BC000314", "SELECT TOP 1 [TableroId], [TareaId] FROM [Tareas] WHERE [TableroId] = @TableroId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000314,1, GxCacheFrequency.OFF ,true,true )
+             ,new CursorDef("BC000315", "SELECT TM1.[TableroId], TM1.[TableroNombre], TM1.[TableroFechaCreacion], TM1.[TableroEstado], TM1.[TableroVisibilidad], TM1.[PropietarioId] AS PropietarioId FROM [Tableros] TM1 WHERE TM1.[TableroId] = @TableroId ORDER BY TM1.[TableroId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000315,100, GxCacheFrequency.OFF ,true,false )
           };
        }
     }
@@ -1488,18 +1463,12 @@ namespace GeneXus.Programs {
              case 11 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((short[]) buf[1])[0] = rslt.getShort(2);
-                ((short[]) buf[2])[0] = rslt.getShort(3);
                 return;
              case 12 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((short[]) buf[1])[0] = rslt.getShort(2);
-                ((short[]) buf[2])[0] = rslt.getShort(3);
                 return;
              case 13 :
-                ((short[]) buf[0])[0] = rslt.getShort(1);
-                ((short[]) buf[1])[0] = rslt.getShort(2);
-                return;
-             case 14 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
                 ((string[]) buf[1])[0] = rslt.getString(2, 100);
                 ((DateTime[]) buf[2])[0] = rslt.getGXDateTime(3);

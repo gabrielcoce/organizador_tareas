@@ -106,43 +106,12 @@ namespace GeneXus.Programs {
             }
             else if ( StringUtil.StrCmp(gxfirstwebparm, "gxajaxNewRow_"+"Grid1") == 0 )
             {
-               nRC_GXsfl_74 = (int)(NumberUtil.Val( GetPar( "nRC_GXsfl_74"), "."));
-               nGXsfl_74_idx = (int)(NumberUtil.Val( GetPar( "nGXsfl_74_idx"), "."));
-               sGXsfl_74_idx = GetPar( "sGXsfl_74_idx");
-               setAjaxCallMode();
-               if ( ! IsValidAjaxCall( true) )
-               {
-                  GxWebError = 1;
-                  return  ;
-               }
-               gxnrGrid1_newrow( ) ;
+               gxnrGrid1_newrow_invoke( ) ;
                return  ;
             }
             else if ( StringUtil.StrCmp(gxfirstwebparm, "gxajaxGridRefresh_"+"Grid1") == 0 )
             {
-               subGrid1_Rows = (int)(NumberUtil.Val( GetPar( "subGrid1_Rows"), "."));
-               AV6cTableroId = (short)(NumberUtil.Val( GetPar( "cTableroId"), "."));
-               AV7cRegistroInvitadoId = (short)(NumberUtil.Val( GetPar( "cRegistroInvitadoId"), "."));
-               AV8cRegistroInvitadoUsuario = (short)(NumberUtil.Val( GetPar( "cRegistroInvitadoUsuario"), "."));
-               AV9cRegistroInvitadoEmail = GetPar( "cRegistroInvitadoEmail");
-               AV10cInvitadoRolId = (short)(NumberUtil.Val( GetPar( "cInvitadoRolId"), "."));
-               AV11cRegistroInvitadoFecha = context.localUtil.ParseDTimeParm( GetPar( "cRegistroInvitadoFecha"));
-               setAjaxCallMode();
-               if ( ! IsValidAjaxCall( true) )
-               {
-                  GxWebError = 1;
-                  return  ;
-               }
-               gxgrGrid1_refresh( subGrid1_Rows, AV6cTableroId, AV7cRegistroInvitadoId, AV8cRegistroInvitadoUsuario, AV9cRegistroInvitadoEmail, AV10cInvitadoRolId, AV11cRegistroInvitadoFecha) ;
-               GxWebStd.gx_hidden_field( context, "ADVANCEDCONTAINER_Class", StringUtil.RTrim( divAdvancedcontainer_Class));
-               GxWebStd.gx_hidden_field( context, "BTNTOGGLE_Class", StringUtil.RTrim( bttBtntoggle_Class));
-               GxWebStd.gx_hidden_field( context, "TABLEROIDFILTERCONTAINER_Class", StringUtil.RTrim( divTableroidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "REGISTROINVITADOIDFILTERCONTAINER_Class", StringUtil.RTrim( divRegistroinvitadoidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "REGISTROINVITADOUSUARIOFILTERCONTAINER_Class", StringUtil.RTrim( divRegistroinvitadousuariofiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "REGISTROINVITADOEMAILFILTERCONTAINER_Class", StringUtil.RTrim( divRegistroinvitadoemailfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "INVITADOROLIDFILTERCONTAINER_Class", StringUtil.RTrim( divInvitadorolidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "REGISTROINVITADOFECHAFILTERCONTAINER_Class", StringUtil.RTrim( divRegistroinvitadofechafiltercontainer_Class));
-               AddString( context.getJSONResponse( )) ;
+               gxgrGrid1_refresh_invoke( ) ;
                return  ;
             }
             else
@@ -176,6 +145,41 @@ namespace GeneXus.Programs {
          {
             context.PushCurrentUrl();
          }
+      }
+
+      protected void gxnrGrid1_newrow_invoke( )
+      {
+         nRC_GXsfl_74 = (int)(NumberUtil.Val( GetPar( "nRC_GXsfl_74"), "."));
+         nGXsfl_74_idx = (int)(NumberUtil.Val( GetPar( "nGXsfl_74_idx"), "."));
+         sGXsfl_74_idx = GetPar( "sGXsfl_74_idx");
+         setAjaxCallMode();
+         if ( ! IsValidAjaxCall( true) )
+         {
+            GxWebError = 1;
+            return  ;
+         }
+         gxnrGrid1_newrow( ) ;
+         /* End function gxnrGrid1_newrow_invoke */
+      }
+
+      protected void gxgrGrid1_refresh_invoke( )
+      {
+         subGrid1_Rows = (int)(NumberUtil.Val( GetPar( "subGrid1_Rows"), "."));
+         AV6cTableroId = (short)(NumberUtil.Val( GetPar( "cTableroId"), "."));
+         AV7cRegistroInvitadoId = (short)(NumberUtil.Val( GetPar( "cRegistroInvitadoId"), "."));
+         AV8cRegistroInvitadoUsuario = (short)(NumberUtil.Val( GetPar( "cRegistroInvitadoUsuario"), "."));
+         AV9cRegistroInvitadoEmail = GetPar( "cRegistroInvitadoEmail");
+         AV10cInvitadoRolId = (short)(NumberUtil.Val( GetPar( "cInvitadoRolId"), "."));
+         AV11cRegistroInvitadoFecha = context.localUtil.ParseDTimeParm( GetPar( "cRegistroInvitadoFecha"));
+         setAjaxCallMode();
+         if ( ! IsValidAjaxCall( true) )
+         {
+            GxWebError = 1;
+            return  ;
+         }
+         gxgrGrid1_refresh( subGrid1_Rows, AV6cTableroId, AV7cRegistroInvitadoId, AV8cRegistroInvitadoUsuario, AV9cRegistroInvitadoEmail, AV10cInvitadoRolId, AV11cRegistroInvitadoFecha) ;
+         AddString( context.getJSONResponse( )) ;
+         /* End function gxgrGrid1_refresh_invoke */
       }
 
       public override void webExecute( )
@@ -258,18 +262,18 @@ namespace GeneXus.Programs {
          }
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?20229920475029", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
          }
-         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1940340), false, true);
+         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1848160), false, true);
          context.WriteHtmlText( Form.Headerrawhtml) ;
          context.CloseHtmlHeader();
          if ( context.isSpaRequest( ) )
@@ -632,108 +636,7 @@ namespace GeneXus.Programs {
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "left", "top", "", "", "div");
             /*  Grid Control  */
             Grid1Container.SetWrapped(nGXWrapped);
-            if ( Grid1Container.GetWrapped() == 1 )
-            {
-               context.WriteHtmlText( "<div id=\""+"Grid1Container"+"DivS\" data-gxgridid=\"74\">") ;
-               sStyleString = "";
-               GxWebStd.gx_table_start( context, subGrid1_Internalname, subGrid1_Internalname, "", "PromptGrid", 0, "", "", 1, 2, sStyleString, "", "", 0);
-               /* Subfile titles */
-               context.WriteHtmlText( "<tr") ;
-               context.WriteHtmlTextNl( ">") ;
-               if ( subGrid1_Backcolorstyle == 0 )
-               {
-                  subGrid1_Titlebackstyle = 0;
-                  if ( StringUtil.Len( subGrid1_Class) > 0 )
-                  {
-                     subGrid1_Linesclass = subGrid1_Class+"Title";
-                  }
-               }
-               else
-               {
-                  subGrid1_Titlebackstyle = 1;
-                  if ( subGrid1_Backcolorstyle == 1 )
-                  {
-                     subGrid1_Titlebackcolor = subGrid1_Allbackcolor;
-                     if ( StringUtil.Len( subGrid1_Class) > 0 )
-                     {
-                        subGrid1_Linesclass = subGrid1_Class+"UniformTitle";
-                     }
-                  }
-                  else
-                  {
-                     if ( StringUtil.Len( subGrid1_Class) > 0 )
-                     {
-                        subGrid1_Linesclass = subGrid1_Class+"Title";
-                     }
-                  }
-               }
-               context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"SelectionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Tablero Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Invitado Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Invitado Usuario") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Rol Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Invitado Fecha") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlTextNl( "</tr>") ;
-               Grid1Container.AddObjectProperty("GridName", "Grid1");
-            }
-            else
-            {
-               if ( isAjaxCallMode( ) )
-               {
-                  Grid1Container = new GXWebGrid( context);
-               }
-               else
-               {
-                  Grid1Container.Clear();
-               }
-               Grid1Container.SetWrapped(nGXWrapped);
-               Grid1Container.AddObjectProperty("GridName", "Grid1");
-               Grid1Container.AddObjectProperty("Header", subGrid1_Header);
-               Grid1Container.AddObjectProperty("Class", "PromptGrid");
-               Grid1Container.AddObjectProperty("Cellpadding", StringUtil.LTrim( StringUtil.NToC( (decimal)(1), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Cellspacing", StringUtil.LTrim( StringUtil.NToC( (decimal)(2), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Backcolorstyle", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Backcolorstyle), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("CmpContext", "");
-               Grid1Container.AddObjectProperty("InMasterPage", "false");
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.convertURL( AV5LinkSelection));
-               Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtavLinkselection_Link));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A9TableroId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A40RegistroInvitadoId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A43RegistroInvitadoUsuario), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A41InvitadoRolId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.localUtil.TToC( A45RegistroInvitadoFecha, 10, 8, 0, 3, "/", ":", " "));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Container.AddObjectProperty("Selectedindex", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectedindex), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowselection", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowselection), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Selectioncolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectioncolor), 9, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowhover", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowhovering), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Hovercolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Hoveringcolor), 9, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowcollapsing", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowcollapsing), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Collapsed", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Collapsed), 1, 0, ".", "")));
-            }
+            StartGridControl74( ) ;
          }
          if ( wbEnd == 74 )
          {
@@ -750,7 +653,7 @@ namespace GeneXus.Programs {
                Grid1Container.AddObjectProperty("GRID1_nFirstRecordOnPage", GRID1_nFirstRecordOnPage);
                sStyleString = "";
                context.WriteHtmlText( "<div id=\""+"Grid1Container"+"Div\" "+sStyleString+">"+"</div>") ;
-               context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container);
+               context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container, subGrid1_Internalname);
                if ( ! context.isAjaxRequest( ) && ! context.isSpaRequest( ) )
                {
                   GxWebStd.gx_hidden_field( context, "Grid1ContainerData", Grid1Container.ToJavascriptSource());
@@ -798,7 +701,7 @@ namespace GeneXus.Programs {
                   Grid1Container.AddObjectProperty("GRID1_nFirstRecordOnPage", GRID1_nFirstRecordOnPage);
                   sStyleString = "";
                   context.WriteHtmlText( "<div id=\""+"Grid1Container"+"Div\" "+sStyleString+">"+"</div>") ;
-                  context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container);
+                  context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container, subGrid1_Internalname);
                   if ( ! context.isAjaxRequest( ) && ! context.isSpaRequest( ) )
                   {
                      GxWebStd.gx_hidden_field( context, "Grid1ContainerData", Grid1Container.ToJavascriptSource());
@@ -826,7 +729,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Selection List  T10", 0) ;
          }
@@ -1575,7 +1478,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20229920475075", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161247596", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1591,7 +1494,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("gx00c0.js", "?20229920475075", false, true);
+         context.AddJavascriptSource("gx00c0.js", "?202210161247596", false, true);
          /* End function include_jscripts */
       }
 
@@ -1745,6 +1648,112 @@ namespace GeneXus.Programs {
          /* End function init_web_controls */
       }
 
+      protected void StartGridControl74( )
+      {
+         if ( Grid1Container.GetWrapped() == 1 )
+         {
+            context.WriteHtmlText( "<div id=\""+"Grid1Container"+"DivS\" data-gxgridid=\"74\">") ;
+            sStyleString = "";
+            GxWebStd.gx_table_start( context, subGrid1_Internalname, subGrid1_Internalname, "", "PromptGrid", 0, "", "", 1, 2, sStyleString, "", "", 0);
+            /* Subfile titles */
+            context.WriteHtmlText( "<tr") ;
+            context.WriteHtmlTextNl( ">") ;
+            if ( subGrid1_Backcolorstyle == 0 )
+            {
+               subGrid1_Titlebackstyle = 0;
+               if ( StringUtil.Len( subGrid1_Class) > 0 )
+               {
+                  subGrid1_Linesclass = subGrid1_Class+"Title";
+               }
+            }
+            else
+            {
+               subGrid1_Titlebackstyle = 1;
+               if ( subGrid1_Backcolorstyle == 1 )
+               {
+                  subGrid1_Titlebackcolor = subGrid1_Allbackcolor;
+                  if ( StringUtil.Len( subGrid1_Class) > 0 )
+                  {
+                     subGrid1_Linesclass = subGrid1_Class+"UniformTitle";
+                  }
+               }
+               else
+               {
+                  if ( StringUtil.Len( subGrid1_Class) > 0 )
+                  {
+                     subGrid1_Linesclass = subGrid1_Class+"Title";
+                  }
+               }
+            }
+            context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"SelectionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Tablero Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Invitado Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Invitado Usuario") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Rol Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Invitado Fecha") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlTextNl( "</tr>") ;
+            Grid1Container.AddObjectProperty("GridName", "Grid1");
+         }
+         else
+         {
+            if ( isAjaxCallMode( ) )
+            {
+               Grid1Container = new GXWebGrid( context);
+            }
+            else
+            {
+               Grid1Container.Clear();
+            }
+            Grid1Container.SetWrapped(nGXWrapped);
+            Grid1Container.AddObjectProperty("GridName", "Grid1");
+            Grid1Container.AddObjectProperty("Header", subGrid1_Header);
+            Grid1Container.AddObjectProperty("Class", "PromptGrid");
+            Grid1Container.AddObjectProperty("Cellpadding", StringUtil.LTrim( StringUtil.NToC( (decimal)(1), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Cellspacing", StringUtil.LTrim( StringUtil.NToC( (decimal)(2), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Backcolorstyle", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Backcolorstyle), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("CmpContext", "");
+            Grid1Container.AddObjectProperty("InMasterPage", "false");
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.convertURL( AV5LinkSelection));
+            Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtavLinkselection_Link));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A9TableroId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A40RegistroInvitadoId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A43RegistroInvitadoUsuario), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A41InvitadoRolId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.localUtil.TToC( A45RegistroInvitadoFecha, 10, 8, 0, 3, "/", ":", " "));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Container.AddObjectProperty("Selectedindex", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectedindex), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowselection", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowselection), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Selectioncolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectioncolor), 9, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowhover", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowhovering), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Hovercolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Hoveringcolor), 9, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowcollapsing", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowcollapsing), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Collapsed", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Collapsed), 1, 0, ".", "")));
+         }
+      }
+
       protected void init_default_properties( )
       {
          lblLbltableroidfilter_Internalname = "LBLTABLEROIDFILTER";
@@ -1788,15 +1797,15 @@ namespace GeneXus.Programs {
             disableJsOutput();
          }
          init_default_properties( ) ;
+         subGrid1_Allowcollapsing = 0;
+         subGrid1_Allowselection = 0;
+         subGrid1_Header = "";
          edtRegistroInvitadoFecha_Jsonclick = "";
          edtInvitadoRolId_Jsonclick = "";
          edtRegistroInvitadoUsuario_Jsonclick = "";
          edtRegistroInvitadoId_Jsonclick = "";
          edtTableroId_Jsonclick = "";
-         subGrid1_Allowcollapsing = 0;
-         subGrid1_Allowselection = 0;
          edtavLinkselection_Link = "";
-         subGrid1_Header = "";
          subGrid1_Class = "PromptGrid";
          subGrid1_Backcolorstyle = 0;
          edtavCregistroinvitadofecha_Jsonclick = "";
@@ -1816,11 +1825,6 @@ namespace GeneXus.Programs {
          edtavCtableroid_Jsonclick = "";
          edtavCtableroid_Enabled = 1;
          edtavCtableroid_Visible = 1;
-         Form.Headerrawhtml = "";
-         Form.Background = "";
-         Form.Textcolor = 0;
-         Form.Backcolor = (int)(0xFFFFFF);
-         Form.Caption = "Selection List  T10";
          divRegistroinvitadofechafiltercontainer_Class = "AdvancedContainerItem";
          divInvitadorolidfiltercontainer_Class = "AdvancedContainerItem";
          divRegistroinvitadoemailfiltercontainer_Class = "AdvancedContainerItem";
@@ -1829,6 +1833,11 @@ namespace GeneXus.Programs {
          divTableroidfiltercontainer_Class = "AdvancedContainerItem";
          bttBtntoggle_Class = "BtnToggle";
          divAdvancedcontainer_Class = "AdvancedContainerVisible";
+         Form.Headerrawhtml = "";
+         Form.Background = "";
+         Form.Textcolor = 0;
+         Form.Backcolor = (int)(0xFFFFFF);
+         Form.Caption = "Selection List  T10";
          subGrid1_Rows = 10;
          if ( context.isSpaRequest( ) )
          {
@@ -1917,16 +1926,14 @@ namespace GeneXus.Programs {
          bttBtntoggle_Jsonclick = "";
          Grid1Container = new GXWebGrid( context);
          sStyleString = "";
-         subGrid1_Linesclass = "";
-         Grid1Column = new GXWebColumn();
-         AV5LinkSelection = "";
-         A45RegistroInvitadoFecha = (DateTime)(DateTime.MinValue);
          bttBtn_cancel_Jsonclick = "";
          sEvt = "";
          EvtGridId = "";
          EvtRowId = "";
          sEvtType = "";
+         AV5LinkSelection = "";
          AV17Linkselection_GXI = "";
+         A45RegistroInvitadoFecha = (DateTime)(DateTime.MinValue);
          scmdbuf = "";
          lV9cRegistroInvitadoEmail = "";
          A44RegistroInvitadoEmail = "";
@@ -1941,8 +1948,10 @@ namespace GeneXus.Programs {
          Grid1Row = new GXWebRow();
          BackMsgLst = new msglist();
          LclMsgLst = new msglist();
+         subGrid1_Linesclass = "";
          sImgUrl = "";
          ROClassString = "";
+         Grid1Column = new GXWebColumn();
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.gx00c0__default(),
             new Object[][] {
                 new Object[] {
@@ -1970,23 +1979,23 @@ namespace GeneXus.Programs {
       private short gxajaxcallmode ;
       private short wbEnd ;
       private short wbStart ;
-      private short subGrid1_Backcolorstyle ;
-      private short subGrid1_Titlebackstyle ;
       private short A9TableroId ;
       private short A40RegistroInvitadoId ;
       private short A43RegistroInvitadoUsuario ;
       private short A41InvitadoRolId ;
+      private short nDonePA ;
+      private short gxcookieaux ;
+      private short subGrid1_Backcolorstyle ;
+      private short nGXWrapped ;
+      private short subGrid1_Backstyle ;
+      private short subGrid1_Titlebackstyle ;
       private short subGrid1_Allowselection ;
       private short subGrid1_Allowhovering ;
       private short subGrid1_Allowcollapsing ;
       private short subGrid1_Collapsed ;
-      private short nDonePA ;
-      private short gxcookieaux ;
-      private short nGXWrapped ;
-      private short subGrid1_Backstyle ;
       private int nRC_GXsfl_74 ;
-      private int nGXsfl_74_idx=1 ;
       private int subGrid1_Rows ;
+      private int nGXsfl_74_idx=1 ;
       private int edtavCtableroid_Enabled ;
       private int edtavCtableroid_Visible ;
       private int edtavCregistroinvitadoid_Enabled ;
@@ -1998,16 +2007,16 @@ namespace GeneXus.Programs {
       private int edtavCinvitadorolid_Enabled ;
       private int edtavCinvitadorolid_Visible ;
       private int edtavCregistroinvitadofecha_Enabled ;
-      private int subGrid1_Titlebackcolor ;
-      private int subGrid1_Allbackcolor ;
-      private int subGrid1_Selectedindex ;
-      private int subGrid1_Selectioncolor ;
-      private int subGrid1_Hoveringcolor ;
       private int subGrid1_Islastpage ;
       private int GXPagingFrom2 ;
       private int GXPagingTo2 ;
       private int idxLst ;
       private int subGrid1_Backcolor ;
+      private int subGrid1_Allbackcolor ;
+      private int subGrid1_Titlebackcolor ;
+      private int subGrid1_Selectedindex ;
+      private int subGrid1_Selectioncolor ;
+      private int subGrid1_Hoveringcolor ;
       private long GRID1_nFirstRecordOnPage ;
       private long GRID1_nCurrentRecord ;
       private long GRID1_nRecordCount ;
@@ -2068,10 +2077,6 @@ namespace GeneXus.Programs {
       private string bttBtntoggle_Jsonclick ;
       private string sStyleString ;
       private string subGrid1_Internalname ;
-      private string subGrid1_Class ;
-      private string subGrid1_Linesclass ;
-      private string subGrid1_Header ;
-      private string edtavLinkselection_Link ;
       private string bttBtn_cancel_Internalname ;
       private string bttBtn_cancel_Jsonclick ;
       private string sEvt ;
@@ -2087,6 +2092,9 @@ namespace GeneXus.Programs {
       private string scmdbuf ;
       private string AV14ADVANCED_LABEL_TEMPLATE ;
       private string sGXsfl_74_fel_idx="0001" ;
+      private string subGrid1_Class ;
+      private string subGrid1_Linesclass ;
+      private string edtavLinkselection_Link ;
       private string sImgUrl ;
       private string ROClassString ;
       private string edtTableroId_Jsonclick ;
@@ -2094,6 +2102,7 @@ namespace GeneXus.Programs {
       private string edtRegistroInvitadoUsuario_Jsonclick ;
       private string edtInvitadoRolId_Jsonclick ;
       private string edtRegistroInvitadoFecha_Jsonclick ;
+      private string subGrid1_Header ;
       private DateTime AV11cRegistroInvitadoFecha ;
       private DateTime A45RegistroInvitadoFecha ;
       private bool entryPointCalled ;

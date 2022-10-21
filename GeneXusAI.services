@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ExposableServices module="GeneXusAI">
+  <Service name="GeneXusAI.Custom.Train" fullName="GeneXus.AI.genexusai.custom.train" />
+  <Service name="GeneXusAI.Custom.Evaluate" fullName="GeneXus.AI.genexusai.custom.evaluate" />
+  <Service name="GeneXusAI.Custom.Check" fullName="GeneXus.AI.genexusai.custom.check" />
+  <Service name="GeneXusAI.Custom.Deploy" fullName="GeneXus.AI.genexusai.custom.deploy" />
+  <Service name="GeneXusAI.Custom.Delete" fullName="GeneXus.AI.genexusai.custom.delete" />
+  <Service name="GeneXusAI.Custom.Inference.Cloud.Train" fullName="GeneXus.AI.genexusai.custom.inference.cloud.train" />
+  <Service name="GeneXusAI.Custom.Inference.Cloud.Evaluate" fullName="GeneXus.AI.genexusai.custom.inference.cloud.evaluate" />
+  <Service name="GeneXusAI.Custom.Inference.Cloud.Check" fullName="GeneXus.AI.genexusai.custom.inference.cloud.check" />
+  <Service name="GeneXusAI.Custom.Inference.Cloud.Deploy" fullName="GeneXus.AI.genexusai.custom.inference.cloud.deploy" />
+  <Service name="GeneXusAI.Custom.Inference.Cloud.Delete" fullName="GeneXus.AI.genexusai.custom.inference.cloud.delete" />
+  <Service name="GeneXusAI.Custom.Inference.Cloud.Predict" fullName="GeneXus.AI.genexusai.custom.inference.cloud.predict" />
+  <Service name="GeneXusAI.Video.Process" fullName="GeneXus.AI.genexusai.video.process" />
+  <Service name="GeneXusAI.Video.Analyze" fullName="GeneXus.AI.genexusai.video.analyze" />
+  <Service name="GeneXusAI.Video.Inference.Cloud.Process" fullName="GeneXus.AI.genexusai.video.inference.cloud.process" />
+  <Service name="GeneXusAI.Video.Inference.Cloud.Analyze" fullName="GeneXus.AI.genexusai.video.inference.cloud.analyze" />
+  <Service name="GeneXusAI.zCommon.Media.Image.GetDimension" fullName="GeneXus.AI.genexusai.zcommon.media.image.getdimension" />
+  <Service name="GeneXusAI.zCommon.HTTP.SD.UploadBlob" fullName="GeneXus.AI.genexusai.zcommon.http.sd.uploadblob" />
+  <Service name="GeneXusAI.Audio.TextToSpeech" fullName="GeneXus.AI.genexusai.audio.texttospeech" />
+  <Service name="GeneXusAI.Audio.SpeechToText" fullName="GeneXus.AI.genexusai.audio.speechtotext" />
+  <Service name="GeneXusAI.Audio.Inference.Cloud.TextToSpeech" fullName="GeneXus.AI.genexusai.audio.inference.cloud.texttospeech" />
+  <Service name="GeneXusAI.Audio.Inference.Cloud.SpeechToText" fullName="GeneXus.AI.genexusai.audio.inference.cloud.speechtotext" />
+  <Service name="GeneXusAI.Image.DetectScene" fullName="GeneXus.AI.genexusai.image.detectscene" />
+  <Service name="GeneXusAI.Image.DetectFaces" fullName="GeneXus.AI.genexusai.image.detectfaces" />
+  <Service name="GeneXusAI.Image.DetectObjects" fullName="GeneXus.AI.genexusai.image.detectobjects" />
+  <Service name="GeneXusAI.Image.OCR" fullName="GeneXus.AI.genexusai.image.ocr" />
+  <Service name="GeneXusAI.Image.Classify" fullName="GeneXus.AI.genexusai.image.classify" />
+  <Service name="GeneXusAI.Image.Inference.Cloud.DetectScene" fullName="GeneXus.AI.genexusai.image.inference.cloud.detectscene" />
+  <Service name="GeneXusAI.Image.Inference.Cloud.DetectFaces" fullName="GeneXus.AI.genexusai.image.inference.cloud.detectfaces" />
+  <Service name="GeneXusAI.Image.Inference.Cloud.DetectObjects" fullName="GeneXus.AI.genexusai.image.inference.cloud.detectobjects" />
+  <Service name="GeneXusAI.Image.Inference.Cloud.OCR" fullName="GeneXus.AI.genexusai.image.inference.cloud.ocr" />
+  <Service name="GeneXusAI.Image.Inference.Cloud.Classify" fullName="GeneXus.AI.genexusai.image.inference.cloud.classify" />
+  <Service name="GeneXusAI.Text.DetectLanguage" fullName="GeneXus.AI.genexusai.text.detectlanguage" />
+  <Service name="GeneXusAI.Text.Translate" fullName="GeneXus.AI.genexusai.text.translate" />
+  <Service name="GeneXusAI.Text.SentimentAnalysis" fullName="GeneXus.AI.genexusai.text.sentimentanalysis" />
+  <Service name="GeneXusAI.Text.ExtractEntities" fullName="GeneXus.AI.genexusai.text.extractentities" />
+  <Service name="GeneXusAI.Text.KeyPhrases" fullName="GeneXus.AI.genexusai.text.keyphrases" />
+  <Service name="GeneXusAI.Text.Inference.Cloud.DetectLanguage" fullName="GeneXus.AI.genexusai.text.inference.cloud.detectlanguage" />
+  <Service name="GeneXusAI.Text.Inference.Cloud.Translate" fullName="GeneXus.AI.genexusai.text.inference.cloud.translate" />
+  <Service name="GeneXusAI.Text.Inference.Cloud.SentimentAnalysis" fullName="GeneXus.AI.genexusai.text.inference.cloud.sentimentanalysis" />
+  <Service name="GeneXusAI.Text.Inference.Cloud.ExtractEntities" fullName="GeneXus.AI.genexusai.text.inference.cloud.extractentities" />
+  <Service name="GeneXusAI.Text.Inference.Cloud.KeyPhrases" fullName="GeneXus.AI.genexusai.text.inference.cloud.keyphrases" />
+</ExposableServices>

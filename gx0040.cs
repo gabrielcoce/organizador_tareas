@@ -106,45 +106,12 @@ namespace GeneXus.Programs {
             }
             else if ( StringUtil.StrCmp(gxfirstwebparm, "gxajaxNewRow_"+"Grid1") == 0 )
             {
-               nRC_GXsfl_84 = (int)(NumberUtil.Val( GetPar( "nRC_GXsfl_84"), "."));
-               nGXsfl_84_idx = (int)(NumberUtil.Val( GetPar( "nGXsfl_84_idx"), "."));
-               sGXsfl_84_idx = GetPar( "sGXsfl_84_idx");
-               setAjaxCallMode();
-               if ( ! IsValidAjaxCall( true) )
-               {
-                  GxWebError = 1;
-                  return  ;
-               }
-               gxnrGrid1_newrow( ) ;
+               gxnrGrid1_newrow_invoke( ) ;
                return  ;
             }
             else if ( StringUtil.StrCmp(gxfirstwebparm, "gxajaxGridRefresh_"+"Grid1") == 0 )
             {
-               subGrid1_Rows = (int)(NumberUtil.Val( GetPar( "subGrid1_Rows"), "."));
-               AV6cTableroId = (short)(NumberUtil.Val( GetPar( "cTableroId"), "."));
-               AV7cTareaId = (short)(NumberUtil.Val( GetPar( "cTareaId"), "."));
-               AV8cTareaNombre = GetPar( "cTareaNombre");
-               AV10cResponsableId = (short)(NumberUtil.Val( GetPar( "cResponsableId"), "."));
-               AV11cTareaFechaInicio = context.localUtil.ParseDateParm( GetPar( "cTareaFechaInicio"));
-               AV12cTareaFechaFin = context.localUtil.ParseDateParm( GetPar( "cTareaFechaFin"));
-               AV16cTareaEstado = (short)(NumberUtil.Val( GetPar( "cTareaEstado"), "."));
-               setAjaxCallMode();
-               if ( ! IsValidAjaxCall( true) )
-               {
-                  GxWebError = 1;
-                  return  ;
-               }
-               gxgrGrid1_refresh( subGrid1_Rows, AV6cTableroId, AV7cTareaId, AV8cTareaNombre, AV10cResponsableId, AV11cTareaFechaInicio, AV12cTareaFechaFin, AV16cTareaEstado) ;
-               GxWebStd.gx_hidden_field( context, "ADVANCEDCONTAINER_Class", StringUtil.RTrim( divAdvancedcontainer_Class));
-               GxWebStd.gx_hidden_field( context, "BTNTOGGLE_Class", StringUtil.RTrim( bttBtntoggle_Class));
-               GxWebStd.gx_hidden_field( context, "TABLEROIDFILTERCONTAINER_Class", StringUtil.RTrim( divTableroidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "TAREAIDFILTERCONTAINER_Class", StringUtil.RTrim( divTareaidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "TAREANOMBREFILTERCONTAINER_Class", StringUtil.RTrim( divTareanombrefiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "RESPONSABLEIDFILTERCONTAINER_Class", StringUtil.RTrim( divResponsableidfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "TAREAFECHAINICIOFILTERCONTAINER_Class", StringUtil.RTrim( divTareafechainiciofiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "TAREAFECHAFINFILTERCONTAINER_Class", StringUtil.RTrim( divTareafechafinfiltercontainer_Class));
-               GxWebStd.gx_hidden_field( context, "TAREAESTADOFILTERCONTAINER_Class", StringUtil.RTrim( divTareaestadofiltercontainer_Class));
-               AddString( context.getJSONResponse( )) ;
+               gxgrGrid1_refresh_invoke( ) ;
                return  ;
             }
             else
@@ -178,6 +145,42 @@ namespace GeneXus.Programs {
          {
             context.PushCurrentUrl();
          }
+      }
+
+      protected void gxnrGrid1_newrow_invoke( )
+      {
+         nRC_GXsfl_84 = (int)(NumberUtil.Val( GetPar( "nRC_GXsfl_84"), "."));
+         nGXsfl_84_idx = (int)(NumberUtil.Val( GetPar( "nGXsfl_84_idx"), "."));
+         sGXsfl_84_idx = GetPar( "sGXsfl_84_idx");
+         setAjaxCallMode();
+         if ( ! IsValidAjaxCall( true) )
+         {
+            GxWebError = 1;
+            return  ;
+         }
+         gxnrGrid1_newrow( ) ;
+         /* End function gxnrGrid1_newrow_invoke */
+      }
+
+      protected void gxgrGrid1_refresh_invoke( )
+      {
+         subGrid1_Rows = (int)(NumberUtil.Val( GetPar( "subGrid1_Rows"), "."));
+         AV6cTableroId = (short)(NumberUtil.Val( GetPar( "cTableroId"), "."));
+         AV7cTareaId = (short)(NumberUtil.Val( GetPar( "cTareaId"), "."));
+         AV8cTareaNombre = GetPar( "cTareaNombre");
+         AV10cResponsableId = (short)(NumberUtil.Val( GetPar( "cResponsableId"), "."));
+         AV11cTareaFechaInicio = context.localUtil.ParseDateParm( GetPar( "cTareaFechaInicio"));
+         AV12cTareaFechaFin = context.localUtil.ParseDateParm( GetPar( "cTareaFechaFin"));
+         AV16cTareaEstado = (short)(NumberUtil.Val( GetPar( "cTareaEstado"), "."));
+         setAjaxCallMode();
+         if ( ! IsValidAjaxCall( true) )
+         {
+            GxWebError = 1;
+            return  ;
+         }
+         gxgrGrid1_refresh( subGrid1_Rows, AV6cTableroId, AV7cTareaId, AV8cTareaNombre, AV10cResponsableId, AV11cTareaFechaInicio, AV12cTareaFechaFin, AV16cTareaEstado) ;
+         AddString( context.getJSONResponse( )) ;
+         /* End function gxgrGrid1_refresh_invoke */
       }
 
       public override void webExecute( )
@@ -260,18 +263,18 @@ namespace GeneXus.Programs {
          }
          if ( ( ( context.GetBrowserType( ) == 1 ) || ( context.GetBrowserType( ) == 5 ) ) && ( StringUtil.StrCmp(context.GetBrowserVersion( ), "7.0") == 0 ) )
          {
-            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1940340), false, true);
+            context.AddJavascriptSource("json2.js", "?"+context.GetBuildNumber( 1848160), false, true);
          }
-         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("gxcfg.js", "?202291618443960", false, true);
+         context.AddJavascriptSource("jquery.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxgral.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("gxcfg.js", "?"+GetCacheInvalidationToken( ), false, true);
          if ( context.isSpaRequest( ) )
          {
             enableOutput();
          }
-         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1940340), false, true);
-         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1940340), false, true);
+         context.AddJavascriptSource("calendar.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-setup.js", "?"+context.GetBuildNumber( 1848160), false, true);
+         context.AddJavascriptSource("calendar-es.js", "?"+context.GetBuildNumber( 1848160), false, true);
          context.WriteHtmlText( Form.Headerrawhtml) ;
          context.CloseHtmlHeader();
          if ( context.isSpaRequest( ) )
@@ -669,121 +672,7 @@ namespace GeneXus.Programs {
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "left", "top", "", "", "div");
             /*  Grid Control  */
             Grid1Container.SetWrapped(nGXWrapped);
-            if ( Grid1Container.GetWrapped() == 1 )
-            {
-               context.WriteHtmlText( "<div id=\""+"Grid1Container"+"DivS\" data-gxgridid=\"84\">") ;
-               sStyleString = "";
-               GxWebStd.gx_table_start( context, subGrid1_Internalname, subGrid1_Internalname, "", "PromptGrid", 0, "", "", 1, 2, sStyleString, "", "", 0);
-               /* Subfile titles */
-               context.WriteHtmlText( "<tr") ;
-               context.WriteHtmlTextNl( ">") ;
-               if ( subGrid1_Backcolorstyle == 0 )
-               {
-                  subGrid1_Titlebackstyle = 0;
-                  if ( StringUtil.Len( subGrid1_Class) > 0 )
-                  {
-                     subGrid1_Linesclass = subGrid1_Class+"Title";
-                  }
-               }
-               else
-               {
-                  subGrid1_Titlebackstyle = 1;
-                  if ( subGrid1_Backcolorstyle == 1 )
-                  {
-                     subGrid1_Titlebackcolor = subGrid1_Allbackcolor;
-                     if ( StringUtil.Len( subGrid1_Class) > 0 )
-                     {
-                        subGrid1_Linesclass = subGrid1_Class+"UniformTitle";
-                     }
-                  }
-                  else
-                  {
-                     if ( StringUtil.Len( subGrid1_Class) > 0 )
-                     {
-                        subGrid1_Linesclass = subGrid1_Class+"Title";
-                     }
-                  }
-               }
-               context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"SelectionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Tablero Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"left"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"DescriptionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Nombre") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Id") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Fecha Inicio") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Fecha Fin") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
-               context.SendWebValue( "Estado") ;
-               context.WriteHtmlTextNl( "</th>") ;
-               context.WriteHtmlTextNl( "</tr>") ;
-               Grid1Container.AddObjectProperty("GridName", "Grid1");
-            }
-            else
-            {
-               if ( isAjaxCallMode( ) )
-               {
-                  Grid1Container = new GXWebGrid( context);
-               }
-               else
-               {
-                  Grid1Container.Clear();
-               }
-               Grid1Container.SetWrapped(nGXWrapped);
-               Grid1Container.AddObjectProperty("GridName", "Grid1");
-               Grid1Container.AddObjectProperty("Header", subGrid1_Header);
-               Grid1Container.AddObjectProperty("Class", "PromptGrid");
-               Grid1Container.AddObjectProperty("Cellpadding", StringUtil.LTrim( StringUtil.NToC( (decimal)(1), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Cellspacing", StringUtil.LTrim( StringUtil.NToC( (decimal)(2), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Backcolorstyle", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Backcolorstyle), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("CmpContext", "");
-               Grid1Container.AddObjectProperty("InMasterPage", "false");
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.convertURL( AV5LinkSelection));
-               Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtavLinkselection_Link));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A9TableroId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A12TareaId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.RTrim( A13TareaNombre));
-               Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtTareaNombre_Link));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A23ResponsableId), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.localUtil.Format(A24TareaFechaInicio, "99/99/99"));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", context.localUtil.Format(A25TareaFechaFin, "99/99/99"));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
-               Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A46TareaEstado), 4, 0, ".", "")));
-               Grid1Container.AddColumnProperties(Grid1Column);
-               Grid1Container.AddObjectProperty("Selectedindex", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectedindex), 4, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowselection", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowselection), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Selectioncolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectioncolor), 9, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowhover", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowhovering), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Hovercolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Hoveringcolor), 9, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Allowcollapsing", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowcollapsing), 1, 0, ".", "")));
-               Grid1Container.AddObjectProperty("Collapsed", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Collapsed), 1, 0, ".", "")));
-            }
+            StartGridControl84( ) ;
          }
          if ( wbEnd == 84 )
          {
@@ -800,7 +689,7 @@ namespace GeneXus.Programs {
                Grid1Container.AddObjectProperty("GRID1_nFirstRecordOnPage", GRID1_nFirstRecordOnPage);
                sStyleString = "";
                context.WriteHtmlText( "<div id=\""+"Grid1Container"+"Div\" "+sStyleString+">"+"</div>") ;
-               context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container);
+               context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container, subGrid1_Internalname);
                if ( ! context.isAjaxRequest( ) && ! context.isSpaRequest( ) )
                {
                   GxWebStd.gx_hidden_field( context, "Grid1ContainerData", Grid1Container.ToJavascriptSource());
@@ -848,7 +737,7 @@ namespace GeneXus.Programs {
                   Grid1Container.AddObjectProperty("GRID1_nFirstRecordOnPage", GRID1_nFirstRecordOnPage);
                   sStyleString = "";
                   context.WriteHtmlText( "<div id=\""+"Grid1Container"+"Div\" "+sStyleString+">"+"</div>") ;
-                  context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container);
+                  context.httpAjaxContext.ajax_rsp_assign_grid("_"+"Grid1", Grid1Container, subGrid1_Internalname);
                   if ( ! context.isAjaxRequest( ) && ! context.isSpaRequest( ) )
                   {
                      GxWebStd.gx_hidden_field( context, "Grid1ContainerData", Grid1Container.ToJavascriptSource());
@@ -876,7 +765,7 @@ namespace GeneXus.Programs {
          {
             if ( context.ExposeMetadata( ) )
             {
-               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_8-158023", 0) ;
+               Form.Meta.addItem("generator", "GeneXus .NET Framework 17_0_11-163677", 0) ;
             }
             Form.Meta.addItem("description", "Selection List Tareas", 0) ;
          }
@@ -1660,7 +1549,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202291618443995", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022101613111058", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1676,7 +1565,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("gx0040.js", "?202291618443995", false, true);
+         context.AddJavascriptSource("gx0040.js", "?2022101613111058", false, true);
          /* End function include_jscripts */
       }
 
@@ -1852,6 +1741,125 @@ namespace GeneXus.Programs {
          /* End function init_web_controls */
       }
 
+      protected void StartGridControl84( )
+      {
+         if ( Grid1Container.GetWrapped() == 1 )
+         {
+            context.WriteHtmlText( "<div id=\""+"Grid1Container"+"DivS\" data-gxgridid=\"84\">") ;
+            sStyleString = "";
+            GxWebStd.gx_table_start( context, subGrid1_Internalname, subGrid1_Internalname, "", "PromptGrid", 0, "", "", 1, 2, sStyleString, "", "", 0);
+            /* Subfile titles */
+            context.WriteHtmlText( "<tr") ;
+            context.WriteHtmlTextNl( ">") ;
+            if ( subGrid1_Backcolorstyle == 0 )
+            {
+               subGrid1_Titlebackstyle = 0;
+               if ( StringUtil.Len( subGrid1_Class) > 0 )
+               {
+                  subGrid1_Linesclass = subGrid1_Class+"Title";
+               }
+            }
+            else
+            {
+               subGrid1_Titlebackstyle = 1;
+               if ( subGrid1_Backcolorstyle == 1 )
+               {
+                  subGrid1_Titlebackcolor = subGrid1_Allbackcolor;
+                  if ( StringUtil.Len( subGrid1_Class) > 0 )
+                  {
+                     subGrid1_Linesclass = subGrid1_Class+"UniformTitle";
+                  }
+               }
+               else
+               {
+                  if ( StringUtil.Len( subGrid1_Class) > 0 )
+                  {
+                     subGrid1_Linesclass = subGrid1_Class+"Title";
+                  }
+               }
+            }
+            context.WriteHtmlText( "<th align=\""+""+"\" "+" nowrap=\"nowrap\" "+" class=\""+"SelectionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Tablero Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"left"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"DescriptionAttribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Nombre") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Id") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Fecha Inicio") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Fecha Fin") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlText( "<th align=\""+"right"+"\" "+" nowrap=\"nowrap\" "+" class=\""+"Attribute"+"\" "+" style=\""+""+""+"\" "+">") ;
+            context.SendWebValue( "Estado") ;
+            context.WriteHtmlTextNl( "</th>") ;
+            context.WriteHtmlTextNl( "</tr>") ;
+            Grid1Container.AddObjectProperty("GridName", "Grid1");
+         }
+         else
+         {
+            if ( isAjaxCallMode( ) )
+            {
+               Grid1Container = new GXWebGrid( context);
+            }
+            else
+            {
+               Grid1Container.Clear();
+            }
+            Grid1Container.SetWrapped(nGXWrapped);
+            Grid1Container.AddObjectProperty("GridName", "Grid1");
+            Grid1Container.AddObjectProperty("Header", subGrid1_Header);
+            Grid1Container.AddObjectProperty("Class", "PromptGrid");
+            Grid1Container.AddObjectProperty("Cellpadding", StringUtil.LTrim( StringUtil.NToC( (decimal)(1), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Cellspacing", StringUtil.LTrim( StringUtil.NToC( (decimal)(2), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Backcolorstyle", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Backcolorstyle), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("CmpContext", "");
+            Grid1Container.AddObjectProperty("InMasterPage", "false");
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.convertURL( AV5LinkSelection));
+            Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtavLinkselection_Link));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A9TableroId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A12TareaId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.RTrim( A13TareaNombre));
+            Grid1Column.AddObjectProperty("Link", StringUtil.RTrim( edtTareaNombre_Link));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A23ResponsableId), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.localUtil.Format(A24TareaFechaInicio, "99/99/99"));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", context.localUtil.Format(A25TareaFechaFin, "99/99/99"));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Column = GXWebColumn.GetNew(isAjaxCallMode( ));
+            Grid1Column.AddObjectProperty("Value", StringUtil.LTrim( StringUtil.NToC( (decimal)(A46TareaEstado), 4, 0, ".", "")));
+            Grid1Container.AddColumnProperties(Grid1Column);
+            Grid1Container.AddObjectProperty("Selectedindex", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectedindex), 4, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowselection", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowselection), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Selectioncolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Selectioncolor), 9, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowhover", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowhovering), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Hovercolor", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Hoveringcolor), 9, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Allowcollapsing", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Allowcollapsing), 1, 0, ".", "")));
+            Grid1Container.AddObjectProperty("Collapsed", StringUtil.LTrim( StringUtil.NToC( (decimal)(subGrid1_Collapsed), 1, 0, ".", "")));
+         }
+      }
+
       protected void init_default_properties( )
       {
          lblLbltableroidfilter_Internalname = "LBLTABLEROIDFILTER";
@@ -1900,18 +1908,18 @@ namespace GeneXus.Programs {
             disableJsOutput();
          }
          init_default_properties( ) ;
+         subGrid1_Allowcollapsing = 0;
+         subGrid1_Allowselection = 0;
+         subGrid1_Header = "";
          edtTareaEstado_Jsonclick = "";
          edtTareaFechaFin_Jsonclick = "";
          edtTareaFechaInicio_Jsonclick = "";
          edtResponsableId_Jsonclick = "";
          edtTareaNombre_Jsonclick = "";
+         edtTareaNombre_Link = "";
          edtTareaId_Jsonclick = "";
          edtTableroId_Jsonclick = "";
-         subGrid1_Allowcollapsing = 0;
-         subGrid1_Allowselection = 0;
-         edtTareaNombre_Link = "";
          edtavLinkselection_Link = "";
-         subGrid1_Header = "";
          subGrid1_Class = "PromptGrid";
          subGrid1_Backcolorstyle = 0;
          edtavCtareaestado_Jsonclick = "";
@@ -1933,11 +1941,6 @@ namespace GeneXus.Programs {
          edtavCtableroid_Jsonclick = "";
          edtavCtableroid_Enabled = 1;
          edtavCtableroid_Visible = 1;
-         Form.Headerrawhtml = "";
-         Form.Background = "";
-         Form.Textcolor = 0;
-         Form.Backcolor = (int)(0xFFFFFF);
-         Form.Caption = "Selection List Tareas";
          divTareaestadofiltercontainer_Class = "AdvancedContainerItem";
          divTareafechafinfiltercontainer_Class = "AdvancedContainerItem";
          divTareafechainiciofiltercontainer_Class = "AdvancedContainerItem";
@@ -1947,6 +1950,11 @@ namespace GeneXus.Programs {
          divTableroidfiltercontainer_Class = "AdvancedContainerItem";
          bttBtntoggle_Class = "BtnToggle";
          divAdvancedcontainer_Class = "AdvancedContainerVisible";
+         Form.Headerrawhtml = "";
+         Form.Background = "";
+         Form.Textcolor = 0;
+         Form.Backcolor = (int)(0xFFFFFF);
+         Form.Caption = "Selection List Tareas";
          subGrid1_Rows = 10;
          if ( context.isSpaRequest( ) )
          {
@@ -2039,18 +2047,16 @@ namespace GeneXus.Programs {
          bttBtntoggle_Jsonclick = "";
          Grid1Container = new GXWebGrid( context);
          sStyleString = "";
-         subGrid1_Linesclass = "";
-         Grid1Column = new GXWebColumn();
-         AV5LinkSelection = "";
-         A13TareaNombre = "";
-         A24TareaFechaInicio = DateTime.MinValue;
-         A25TareaFechaFin = DateTime.MinValue;
          bttBtn_cancel_Jsonclick = "";
          sEvt = "";
          EvtGridId = "";
          EvtRowId = "";
          sEvtType = "";
+         AV5LinkSelection = "";
          AV19Linkselection_GXI = "";
+         A13TareaNombre = "";
+         A24TareaFechaInicio = DateTime.MinValue;
+         A25TareaFechaFin = DateTime.MinValue;
          scmdbuf = "";
          lV8cTareaNombre = "";
          H00082_A46TareaEstado = new short[1] ;
@@ -2066,8 +2072,10 @@ namespace GeneXus.Programs {
          Grid1Row = new GXWebRow();
          BackMsgLst = new msglist();
          LclMsgLst = new msglist();
+         subGrid1_Linesclass = "";
          sImgUrl = "";
          ROClassString = "";
+         Grid1Column = new GXWebColumn();
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.gx0040__default(),
             new Object[][] {
                 new Object[] {
@@ -2095,23 +2103,23 @@ namespace GeneXus.Programs {
       private short gxajaxcallmode ;
       private short wbEnd ;
       private short wbStart ;
-      private short subGrid1_Backcolorstyle ;
-      private short subGrid1_Titlebackstyle ;
       private short A9TableroId ;
       private short A12TareaId ;
       private short A23ResponsableId ;
       private short A46TareaEstado ;
+      private short nDonePA ;
+      private short gxcookieaux ;
+      private short subGrid1_Backcolorstyle ;
+      private short nGXWrapped ;
+      private short subGrid1_Backstyle ;
+      private short subGrid1_Titlebackstyle ;
       private short subGrid1_Allowselection ;
       private short subGrid1_Allowhovering ;
       private short subGrid1_Allowcollapsing ;
       private short subGrid1_Collapsed ;
-      private short nDonePA ;
-      private short gxcookieaux ;
-      private short nGXWrapped ;
-      private short subGrid1_Backstyle ;
       private int nRC_GXsfl_84 ;
-      private int nGXsfl_84_idx=1 ;
       private int subGrid1_Rows ;
+      private int nGXsfl_84_idx=1 ;
       private int edtavCtableroid_Enabled ;
       private int edtavCtableroid_Visible ;
       private int edtavCtareaid_Enabled ;
@@ -2124,16 +2132,16 @@ namespace GeneXus.Programs {
       private int edtavCtareafechafin_Enabled ;
       private int edtavCtareaestado_Enabled ;
       private int edtavCtareaestado_Visible ;
-      private int subGrid1_Titlebackcolor ;
-      private int subGrid1_Allbackcolor ;
-      private int subGrid1_Selectedindex ;
-      private int subGrid1_Selectioncolor ;
-      private int subGrid1_Hoveringcolor ;
       private int subGrid1_Islastpage ;
       private int GXPagingFrom2 ;
       private int GXPagingTo2 ;
       private int idxLst ;
       private int subGrid1_Backcolor ;
+      private int subGrid1_Allbackcolor ;
+      private int subGrid1_Titlebackcolor ;
+      private int subGrid1_Selectedindex ;
+      private int subGrid1_Selectioncolor ;
+      private int subGrid1_Hoveringcolor ;
       private long GRID1_nFirstRecordOnPage ;
       private long GRID1_nCurrentRecord ;
       private long GRID1_nRecordCount ;
@@ -2201,12 +2209,6 @@ namespace GeneXus.Programs {
       private string bttBtntoggle_Jsonclick ;
       private string sStyleString ;
       private string subGrid1_Internalname ;
-      private string subGrid1_Class ;
-      private string subGrid1_Linesclass ;
-      private string subGrid1_Header ;
-      private string edtavLinkselection_Link ;
-      private string A13TareaNombre ;
-      private string edtTareaNombre_Link ;
       private string bttBtn_cancel_Internalname ;
       private string bttBtn_cancel_Jsonclick ;
       private string sEvt ;
@@ -2216,6 +2218,7 @@ namespace GeneXus.Programs {
       private string edtavLinkselection_Internalname ;
       private string edtTableroId_Internalname ;
       private string edtTareaId_Internalname ;
+      private string A13TareaNombre ;
       private string edtTareaNombre_Internalname ;
       private string edtResponsableId_Internalname ;
       private string edtTareaFechaInicio_Internalname ;
@@ -2225,15 +2228,20 @@ namespace GeneXus.Programs {
       private string lV8cTareaNombre ;
       private string AV15ADVANCED_LABEL_TEMPLATE ;
       private string sGXsfl_84_fel_idx="0001" ;
+      private string subGrid1_Class ;
+      private string subGrid1_Linesclass ;
+      private string edtavLinkselection_Link ;
       private string sImgUrl ;
       private string ROClassString ;
       private string edtTableroId_Jsonclick ;
       private string edtTareaId_Jsonclick ;
+      private string edtTareaNombre_Link ;
       private string edtTareaNombre_Jsonclick ;
       private string edtResponsableId_Jsonclick ;
       private string edtTareaFechaInicio_Jsonclick ;
       private string edtTareaFechaFin_Jsonclick ;
       private string edtTareaEstado_Jsonclick ;
+      private string subGrid1_Header ;
       private DateTime AV11cTareaFechaInicio ;
       private DateTime AV12cTareaFechaFin ;
       private DateTime A24TareaFechaInicio ;

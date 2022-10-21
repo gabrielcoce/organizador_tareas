@@ -1,0 +1,1 @@
+<%@ServiceHost Service= "GeneXus.AI.genexusai.image.inference.cloud.detectfaces_services,genexusai" %>
