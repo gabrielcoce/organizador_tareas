@@ -103,7 +103,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -125,7 +125,7 @@ namespace GeneXus.Programs {
          {
             disableOutput();
          }
-         context.AddJavascriptSource("masterpage.js", "?202210201712321", false, true);
+         context.AddJavascriptSource("masterpage.js", "?2022102212114566", false, true);
          context.WriteHtmlTextNl( "</body>") ;
          context.WriteHtmlTextNl( "</html>") ;
          if ( context.isSpaRequest( ) )
@@ -345,7 +345,11 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            GXKey = Crypto.GetSiteKey( );
+            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
+            {
+               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
+            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -453,7 +457,7 @@ namespace GeneXus.Programs {
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -474,7 +478,38 @@ namespace GeneXus.Programs {
          returnInSub = false;
          lblJs_Caption = "<script type='text/javascript'>"+StringUtil.NewLine( )+"(() => {"+StringUtil.NewLine( )+"if (window.localStorage) {"+StringUtil.NewLine( )+"if (!localStorage.getItem('reload')) {"+StringUtil.NewLine( )+"localStorage['reload'] = true;"+StringUtil.NewLine( )+"window.location.reload();"+StringUtil.NewLine( )+"} else {"+StringUtil.NewLine( )+"localStorage.removeItem('reload');"+StringUtil.NewLine( )+"}"+StringUtil.NewLine( )+"}"+StringUtil.NewLine( )+"})();"+StringUtil.NewLine( )+"</script>"+StringUtil.NewLine( );
          AssignProp("", true, lblJs_Internalname, "Caption", lblJs_Caption, true);
+         AV28contador1 = 0;
+         AV29contador2 = 0;
+         AV30contador3 = 0;
          AV26Usuarios.Load((short)(NumberUtil.Val( AV24websession.Get("UsuarioId"), ".")));
+         /* Optimized group. */
+         /* Using cursor H000G2 */
+         pr_default.execute(0, new Object[] {AV26Usuarios.gxTpr_Usuarioid});
+         cV28contador1 = H000G2_AV28contador1[0];
+         pr_default.close(0);
+         AV28contador1 = (short)(AV28contador1+cV28contador1*1);
+         /* End optimized group. */
+         /* Optimized group. */
+         /* Using cursor H000G3 */
+         pr_default.execute(1, new Object[] {AV26Usuarios.gxTpr_Usuarioid});
+         cV30contador3 = H000G3_AV30contador3[0];
+         pr_default.close(1);
+         AV30contador3 = (short)(AV30contador3+cV30contador3*1);
+         /* End optimized group. */
+         /* Optimized group. */
+         /* Using cursor H000G4 */
+         pr_default.execute(2, new Object[] {AV26Usuarios.gxTpr_Usuarioid});
+         cV28contador1 = H000G4_AV28contador1[0];
+         pr_default.close(2);
+         AV28contador1 = (short)(AV28contador1+cV28contador1*1);
+         /* End optimized group. */
+         /* Optimized group. */
+         /* Using cursor H000G5 */
+         pr_default.execute(3, new Object[] {AV26Usuarios.gxTpr_Usuarioid});
+         cV29contador2 = H000G5_AV29contador2[0];
+         pr_default.close(3);
+         AV29contador2 = (short)(AV29contador2+cV29contador2*1);
+         /* End optimized group. */
          if ( StringUtil.StrCmp(AV24websession.Get("UsuarioId"), "") == 0 )
          {
             CallWebObject(formatLink("ingreso.aspx") );
@@ -500,7 +535,7 @@ namespace GeneXus.Programs {
          AV7vScript = "<div class=\"wrapper\">" + StringUtil.NewLine( ) + "<nav class=\"main-header navbar navbar-expand navbar-dark navbar-light\" style=\"border-radius:0px; margin-bottom:0px;\">" + StringUtil.NewLine( ) + "<ul class=\"navbar-nav\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a class=\"nav-link\" data-widget=\"pushmenu\" href=\"#\" role=\"button\"><i class=\"fas fa-bars\" style=\"margin-left:10px;\"></i></a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item d-none d-sm-inline-block\">" + StringUtil.NewLine( ) + "<a href=\"https://umg.edu.gt\" class=\"nav-link\" target=\"_blank\">Portal Universidad Mariano Gálvez</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "<ul class=\"navbar-nav ml-auto\">" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</nav>" + StringUtil.NewLine( ) + "<aside class=\"main-sidebar sidebar-dark-primary elevation-4\">" + StringUtil.NewLine( ) + "<a href=\"index3.html\" class=\"brand-link\">" + StringUtil.NewLine( ) + "<img src=\"umg.png\" alt=\"Tableros\" class=\"brand-image\" style=\"opacity: .8\">" + StringUtil.NewLine( ) + "<span class=\"brand-text font-weight-light\">Tableros</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<div class=\"sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition\"><div class=\"os-resize-observer-host observed\"><div class=\"os-resize-observer\" style=\"left: 0px; right: auto;\"></div></div><div class=\"os-size-auto-observer observed\" style=\"height: calc(100% + 1px); float: left;\"><div class=\"os-resize-observer\"></div></div><div class=\"os-content-glue\" style=\"margin: 0px -8px; width: 249px; height: 871px;\"></div><div class=\"os-padding\"><div class=\"os-viewport os-viewport-native-scrollbars-invisible\" style=\"overflow-y: scroll;\"><div class=\"os-content\" style=\"padding: 0px 8px; height: 100%; width: 100%;\">" + StringUtil.NewLine( ) + "<div class=\"user-panel mt-3 pb-3 mb-3 d-flex\">" + StringUtil.NewLine( ) + "<div class=\"image\">" + StringUtil.NewLine( ) + "<img src=\"dist/img/avatar.png\" class=\"img-circle elevation-1\" style=\"height:3.1rem; width:3.1rem;\" alt=\"User Image\">" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"info\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"d-block\">" + StringUtil.Trim( AV26Usuarios.gxTpr_Usuarionombre) + " " + StringUtil.Trim( AV26Usuarios.gxTpr_Usuarioapellido) + "</a>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<nav class=\"mt-2\">" + StringUtil.NewLine( ) + "<ul class=\"nav nav-pills nav-sidebar flex-column\" data-widget=\"treeview\" role=\"menu\" data-accordion=\"false\">" + StringUtil.NewLine( );
          if ( AV20Config.gxTpr_Version == 1 )
          {
-            AV7vScript += StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1101,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-tachometer-alt\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Dashboard" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-user\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Mi cuenta" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1102,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"far fa-address-card nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Perfil de Usuario</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-header\">TABLEROS</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-arrow-alt-right\"></i>" + StringUtil.NewLine( ) + "<span class=\"badge badge-info right\">" + StringUtil.Str( (decimal)(0), 10, 0) + " </span>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Todos los tableros" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1103,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"fas fa-inbox nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Mis tableros</p>" + StringUtil.NewLine( ) + "<span class=\"badge badge-secondary right\">" + StringUtil.Str( (decimal)(0), 10, 0) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1104,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"fas fa-star nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Tableros de invitado</p>" + StringUtil.NewLine( ) + "<span class=\"badge badge-secondary right\">" + StringUtil.Str( (decimal)(0), 10, 0) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-sign-out-alt\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Salir" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1105,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"far fa-power-off nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Cerrar sesión</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( );
+            AV7vScript += StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1101,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-tachometer-alt\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Dashboard" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-user\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Mi cuenta" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1102,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"far fa-address-card nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Perfil de Usuario</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-header\">TABLEROS</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-arrow-alt-right\"></i>" + StringUtil.NewLine( ) + "<span class=\"badge badge-info right\">" + StringUtil.Str( (decimal)(AV28contador1), 4, 0) + " </span>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Todos los tableros" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1103,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"fas fa-inbox nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Mis tableros</p>" + StringUtil.NewLine( ) + "<span class=\"badge badge-secondary right\">" + StringUtil.Str( (decimal)(AV30contador3), 4, 0) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1104,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"fas fa-star nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Tableros de invitado</p>" + StringUtil.NewLine( ) + "<span class=\"badge badge-secondary right\">" + StringUtil.Str( (decimal)(AV29contador2), 4, 0) + "</span>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "<li class=\"nav-item\">" + StringUtil.NewLine( ) + "<a href=\"#\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"nav-icon fas fa-sign-out-alt\"></i>" + StringUtil.NewLine( ) + "<p>" + StringUtil.NewLine( ) + "Salir" + StringUtil.NewLine( ) + "<i class=\"right fas fa-angle-left\"></i>" + StringUtil.NewLine( ) + "</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "<ul class=\"nav nav-treeview\">" + StringUtil.NewLine( ) + "<li class=\"nav-item\" style=\"margin-left:10px;\">" + StringUtil.NewLine( ) + "<a href=\"" + AV5vRuta + formatLink("links.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(1105,4,0))}, new string[] {"route"})  + "\" class=\"nav-link\">" + StringUtil.NewLine( ) + "<i class=\"far fa-power-off nav-icon\"></i>" + StringUtil.NewLine( ) + "<p>Cerrar sesión</p>" + StringUtil.NewLine( ) + "</a>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</li>" + StringUtil.NewLine( );
          }
          AV7vScript += StringUtil.NewLine( ) + "</ul>" + StringUtil.NewLine( ) + "</nav>" + StringUtil.NewLine( ) + "</div></div></div><div class=\"os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden\"><div class=\"os-scrollbar-track\"><div class=\"os-scrollbar-handle\" style=\"width: 100%; transform: translate(0px, 0px);\"></div></div></div><div class=\"os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden\"><div class=\"os-scrollbar-track\"><div class=\"os-scrollbar-handle\" style=\"height: 64.1648%; transform: translate(0px, 0px);\"></div></div></div><div class=\"os-scrollbar-corner\"></div></div>" + StringUtil.NewLine( ) + "</aside>" + StringUtil.NewLine( ) + "<div class=\"content-wrapper\" style=\"min-height: 815px;\">" + StringUtil.NewLine( ) + "<!-- Content Header (Page header) -->" + StringUtil.NewLine( ) + "<section class=\"content-header\">" + StringUtil.NewLine( ) + "<div class=\"container-fluid\">" + StringUtil.NewLine( ) + "<div class=\"row mb-2\">" + StringUtil.NewLine( ) + "<div class=\"col-sm-6\">" + StringUtil.NewLine( ) + "<h1>" + (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Caption + "</h1>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<div class=\"col-sm-6\">" + StringUtil.NewLine( ) + "<ol class=\"breadcrumb float-sm-right\">" + StringUtil.NewLine( ) + "<li class=\"breadcrumb-item\"><a href=\"paginadeinicio.aspx\"><i class=\"fas fa-home\"></i></a></li>" + StringUtil.NewLine( ) + "<li class=\"breadcrumb-item active\">" + (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Caption + "</li>" + StringUtil.NewLine( ) + "</ol>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</div><!-- /.container-fluid -->" + StringUtil.NewLine( ) + "</section>" + StringUtil.NewLine( ) + "<!-- Main content -->" + StringUtil.NewLine( ) + "<section class=\"content\">" + StringUtil.NewLine( ) + "<div class=\"container-fluid\">" + StringUtil.NewLine( ) + "<div class=\"row\">" + StringUtil.NewLine( );
          AV8vScript2 = "</div>" + StringUtil.NewLine( ) + "</section>" + StringUtil.NewLine( ) + "<!-- /.content -->" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "<footer class=\"main-footer\">" + StringUtil.NewLine( ) + "<strong><a href=\"https://umg.edu.gt\" target=\"_blank\">Universidad Mariano Gálvez de Guatemala</a> © 2022 </strong>" + StringUtil.NewLine( ) + "Todos los derechos reservados" + StringUtil.NewLine( ) + "<div class=\"float-right d-none d-sm-inline-block\">" + StringUtil.NewLine( ) + "<b>Version</b> 1.0.0" + StringUtil.NewLine( ) + "</div>" + StringUtil.NewLine( ) + "</footer>" + StringUtil.NewLine( );
@@ -564,7 +599,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= (getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)(getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Item(idxLst))), "?202210201712324", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)(getDataAreaObject() == null ? Form : getDataAreaObject().GetForm()).Jscriptsrc.Item(idxLst))), "?2022102212114572", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -581,7 +616,7 @@ namespace GeneXus.Programs {
       {
          if ( nGXWrapped != 1 )
          {
-            context.AddJavascriptSource("masterpage.js", "?202210201712324", false, true);
+            context.AddJavascriptSource("masterpage.js", "?2022102212114572", false, true);
          }
          /* End function include_jscripts */
       }
@@ -656,6 +691,11 @@ namespace GeneXus.Programs {
          sEvtType = "";
          AV26Usuarios = new SdtUsuarios(context);
          AV24websession = context.GetSession();
+         scmdbuf = "";
+         H000G2_AV28contador1 = new short[1] ;
+         H000G3_AV30contador3 = new short[1] ;
+         H000G4_AV28contador1 = new short[1] ;
+         H000G5_AV29contador2 = new short[1] ;
          AV5vRuta = "";
          AV6HttpRequest = new GxHttpRequest( context);
          AV7vScript = "";
@@ -665,15 +705,46 @@ namespace GeneXus.Programs {
          LclMsgLst = new msglist();
          sDynURL = "";
          Form = new GXWebForm();
+         pr_default = new DataStoreProvider(context, new GeneXus.Programs.masterpage__default(),
+            new Object[][] {
+                new Object[] {
+               H000G2_AV28contador1
+               }
+               , new Object[] {
+               H000G3_AV30contador3
+               }
+               , new Object[] {
+               H000G4_AV28contador1
+               }
+               , new Object[] {
+               H000G5_AV29contador2
+               }
+            }
+         );
          /* GeneXus formulas. */
          context.Gx_err = 0;
       }
 
+      private short nRcdExists_6 ;
+      private short nIsMod_6 ;
+      private short nRcdExists_5 ;
+      private short nIsMod_5 ;
+      private short nRcdExists_4 ;
+      private short nIsMod_4 ;
+      private short nRcdExists_3 ;
+      private short nIsMod_3 ;
       private short initialized ;
       private short GxWebError ;
       private short wbEnd ;
       private short wbStart ;
       private short nDonePA ;
+      private short gxcookieaux ;
+      private short AV28contador1 ;
+      private short AV29contador2 ;
+      private short AV30contador3 ;
+      private short cV28contador1 ;
+      private short cV30contador3 ;
+      private short cV29contador2 ;
       private short AV19rolid ;
       private short nGotPars ;
       private short nGXWrapped ;
@@ -693,6 +764,7 @@ namespace GeneXus.Programs {
       private string EvtGridId ;
       private string EvtRowId ;
       private string sEvtType ;
+      private string scmdbuf ;
       private string sDynURL ;
       private bool wbLoad ;
       private bool Rfr0gs ;
@@ -706,6 +778,11 @@ namespace GeneXus.Programs {
       private IGxSession AV24websession ;
       private IGxDataStore dsDefault ;
       private GXDataAreaControl Contholder1 ;
+      private IDataStoreProvider pr_default ;
+      private short[] H000G2_AV28contador1 ;
+      private short[] H000G3_AV30contador3 ;
+      private short[] H000G4_AV28contador1 ;
+      private short[] H000G5_AV29contador2 ;
       private msglist BackMsgLst ;
       private msglist LclMsgLst ;
       private GxHttpRequest AV6HttpRequest ;
@@ -713,5 +790,71 @@ namespace GeneXus.Programs {
       private SdtConfig AV20Config ;
       private SdtUsuarios AV26Usuarios ;
    }
+
+   public class masterpage__default : DataStoreHelperBase, IDataStoreHelper
+   {
+      public ICursor[] getCursors( )
+      {
+         cursorDefinitions();
+         return new Cursor[] {
+          new ForEachCursor(def[0])
+         ,new ForEachCursor(def[1])
+         ,new ForEachCursor(def[2])
+         ,new ForEachCursor(def[3])
+       };
+    }
+
+    private static CursorDef[] def;
+    private void cursorDefinitions( )
+    {
+       if ( def == null )
+       {
+          Object[] prmH000G2;
+          prmH000G2 = new Object[] {
+          new ParDef("@AV26Usuarios__Usuarioid",GXType.Int16,4,0)
+          };
+          Object[] prmH000G3;
+          prmH000G3 = new Object[] {
+          new ParDef("@AV26Usuarios__Usuarioid",GXType.Int16,4,0)
+          };
+          Object[] prmH000G4;
+          prmH000G4 = new Object[] {
+          new ParDef("@AV26Usuarios__Usuarioid",GXType.Int16,4,0)
+          };
+          Object[] prmH000G5;
+          prmH000G5 = new Object[] {
+          new ParDef("@AV26Usuarios__Usuarioid",GXType.Int16,4,0)
+          };
+          def= new CursorDef[] {
+              new CursorDef("H000G2", "SELECT COUNT(*) FROM [Tableros] WHERE [PropietarioId] = @AV26Usuarios__Usuarioid ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmH000G2,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("H000G3", "SELECT COUNT(*) FROM [Tableros] WHERE [PropietarioId] = @AV26Usuarios__Usuarioid ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmH000G3,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("H000G4", "SELECT COUNT(*) FROM [Participantes] WHERE [ParticipanteTableroId] = @AV26Usuarios__Usuarioid ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmH000G4,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("H000G5", "SELECT COUNT(*) FROM [Participantes] WHERE [ParticipanteTableroId] = @AV26Usuarios__Usuarioid ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmH000G5,1, GxCacheFrequency.OFF ,true,false )
+          };
+       }
+    }
+
+    public void getResults( int cursor ,
+                            IFieldGetter rslt ,
+                            Object[] buf )
+    {
+       switch ( cursor )
+       {
+             case 0 :
+                ((short[]) buf[0])[0] = rslt.getShort(1);
+                return;
+             case 1 :
+                ((short[]) buf[0])[0] = rslt.getShort(1);
+                return;
+             case 2 :
+                ((short[]) buf[0])[0] = rslt.getShort(1);
+                return;
+             case 3 :
+                ((short[]) buf[0])[0] = rslt.getShort(1);
+                return;
+       }
+    }
+
+ }
 
 }

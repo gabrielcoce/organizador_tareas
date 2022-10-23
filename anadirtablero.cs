@@ -252,7 +252,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -579,7 +579,11 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            GXKey = Crypto.GetSiteKey( );
+            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
+            {
+               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
+            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -697,7 +701,7 @@ namespace GeneXus.Programs {
             AssignAttri("", false, "AV7TableroVisibilidad", AV7TableroVisibilidad);
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -854,7 +858,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161311537", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210229111481", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -870,7 +874,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("anadirtablero.js", "?202210161311538", false, true);
+         context.AddJavascriptSource("anadirtablero.js", "?202210229111481", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -1007,6 +1011,7 @@ namespace GeneXus.Programs {
       private short wbEnd ;
       private short wbStart ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short AV8count ;
       private short AV5TableroId ;
       private short GXt_int1 ;

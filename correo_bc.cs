@@ -134,6 +134,7 @@ namespace GeneXus.Programs {
             Z54CorreoPuerto = A54CorreoPuerto;
             Z55CorreoUsuario = A55CorreoUsuario;
             Z56CorreoContrasena = A56CorreoContrasena;
+            Z57CorreoPlantilla = A57CorreoPlantilla;
          }
       }
 
@@ -158,6 +159,8 @@ namespace GeneXus.Programs {
             A54CorreoPuerto = BC000C4_A54CorreoPuerto[0];
             A55CorreoUsuario = BC000C4_A55CorreoUsuario[0];
             A56CorreoContrasena = BC000C4_A56CorreoContrasena[0];
+            A57CorreoPlantilla = BC000C4_A57CorreoPlantilla[0];
+            n57CorreoPlantilla = BC000C4_n57CorreoPlantilla[0];
             ZM0C13( -2) ;
          }
          pr_default.close(2);
@@ -217,6 +220,8 @@ namespace GeneXus.Programs {
             A54CorreoPuerto = BC000C3_A54CorreoPuerto[0];
             A55CorreoUsuario = BC000C3_A55CorreoUsuario[0];
             A56CorreoContrasena = BC000C3_A56CorreoContrasena[0];
+            A57CorreoPlantilla = BC000C3_A57CorreoPlantilla[0];
+            n57CorreoPlantilla = BC000C3_n57CorreoPlantilla[0];
             Z50CorreoId = A50CorreoId;
             sMode13 = Gx_mode;
             Gx_mode = "DSP";
@@ -317,7 +322,7 @@ namespace GeneXus.Programs {
                   if ( AnyError == 0 )
                   {
                      /* Using cursor BC000C6 */
-                     pr_default.execute(4, new Object[] {A51CorreoIdentificador, A52CorreoNombre, A53CorreoServidor, A54CorreoPuerto, A55CorreoUsuario, A56CorreoContrasena});
+                     pr_default.execute(4, new Object[] {A51CorreoIdentificador, A52CorreoNombre, A53CorreoServidor, A54CorreoPuerto, A55CorreoUsuario, A56CorreoContrasena, n57CorreoPlantilla, A57CorreoPlantilla});
                      A50CorreoId = BC000C6_A50CorreoId[0];
                      pr_default.close(4);
                      dsDefault.SmartCacheProvider.SetUpdated("Correo");
@@ -368,7 +373,7 @@ namespace GeneXus.Programs {
                   if ( AnyError == 0 )
                   {
                      /* Using cursor BC000C7 */
-                     pr_default.execute(5, new Object[] {A51CorreoIdentificador, A52CorreoNombre, A53CorreoServidor, A54CorreoPuerto, A55CorreoUsuario, A56CorreoContrasena, A50CorreoId});
+                     pr_default.execute(5, new Object[] {A51CorreoIdentificador, A52CorreoNombre, A53CorreoServidor, A54CorreoPuerto, A55CorreoUsuario, A56CorreoContrasena, n57CorreoPlantilla, A57CorreoPlantilla, A50CorreoId});
                      pr_default.close(5);
                      dsDefault.SmartCacheProvider.SetUpdated("Correo");
                      if ( (pr_default.getStatus(5) == 103) )
@@ -499,6 +504,8 @@ namespace GeneXus.Programs {
             A54CorreoPuerto = BC000C9_A54CorreoPuerto[0];
             A55CorreoUsuario = BC000C9_A55CorreoUsuario[0];
             A56CorreoContrasena = BC000C9_A56CorreoContrasena[0];
+            A57CorreoPlantilla = BC000C9_A57CorreoPlantilla[0];
+            n57CorreoPlantilla = BC000C9_n57CorreoPlantilla[0];
          }
          /* Load Subordinate Levels */
       }
@@ -525,6 +532,8 @@ namespace GeneXus.Programs {
             A54CorreoPuerto = BC000C9_A54CorreoPuerto[0];
             A55CorreoUsuario = BC000C9_A55CorreoUsuario[0];
             A56CorreoContrasena = BC000C9_A56CorreoContrasena[0];
+            A57CorreoPlantilla = BC000C9_A57CorreoPlantilla[0];
+            n57CorreoPlantilla = BC000C9_n57CorreoPlantilla[0];
          }
          Gx_mode = sMode13;
       }
@@ -590,6 +599,8 @@ namespace GeneXus.Programs {
          A54CorreoPuerto = 0;
          A55CorreoUsuario = "";
          A56CorreoContrasena = "";
+         A57CorreoPlantilla = "";
+         n57CorreoPlantilla = false;
          Z51CorreoIdentificador = "";
          Z52CorreoNombre = "";
          Z53CorreoServidor = "";
@@ -637,6 +648,7 @@ namespace GeneXus.Programs {
          obj13.gxTpr_Correopuerto = A54CorreoPuerto;
          obj13.gxTpr_Correousuario = A55CorreoUsuario;
          obj13.gxTpr_Correocontrasena = A56CorreoContrasena;
+         obj13.gxTpr_Correoplantilla = A57CorreoPlantilla;
          obj13.gxTpr_Correoid = A50CorreoId;
          obj13.gxTpr_Correoid_Z = Z50CorreoId;
          obj13.gxTpr_Correoidentificador_Z = Z51CorreoIdentificador;
@@ -645,6 +657,7 @@ namespace GeneXus.Programs {
          obj13.gxTpr_Correopuerto_Z = Z54CorreoPuerto;
          obj13.gxTpr_Correousuario_Z = Z55CorreoUsuario;
          obj13.gxTpr_Correocontrasena_Z = Z56CorreoContrasena;
+         obj13.gxTpr_Correoplantilla_N = (short)(Convert.ToInt16(n57CorreoPlantilla));
          obj13.gxTpr_Mode = Gx_mode;
          return  ;
       }
@@ -665,6 +678,8 @@ namespace GeneXus.Programs {
          A54CorreoPuerto = obj13.gxTpr_Correopuerto;
          A55CorreoUsuario = obj13.gxTpr_Correousuario;
          A56CorreoContrasena = obj13.gxTpr_Correocontrasena;
+         A57CorreoPlantilla = obj13.gxTpr_Correoplantilla;
+         n57CorreoPlantilla = false;
          A50CorreoId = obj13.gxTpr_Correoid;
          Z50CorreoId = obj13.gxTpr_Correoid_Z;
          Z51CorreoIdentificador = obj13.gxTpr_Correoidentificador_Z;
@@ -673,6 +688,7 @@ namespace GeneXus.Programs {
          Z54CorreoPuerto = obj13.gxTpr_Correopuerto_Z;
          Z55CorreoUsuario = obj13.gxTpr_Correousuario_Z;
          Z56CorreoContrasena = obj13.gxTpr_Correocontrasena_Z;
+         n57CorreoPlantilla = (bool)(Convert.ToBoolean(obj13.gxTpr_Correoplantilla_N));
          Gx_mode = obj13.gxTpr_Mode;
          return  ;
       }
@@ -1095,6 +1111,8 @@ namespace GeneXus.Programs {
          A55CorreoUsuario = "";
          Z56CorreoContrasena = "";
          A56CorreoContrasena = "";
+         Z57CorreoPlantilla = "";
+         A57CorreoPlantilla = "";
          BC000C4_A50CorreoId = new short[1] ;
          BC000C4_A51CorreoIdentificador = new string[] {""} ;
          BC000C4_A52CorreoNombre = new string[] {""} ;
@@ -1102,6 +1120,8 @@ namespace GeneXus.Programs {
          BC000C4_A54CorreoPuerto = new short[1] ;
          BC000C4_A55CorreoUsuario = new string[] {""} ;
          BC000C4_A56CorreoContrasena = new string[] {""} ;
+         BC000C4_A57CorreoPlantilla = new string[] {""} ;
+         BC000C4_n57CorreoPlantilla = new bool[] {false} ;
          BC000C5_A50CorreoId = new short[1] ;
          BC000C3_A50CorreoId = new short[1] ;
          BC000C3_A51CorreoIdentificador = new string[] {""} ;
@@ -1110,6 +1130,8 @@ namespace GeneXus.Programs {
          BC000C3_A54CorreoPuerto = new short[1] ;
          BC000C3_A55CorreoUsuario = new string[] {""} ;
          BC000C3_A56CorreoContrasena = new string[] {""} ;
+         BC000C3_A57CorreoPlantilla = new string[] {""} ;
+         BC000C3_n57CorreoPlantilla = new bool[] {false} ;
          sMode13 = "";
          BC000C2_A50CorreoId = new short[1] ;
          BC000C2_A51CorreoIdentificador = new string[] {""} ;
@@ -1118,6 +1140,8 @@ namespace GeneXus.Programs {
          BC000C2_A54CorreoPuerto = new short[1] ;
          BC000C2_A55CorreoUsuario = new string[] {""} ;
          BC000C2_A56CorreoContrasena = new string[] {""} ;
+         BC000C2_A57CorreoPlantilla = new string[] {""} ;
+         BC000C2_n57CorreoPlantilla = new bool[] {false} ;
          BC000C6_A50CorreoId = new short[1] ;
          BC000C9_A50CorreoId = new short[1] ;
          BC000C9_A51CorreoIdentificador = new string[] {""} ;
@@ -1126,18 +1150,20 @@ namespace GeneXus.Programs {
          BC000C9_A54CorreoPuerto = new short[1] ;
          BC000C9_A55CorreoUsuario = new string[] {""} ;
          BC000C9_A56CorreoContrasena = new string[] {""} ;
+         BC000C9_A57CorreoPlantilla = new string[] {""} ;
+         BC000C9_n57CorreoPlantilla = new bool[] {false} ;
          BackMsgLst = new msglist();
          LclMsgLst = new msglist();
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.correo_bc__default(),
             new Object[][] {
                 new Object[] {
-               BC000C2_A50CorreoId, BC000C2_A51CorreoIdentificador, BC000C2_A52CorreoNombre, BC000C2_A53CorreoServidor, BC000C2_A54CorreoPuerto, BC000C2_A55CorreoUsuario, BC000C2_A56CorreoContrasena
+               BC000C2_A50CorreoId, BC000C2_A51CorreoIdentificador, BC000C2_A52CorreoNombre, BC000C2_A53CorreoServidor, BC000C2_A54CorreoPuerto, BC000C2_A55CorreoUsuario, BC000C2_A56CorreoContrasena, BC000C2_A57CorreoPlantilla, BC000C2_n57CorreoPlantilla
                }
                , new Object[] {
-               BC000C3_A50CorreoId, BC000C3_A51CorreoIdentificador, BC000C3_A52CorreoNombre, BC000C3_A53CorreoServidor, BC000C3_A54CorreoPuerto, BC000C3_A55CorreoUsuario, BC000C3_A56CorreoContrasena
+               BC000C3_A50CorreoId, BC000C3_A51CorreoIdentificador, BC000C3_A52CorreoNombre, BC000C3_A53CorreoServidor, BC000C3_A54CorreoPuerto, BC000C3_A55CorreoUsuario, BC000C3_A56CorreoContrasena, BC000C3_A57CorreoPlantilla, BC000C3_n57CorreoPlantilla
                }
                , new Object[] {
-               BC000C4_A50CorreoId, BC000C4_A51CorreoIdentificador, BC000C4_A52CorreoNombre, BC000C4_A53CorreoServidor, BC000C4_A54CorreoPuerto, BC000C4_A55CorreoUsuario, BC000C4_A56CorreoContrasena
+               BC000C4_A50CorreoId, BC000C4_A51CorreoIdentificador, BC000C4_A52CorreoNombre, BC000C4_A53CorreoServidor, BC000C4_A54CorreoPuerto, BC000C4_A55CorreoUsuario, BC000C4_A56CorreoContrasena, BC000C4_A57CorreoPlantilla, BC000C4_n57CorreoPlantilla
                }
                , new Object[] {
                BC000C5_A50CorreoId
@@ -1150,7 +1176,7 @@ namespace GeneXus.Programs {
                , new Object[] {
                }
                , new Object[] {
-               BC000C9_A50CorreoId, BC000C9_A51CorreoIdentificador, BC000C9_A52CorreoNombre, BC000C9_A53CorreoServidor, BC000C9_A54CorreoPuerto, BC000C9_A55CorreoUsuario, BC000C9_A56CorreoContrasena
+               BC000C9_A50CorreoId, BC000C9_A51CorreoIdentificador, BC000C9_A52CorreoNombre, BC000C9_A53CorreoServidor, BC000C9_A54CorreoPuerto, BC000C9_A55CorreoUsuario, BC000C9_A56CorreoContrasena, BC000C9_A57CorreoPlantilla, BC000C9_n57CorreoPlantilla
                }
             }
          );
@@ -1186,8 +1212,11 @@ namespace GeneXus.Programs {
       private string Z56CorreoContrasena ;
       private string A56CorreoContrasena ;
       private string sMode13 ;
+      private bool n57CorreoPlantilla ;
       private bool Gx_longc ;
       private bool mustCommit ;
+      private string Z57CorreoPlantilla ;
+      private string A57CorreoPlantilla ;
       private string Z55CorreoUsuario ;
       private string A55CorreoUsuario ;
       private SdtCorreo bcCorreo ;
@@ -1200,6 +1229,8 @@ namespace GeneXus.Programs {
       private short[] BC000C4_A54CorreoPuerto ;
       private string[] BC000C4_A55CorreoUsuario ;
       private string[] BC000C4_A56CorreoContrasena ;
+      private string[] BC000C4_A57CorreoPlantilla ;
+      private bool[] BC000C4_n57CorreoPlantilla ;
       private short[] BC000C5_A50CorreoId ;
       private short[] BC000C3_A50CorreoId ;
       private string[] BC000C3_A51CorreoIdentificador ;
@@ -1208,6 +1239,8 @@ namespace GeneXus.Programs {
       private short[] BC000C3_A54CorreoPuerto ;
       private string[] BC000C3_A55CorreoUsuario ;
       private string[] BC000C3_A56CorreoContrasena ;
+      private string[] BC000C3_A57CorreoPlantilla ;
+      private bool[] BC000C3_n57CorreoPlantilla ;
       private short[] BC000C2_A50CorreoId ;
       private string[] BC000C2_A51CorreoIdentificador ;
       private string[] BC000C2_A52CorreoNombre ;
@@ -1215,6 +1248,8 @@ namespace GeneXus.Programs {
       private short[] BC000C2_A54CorreoPuerto ;
       private string[] BC000C2_A55CorreoUsuario ;
       private string[] BC000C2_A56CorreoContrasena ;
+      private string[] BC000C2_A57CorreoPlantilla ;
+      private bool[] BC000C2_n57CorreoPlantilla ;
       private short[] BC000C6_A50CorreoId ;
       private short[] BC000C9_A50CorreoId ;
       private string[] BC000C9_A51CorreoIdentificador ;
@@ -1223,6 +1258,8 @@ namespace GeneXus.Programs {
       private short[] BC000C9_A54CorreoPuerto ;
       private string[] BC000C9_A55CorreoUsuario ;
       private string[] BC000C9_A56CorreoContrasena ;
+      private string[] BC000C9_A57CorreoPlantilla ;
+      private bool[] BC000C9_n57CorreoPlantilla ;
       private msglist BackMsgLst ;
       private msglist LclMsgLst ;
    }
@@ -1272,7 +1309,8 @@ namespace GeneXus.Programs {
           new ParDef("@CorreoServidor",GXType.NChar,22,0) ,
           new ParDef("@CorreoPuerto",GXType.Int16,4,0) ,
           new ParDef("@CorreoUsuario",GXType.NVarChar,100,0) ,
-          new ParDef("@CorreoContrasena",GXType.NChar,20,0)
+          new ParDef("@CorreoContrasena",GXType.NChar,20,0) ,
+          new ParDef("@CorreoPlantilla",GXType.NVarChar,2097152,0){Nullable=true}
           };
           Object[] prmBC000C7;
           prmBC000C7 = new Object[] {
@@ -1282,6 +1320,7 @@ namespace GeneXus.Programs {
           new ParDef("@CorreoPuerto",GXType.Int16,4,0) ,
           new ParDef("@CorreoUsuario",GXType.NVarChar,100,0) ,
           new ParDef("@CorreoContrasena",GXType.NChar,20,0) ,
+          new ParDef("@CorreoPlantilla",GXType.NVarChar,2097152,0){Nullable=true} ,
           new ParDef("@CorreoId",GXType.Int16,4,0)
           };
           Object[] prmBC000C8;
@@ -1293,14 +1332,14 @@ namespace GeneXus.Programs {
           new ParDef("@CorreoId",GXType.Int16,4,0)
           };
           def= new CursorDef[] {
-              new CursorDef("BC000C2", "SELECT [CorreoId], [CorreoIdentificador], [CorreoNombre], [CorreoServidor], [CorreoPuerto], [CorreoUsuario], [CorreoContrasena] FROM [Correo] WITH (UPDLOCK) WHERE [CorreoId] = @CorreoId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C2,1, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("BC000C3", "SELECT [CorreoId], [CorreoIdentificador], [CorreoNombre], [CorreoServidor], [CorreoPuerto], [CorreoUsuario], [CorreoContrasena] FROM [Correo] WHERE [CorreoId] = @CorreoId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C3,1, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("BC000C4", "SELECT TM1.[CorreoId], TM1.[CorreoIdentificador], TM1.[CorreoNombre], TM1.[CorreoServidor], TM1.[CorreoPuerto], TM1.[CorreoUsuario], TM1.[CorreoContrasena] FROM [Correo] TM1 WHERE TM1.[CorreoId] = @CorreoId ORDER BY TM1.[CorreoId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C4,100, GxCacheFrequency.OFF ,true,false )
+              new CursorDef("BC000C2", "SELECT [CorreoId], [CorreoIdentificador], [CorreoNombre], [CorreoServidor], [CorreoPuerto], [CorreoUsuario], [CorreoContrasena], [CorreoPlantilla] FROM [Correo] WITH (UPDLOCK) WHERE [CorreoId] = @CorreoId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C2,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC000C3", "SELECT [CorreoId], [CorreoIdentificador], [CorreoNombre], [CorreoServidor], [CorreoPuerto], [CorreoUsuario], [CorreoContrasena], [CorreoPlantilla] FROM [Correo] WHERE [CorreoId] = @CorreoId ",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C3,1, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC000C4", "SELECT TM1.[CorreoId], TM1.[CorreoIdentificador], TM1.[CorreoNombre], TM1.[CorreoServidor], TM1.[CorreoPuerto], TM1.[CorreoUsuario], TM1.[CorreoContrasena], TM1.[CorreoPlantilla] FROM [Correo] TM1 WHERE TM1.[CorreoId] = @CorreoId ORDER BY TM1.[CorreoId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C4,100, GxCacheFrequency.OFF ,true,false )
              ,new CursorDef("BC000C5", "SELECT [CorreoId] FROM [Correo] WHERE [CorreoId] = @CorreoId  OPTION (FAST 1)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C5,1, GxCacheFrequency.OFF ,true,false )
-             ,new CursorDef("BC000C6", "INSERT INTO [Correo]([CorreoIdentificador], [CorreoNombre], [CorreoServidor], [CorreoPuerto], [CorreoUsuario], [CorreoContrasena]) VALUES(@CorreoIdentificador, @CorreoNombre, @CorreoServidor, @CorreoPuerto, @CorreoUsuario, @CorreoContrasena); SELECT SCOPE_IDENTITY()",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C6,1, GxCacheFrequency.OFF ,true,true )
-             ,new CursorDef("BC000C7", "UPDATE [Correo] SET [CorreoIdentificador]=@CorreoIdentificador, [CorreoNombre]=@CorreoNombre, [CorreoServidor]=@CorreoServidor, [CorreoPuerto]=@CorreoPuerto, [CorreoUsuario]=@CorreoUsuario, [CorreoContrasena]=@CorreoContrasena  WHERE [CorreoId] = @CorreoId", GxErrorMask.GX_NOMASK,prmBC000C7)
+             ,new CursorDef("BC000C6", "INSERT INTO [Correo]([CorreoIdentificador], [CorreoNombre], [CorreoServidor], [CorreoPuerto], [CorreoUsuario], [CorreoContrasena], [CorreoPlantilla]) VALUES(@CorreoIdentificador, @CorreoNombre, @CorreoServidor, @CorreoPuerto, @CorreoUsuario, @CorreoContrasena, @CorreoPlantilla); SELECT SCOPE_IDENTITY()",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C6,1, GxCacheFrequency.OFF ,true,true )
+             ,new CursorDef("BC000C7", "UPDATE [Correo] SET [CorreoIdentificador]=@CorreoIdentificador, [CorreoNombre]=@CorreoNombre, [CorreoServidor]=@CorreoServidor, [CorreoPuerto]=@CorreoPuerto, [CorreoUsuario]=@CorreoUsuario, [CorreoContrasena]=@CorreoContrasena, [CorreoPlantilla]=@CorreoPlantilla  WHERE [CorreoId] = @CorreoId", GxErrorMask.GX_NOMASK,prmBC000C7)
              ,new CursorDef("BC000C8", "DELETE FROM [Correo]  WHERE [CorreoId] = @CorreoId", GxErrorMask.GX_NOMASK,prmBC000C8)
-             ,new CursorDef("BC000C9", "SELECT TM1.[CorreoId], TM1.[CorreoIdentificador], TM1.[CorreoNombre], TM1.[CorreoServidor], TM1.[CorreoPuerto], TM1.[CorreoUsuario], TM1.[CorreoContrasena] FROM [Correo] TM1 WHERE TM1.[CorreoId] = @CorreoId ORDER BY TM1.[CorreoId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C9,100, GxCacheFrequency.OFF ,true,false )
+             ,new CursorDef("BC000C9", "SELECT TM1.[CorreoId], TM1.[CorreoIdentificador], TM1.[CorreoNombre], TM1.[CorreoServidor], TM1.[CorreoPuerto], TM1.[CorreoUsuario], TM1.[CorreoContrasena], TM1.[CorreoPlantilla] FROM [Correo] TM1 WHERE TM1.[CorreoId] = @CorreoId ORDER BY TM1.[CorreoId]  OPTION (FAST 100)",true, GxErrorMask.GX_NOMASK, false, this,prmBC000C9,100, GxCacheFrequency.OFF ,true,false )
           };
        }
     }
@@ -1319,6 +1358,8 @@ namespace GeneXus.Programs {
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((string[]) buf[5])[0] = rslt.getVarchar(6);
                 ((string[]) buf[6])[0] = rslt.getString(7, 20);
+                ((string[]) buf[7])[0] = rslt.getLongVarchar(8);
+                ((bool[]) buf[8])[0] = rslt.wasNull(8);
                 return;
              case 1 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
@@ -1328,6 +1369,8 @@ namespace GeneXus.Programs {
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((string[]) buf[5])[0] = rslt.getVarchar(6);
                 ((string[]) buf[6])[0] = rslt.getString(7, 20);
+                ((string[]) buf[7])[0] = rslt.getLongVarchar(8);
+                ((bool[]) buf[8])[0] = rslt.wasNull(8);
                 return;
              case 2 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
@@ -1337,6 +1380,8 @@ namespace GeneXus.Programs {
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((string[]) buf[5])[0] = rslt.getVarchar(6);
                 ((string[]) buf[6])[0] = rslt.getString(7, 20);
+                ((string[]) buf[7])[0] = rslt.getLongVarchar(8);
+                ((bool[]) buf[8])[0] = rslt.wasNull(8);
                 return;
              case 3 :
                 ((short[]) buf[0])[0] = rslt.getShort(1);
@@ -1352,6 +1397,8 @@ namespace GeneXus.Programs {
                 ((short[]) buf[4])[0] = rslt.getShort(5);
                 ((string[]) buf[5])[0] = rslt.getVarchar(6);
                 ((string[]) buf[6])[0] = rslt.getString(7, 20);
+                ((string[]) buf[7])[0] = rslt.getLongVarchar(8);
+                ((bool[]) buf[8])[0] = rslt.wasNull(8);
                 return;
        }
     }

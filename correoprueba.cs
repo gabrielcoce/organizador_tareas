@@ -92,40 +92,46 @@ namespace GeneXus.Programs {
       {
          /* GeneXus formulas */
          /* Output device settings */
-         AV40Usuarios.Load(1);
+         AV40Usuarios.Load((short)(NumberUtil.Val( AV41websession.Get("UsuarioId"), ".")));
+         AV45Tableros.Load(AV43TableroId);
          AV37subject = "Te han invitado a participar en un tablero";
          AV23message = "<h2>Solicitud para colaborar</h2><p>Acepta la invitación para poder participar en el tablero.  Haz click en el siguiente #enlace</p></strong>";
          /* Using cursor P00272 */
          pr_default.execute(0);
          while ( (pr_default.getStatus(0) != 101) )
          {
-            A50CorreoId = P00272_A50CorreoId[0];
             A52CorreoNombre = P00272_A52CorreoNombre[0];
             A55CorreoUsuario = P00272_A55CorreoUsuario[0];
             A56CorreoContrasena = P00272_A56CorreoContrasena[0];
             A54CorreoPuerto = P00272_A54CorreoPuerto[0];
             A53CorreoServidor = P00272_A53CorreoServidor[0];
+            A57CorreoPlantilla = P00272_A57CorreoPlantilla[0];
+            n57CorreoPlantilla = P00272_n57CorreoPlantilla[0];
+            A50CorreoId = P00272_A50CorreoId[0];
             AV27NombreRemitente = A52CorreoNombre;
             AV15CorreoRemitente = A55CorreoUsuario;
             AV12Contrasena = A56CorreoContrasena;
             AV29Puerto = A54CorreoPuerto;
             AV34Servidor = A53CorreoServidor;
+            AV44plantilla = A57CorreoPlantilla;
             /* Exit For each command. Update data (if necessary), close cursors & exit. */
             if (true) break;
-            /* Exiting from a For First loop. */
-            if (true) break;
+            pr_default.readNext(0);
          }
          pr_default.close(0);
          AV26NombreDestinatario = AV40Usuarios.gxTpr_Usuarionombre + " " + AV40Usuarios.gxTpr_Usuarioapellido;
          AV39url = AV19Httprequest.BaseURL;
          AV17data = AV39url + "aceptarinvitacion.aspx?TableroId=" + StringUtil.Trim( StringUtil.Str( (decimal)(AV43TableroId), 4, 0)) + "&UsuarioEmail=" + StringUtil.Trim( AV42UsuarioEmail);
+         AV44plantilla = StringUtil.StringReplace( AV44plantilla, "#NOMBRE", AV26NombreDestinatario);
+         AV44plantilla = StringUtil.StringReplace( AV44plantilla, "#TABLERO", StringUtil.Trim( AV45Tableros.gxTpr_Tableronombre));
+         AV44plantilla = StringUtil.StringReplace( AV44plantilla, "#LINK", StringUtil.Trim( AV17data));
+         AV44plantilla = StringUtil.StringReplace( AV44plantilla, "#INVITADO", AV42UsuarioEmail);
          AV21MailRecipient.Name = StringUtil.Trim( AV26NombreDestinatario);
          AV21MailRecipient.Address = StringUtil.Trim( AV42UsuarioEmail);
          AV20MailMessage.To.Clear();
          AV20MailMessage.To.Add(AV21MailRecipient);
          AV20MailMessage.Subject = AV37subject;
-         AV23message = StringUtil.StringReplace( AV23message, "#enlace", StringUtil.Trim( AV17data));
-         AV20MailMessage.HTMLText = AV23message;
+         AV20MailMessage.HTMLText = AV44plantilla;
          AV36SMTPSession.Host = AV34Servidor;
          AV36SMTPSession.Port = AV29Puerto;
          AV36SMTPSession.Sender.Name = AV27NombreRemitente;
@@ -165,23 +171,29 @@ namespace GeneXus.Programs {
       public override void initialize( )
       {
          AV40Usuarios = new SdtUsuarios(context);
+         AV41websession = context.GetSession();
+         AV45Tableros = new SdtTableros(context);
          AV37subject = "";
          AV23message = "";
          scmdbuf = "";
-         P00272_A50CorreoId = new short[1] ;
          P00272_A52CorreoNombre = new string[] {""} ;
          P00272_A55CorreoUsuario = new string[] {""} ;
          P00272_A56CorreoContrasena = new string[] {""} ;
          P00272_A54CorreoPuerto = new short[1] ;
          P00272_A53CorreoServidor = new string[] {""} ;
+         P00272_A57CorreoPlantilla = new string[] {""} ;
+         P00272_n57CorreoPlantilla = new bool[] {false} ;
+         P00272_A50CorreoId = new short[1] ;
          A52CorreoNombre = "";
          A55CorreoUsuario = "";
          A56CorreoContrasena = "";
          A53CorreoServidor = "";
+         A57CorreoPlantilla = "";
          AV27NombreRemitente = "";
          AV15CorreoRemitente = "";
          AV12Contrasena = "";
          AV34Servidor = "";
+         AV44plantilla = "";
          AV26NombreDestinatario = "";
          AV39url = "";
          AV19Httprequest = new GxHttpRequest( context);
@@ -192,7 +204,7 @@ namespace GeneXus.Programs {
          pr_default = new DataStoreProvider(context, new GeneXus.Programs.correoprueba__default(),
             new Object[][] {
                 new Object[] {
-               P00272_A50CorreoId, P00272_A52CorreoNombre, P00272_A55CorreoUsuario, P00272_A56CorreoContrasena, P00272_A54CorreoPuerto, P00272_A53CorreoServidor
+               P00272_A52CorreoNombre, P00272_A55CorreoUsuario, P00272_A56CorreoContrasena, P00272_A54CorreoPuerto, P00272_A53CorreoServidor, P00272_A57CorreoPlantilla, P00272_n57CorreoPlantilla, P00272_A50CorreoId
                }
             }
          );
@@ -201,8 +213,8 @@ namespace GeneXus.Programs {
       }
 
       private short AV43TableroId ;
-      private short A50CorreoId ;
       private short A54CorreoPuerto ;
+      private short A50CorreoId ;
       private short AV29Puerto ;
       private short AV31resultEmail ;
       private string AV37subject ;
@@ -215,26 +227,33 @@ namespace GeneXus.Programs {
       private string AV34Servidor ;
       private string AV26NombreDestinatario ;
       private string AV39url ;
+      private bool n57CorreoPlantilla ;
       private string AV23message ;
+      private string A57CorreoPlantilla ;
+      private string AV44plantilla ;
       private string AV17data ;
       private string AV42UsuarioEmail ;
       private string A55CorreoUsuario ;
       private string AV15CorreoRemitente ;
+      private IGxSession AV41websession ;
       private IGxDataStore dsDefault ;
       private short aP0_TableroId ;
       private string aP1_UsuarioEmail ;
       private IDataStoreProvider pr_default ;
-      private short[] P00272_A50CorreoId ;
       private string[] P00272_A52CorreoNombre ;
       private string[] P00272_A55CorreoUsuario ;
       private string[] P00272_A56CorreoContrasena ;
       private short[] P00272_A54CorreoPuerto ;
       private string[] P00272_A53CorreoServidor ;
+      private string[] P00272_A57CorreoPlantilla ;
+      private bool[] P00272_n57CorreoPlantilla ;
+      private short[] P00272_A50CorreoId ;
       private GxHttpRequest AV19Httprequest ;
       private GeneXus.Mail.GXMailMessage AV20MailMessage ;
       private GeneXus.Mail.GXMailRecipient AV21MailRecipient ;
       private GeneXus.Mail.GXSMTPSession AV36SMTPSession ;
       private SdtUsuarios AV40Usuarios ;
+      private SdtTableros AV45Tableros ;
    }
 
    public class correoprueba__default : DataStoreHelperBase, IDataStoreHelper
@@ -256,7 +275,7 @@ namespace GeneXus.Programs {
           prmP00272 = new Object[] {
           };
           def= new CursorDef[] {
-              new CursorDef("P00272", "SELECT TOP 1 [CorreoId], [CorreoNombre], [CorreoUsuario], [CorreoContrasena], [CorreoPuerto], [CorreoServidor] FROM [Correo] WHERE [CorreoId] = 1 ORDER BY [CorreoId] ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmP00272,1, GxCacheFrequency.OFF ,false,true )
+              new CursorDef("P00272", "SELECT TOP 1 [CorreoNombre], [CorreoUsuario], [CorreoContrasena], [CorreoPuerto], [CorreoServidor], [CorreoPlantilla], [CorreoId] FROM [Correo] ORDER BY [CorreoId] ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmP00272,1, GxCacheFrequency.OFF ,false,true )
           };
        }
     }
@@ -268,12 +287,14 @@ namespace GeneXus.Programs {
        switch ( cursor )
        {
              case 0 :
-                ((short[]) buf[0])[0] = rslt.getShort(1);
-                ((string[]) buf[1])[0] = rslt.getString(2, 20);
-                ((string[]) buf[2])[0] = rslt.getVarchar(3);
-                ((string[]) buf[3])[0] = rslt.getString(4, 20);
-                ((short[]) buf[4])[0] = rslt.getShort(5);
-                ((string[]) buf[5])[0] = rslt.getString(6, 22);
+                ((string[]) buf[0])[0] = rslt.getString(1, 20);
+                ((string[]) buf[1])[0] = rslt.getVarchar(2);
+                ((string[]) buf[2])[0] = rslt.getString(3, 20);
+                ((short[]) buf[3])[0] = rslt.getShort(4);
+                ((string[]) buf[4])[0] = rslt.getString(5, 22);
+                ((string[]) buf[5])[0] = rslt.getLongVarchar(6);
+                ((bool[]) buf[6])[0] = rslt.wasNull(6);
+                ((short[]) buf[7])[0] = rslt.getShort(7);
                 return;
        }
     }

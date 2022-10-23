@@ -239,15 +239,15 @@ namespace GeneXus.Programs {
          {
             bodyStyle += "-moz-opacity:0;opacity:0;";
          }
-         context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
+         context.WriteHtmlText( " "+"class=\"form-horizontal FormLogin\""+" "+ "style='"+bodyStyle+"'") ;
          context.WriteHtmlText( FormProcess+">") ;
          context.skipLines(1);
-         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("aceptarinvitacion.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0)),UrlEncode(StringUtil.RTrim(AV7UsuarioEmail))}, new string[] {"TableroId","UsuarioEmail"}) +"\">") ;
+         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal FormLogin\" data-gx-class=\"form-horizontal FormLogin\" novalidate action=\""+formatLink("aceptarinvitacion.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0)),UrlEncode(StringUtil.RTrim(AV7UsuarioEmail))}, new string[] {"TableroId","UsuarioEmail"}) +"\">") ;
          GxWebStd.gx_hidden_field( context, "_EventName", "");
          GxWebStd.gx_hidden_field( context, "_EventGridId", "");
          GxWebStd.gx_hidden_field( context, "_EventRowId", "");
          context.WriteHtmlText( "<input type=\"submit\" title=\"submit\" style=\"display:block;height:0;border:0;padding:0\" disabled>") ;
-         AssignProp("", false, "FORM", "Class", "form-horizontal Form", true);
+         AssignProp("", false, "FORM", "Class", "form-horizontal FormLogin", true);
          toggleJsOutput = isJsOutputEnabled( );
          if ( context.isSpaRequest( ) )
          {
@@ -332,9 +332,12 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "left", "top", "", "", "div");
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-4", "left", "top", "", "", "div");
+            GxWebStd.gx_div_end( context, "left", "top", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, divTable1_Internalname, 1, 0, "px", 0, "px", "Table", "left", "top", "", "", "div");
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-4", "left", "top", "", "", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, divTable1_Internalname, 1, 0, "px", 0, "px", "TableRegistro", "left", "top", "", "", "div");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             /* Div Control */
@@ -377,8 +380,8 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 gx-attribute", "left", "top", "", "", "div");
             /* Single line edit */
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 21,'',false,'',0)\"";
-            GxWebStd.gx_single_line_edit( context, edtavUsuarionombre_Internalname, StringUtil.RTrim( AV5UsuarioNombre), StringUtil.RTrim( context.localUtil.Format( AV5UsuarioNombre, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,21);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuarionombre_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuarionombre_Enabled, 0, "text", "", 100, "%", 1, "row", 20, 0, 0, 0, 1, -1, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 22,'',false,'',0)\"";
+            GxWebStd.gx_single_line_edit( context, edtavUsuarionombre_Internalname, StringUtil.RTrim( AV5UsuarioNombre), StringUtil.RTrim( context.localUtil.Format( AV5UsuarioNombre, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,22);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuarionombre_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuarionombre_Enabled, 0, "text", "", 100, "%", 1, "row", 20, 0, 0, 0, 1, -1, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -391,8 +394,8 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 gx-attribute", "left", "top", "", "", "div");
             /* Single line edit */
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 25,'',false,'',0)\"";
-            GxWebStd.gx_single_line_edit( context, edtavUsuarioapellido_Internalname, StringUtil.RTrim( AV6UsuarioApellido), StringUtil.RTrim( context.localUtil.Format( AV6UsuarioApellido, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,25);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuarioapellido_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuarioapellido_Enabled, 0, "text", "", 100, "%", 1, "row", 20, 0, 0, 0, 1, -1, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 26,'',false,'',0)\"";
+            GxWebStd.gx_single_line_edit( context, edtavUsuarioapellido_Internalname, StringUtil.RTrim( AV6UsuarioApellido), StringUtil.RTrim( context.localUtil.Format( AV6UsuarioApellido, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,26);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuarioapellido_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuarioapellido_Enabled, 0, "text", "", 100, "%", 1, "row", 20, 0, 0, 0, 1, -1, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -421,8 +424,8 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 gx-attribute", "left", "top", "", "", "div");
             /* Single line edit */
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 34,'',false,'',0)\"";
-            GxWebStd.gx_single_line_edit( context, edtavUsuariopassword_Internalname, StringUtil.RTrim( AV8UsuarioPassword), StringUtil.RTrim( context.localUtil.Format( AV8UsuarioPassword, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,34);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuariopassword_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuariopassword_Enabled, 0, "text", "", 80, "chr", 1, "row", 200, 0, 0, 0, 1, -1, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 35,'',false,'',0)\"";
+            GxWebStd.gx_single_line_edit( context, edtavUsuariopassword_Internalname, StringUtil.RTrim( AV8UsuarioPassword), StringUtil.RTrim( context.localUtil.Format( AV8UsuarioPassword, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,35);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuariopassword_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuariopassword_Enabled, 0, "text", "", 80, "chr", 1, "row", 200, -1, 0, 0, 1, 0, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -435,8 +438,8 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 gx-attribute", "left", "top", "", "", "div");
             /* Single line edit */
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 38,'',false,'',0)\"";
-            GxWebStd.gx_single_line_edit( context, edtavPassword_Internalname, StringUtil.RTrim( AV9Password), StringUtil.RTrim( context.localUtil.Format( AV9Password, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,38);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavPassword_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavPassword_Enabled, 0, "text", "", 80, "chr", 1, "row", 200, 0, 0, 0, 1, -1, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 39,'',false,'',0)\"";
+            GxWebStd.gx_single_line_edit( context, edtavPassword_Internalname, StringUtil.RTrim( AV9Password), StringUtil.RTrim( context.localUtil.Format( AV9Password, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,39);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavPassword_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavPassword_Enabled, 0, "text", "", 80, "chr", 1, "row", 200, -1, 0, 0, 1, 0, -1, true, "", "left", true, "", "HLP_AceptarInvitacion.htm");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -447,21 +450,27 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-6", "Right", "top", "", "", "div");
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 42,'',false,'',0)\"";
-            ClassString = "BtnEnter";
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "Center", "top", "", "", "div");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 43,'',false,'',0)\"";
+            ClassString = "Aceptar";
             StyleString = "";
             GxWebStd.gx_button_ctrl( context, bttAceptar_Internalname, "", "Aceptar", bttAceptar_Jsonclick, 5, "Aceptar", "", StyleString, ClassString, 1, 1, "standard", "'"+""+"'"+",false,"+"'"+"E\\'REGISTRO\\'."+"'", TempTags, "", context.GetButtonType( ), "HLP_AceptarInvitacion.htm");
-            GxWebStd.gx_div_end( context, "Right", "top", "div");
+            GxWebStd.gx_div_end( context, "Center", "top", "div");
+            GxWebStd.gx_div_end( context, "left", "top", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-6", "left", "top", "", "", "div");
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 44,'',false,'',0)\"";
-            ClassString = "BtnCancel";
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "Center", "top", "", "", "div");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 46,'',false,'',0)\"";
+            ClassString = "BotonAtras";
             StyleString = "";
-            GxWebStd.gx_button_ctrl( context, bttCancelar_Internalname, "", "Cancelar", bttCancelar_Jsonclick, 5, "Cancelar", "", StyleString, ClassString, 1, 1, "standard", "'"+""+"'"+",false,"+"'"+"E\\'CANCELAR\\'."+"'", TempTags, "", context.GetButtonType( ), "HLP_AceptarInvitacion.htm");
+            GxWebStd.gx_button_ctrl( context, bttCancelar_Internalname, "", "Cancelar", bttCancelar_Jsonclick, 7, "Cancelar", "", StyleString, ClassString, 1, 1, "standard", "'"+""+"'"+",false,"+"'"+"e110s1_client"+"'", TempTags, "", 2, "HLP_AceptarInvitacion.htm");
+            GxWebStd.gx_div_end( context, "Center", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-4", "left", "top", "", "", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             /* Div Control */
@@ -537,21 +546,21 @@ namespace GeneXus.Programs {
                            context.wbHandled = 1;
                            dynload_actions( ) ;
                            /* Execute user event: Start */
-                           E110S2 ();
+                           E120S2 ();
                         }
                         else if ( StringUtil.StrCmp(sEvt, "'REGISTRO'") == 0 )
                         {
                            context.wbHandled = 1;
                            dynload_actions( ) ;
                            /* Execute user event: 'Registro' */
-                           E120S2 ();
+                           E130S2 ();
                         }
                         else if ( StringUtil.StrCmp(sEvt, "LOAD") == 0 )
                         {
                            context.wbHandled = 1;
                            dynload_actions( ) ;
                            /* Execute user event: Load */
-                           E130S2 ();
+                           E140S2 ();
                         }
                         else if ( StringUtil.StrCmp(sEvt, "ENTER") == 0 )
                         {
@@ -565,11 +574,6 @@ namespace GeneXus.Programs {
                               dynload_actions( ) ;
                            }
                            /* No code required for Cancel button. It is implemented as the Reset button. */
-                        }
-                        else if ( StringUtil.StrCmp(sEvt, "'CANCELAR'") == 0 )
-                        {
-                           context.wbHandled = 1;
-                           dynload_actions( ) ;
                         }
                         else if ( StringUtil.StrCmp(sEvt, "LSCR") == 0 )
                         {
@@ -684,7 +688,7 @@ namespace GeneXus.Programs {
             while ( (pr_default.getStatus(0) != 101) )
             {
                /* Execute user event: Load */
-               E130S2 ();
+               E140S2 ();
                /* Exiting from a For First loop. */
                if (true) break;
             }
@@ -714,7 +718,7 @@ namespace GeneXus.Programs {
          /* Execute Start event if defined. */
          context.wbGlbDoneStart = 0;
          /* Execute user event: Start */
-         E110S2 ();
+         E120S2 ();
          context.wbGlbDoneStart = 1;
          /* After Start, stand alone formulas. */
          if ( StringUtil.StrCmp(context.GetRequestMethod( ), "POST") == 0 )
@@ -743,7 +747,7 @@ namespace GeneXus.Programs {
       protected void GXStart( )
       {
          /* Execute user event: Start */
-         E110S2 ();
+         E120S2 ();
          if ( returnInSub )
          {
             returnInSub = true;
@@ -751,18 +755,18 @@ namespace GeneXus.Programs {
          }
       }
 
-      protected void E110S2( )
+      protected void E120S2( )
       {
          /* Start Routine */
          returnInSub = false;
          AV17Tableros.Load(A9TableroId);
          AV18Usuarios2.Load(AV17Tableros.gxTpr_Propietarioid);
-         lblTextblock1_Caption = "<h2><center><strong>"+StringUtil.Trim( AV18Usuarios2.gxTpr_Usuarionombre)+" "+StringUtil.Trim( AV18Usuarios2.gxTpr_Usuarioapellido)+"te ha invitado a colaborar.  Registrate para aceptar la invitación</strong></center></h2>";
+         lblTextblock1_Caption = "<h4><center><strong>"+StringUtil.Trim( AV18Usuarios2.gxTpr_Usuarionombre)+" "+StringUtil.Trim( AV18Usuarios2.gxTpr_Usuarioapellido)+" te ha invitado a colaborar.  Registrate para aceptar la invitación</strong></center></h4>";
          AssignProp("", false, lblTextblock1_Internalname, "Caption", lblTextblock1_Caption, true);
          AV14CryptoHash.Algorithm = "SHA1";
       }
 
-      protected void E120S2( )
+      protected void E130S2( )
       {
          /* 'Registro' Routine */
          returnInSub = false;
@@ -829,12 +833,8 @@ namespace GeneXus.Programs {
                   AV13sdt_sa.gxTpr_Allowoutsideclick = true;
                   AV13sdt_sa.gxTpr_Type = "success";
                   this.executeUsercontrolMethod("", false, "RAMP_ADDONS_SWEETALERT1Container", "msgSW", "", new Object[] {(SdtSDT_SweetAlert)AV13sdt_sa});
-                  context.setWebReturnParms(new Object[] {(short)A9TableroId,(string)AV7UsuarioEmail});
-                  context.setWebReturnParmsMetadata(new Object[] {"A9TableroId","AV7UsuarioEmail"});
+                  CallWebObject(formatLink("ingreso.aspx") );
                   context.wjLocDisableFrm = 1;
-                  context.nUserReturn = 1;
-                  returnInSub = true;
-                  if (true) return;
                }
                else
                {
@@ -874,7 +874,7 @@ namespace GeneXus.Programs {
       {
       }
 
-      protected void E130S2( )
+      protected void E140S2( )
       {
          /* Load Routine */
          returnInSub = false;
@@ -927,7 +927,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022102019585261", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022102211561162", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -943,7 +943,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("aceptarinvitacion.js", "?2022102019585261", false, true);
+         context.AddJavascriptSource("aceptarinvitacion.js", "?2022102211561162", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -1009,8 +1009,10 @@ namespace GeneXus.Programs {
       {
          setEventMetadata("REFRESH","{handler:'Refresh',iparms:[{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9',hsh:true}]");
          setEventMetadata("REFRESH",",oparms:[]}");
-         setEventMetadata("'REGISTRO'","{handler:'E120S2',iparms:[{av:'AV5UsuarioNombre',fld:'vUSUARIONOMBRE',pic:''},{av:'AV6UsuarioApellido',fld:'vUSUARIOAPELLIDO',pic:''},{av:'AV7UsuarioEmail',fld:'vUSUARIOEMAIL',pic:''},{av:'AV8UsuarioPassword',fld:'vUSUARIOPASSWORD',pic:''},{av:'AV9Password',fld:'vPASSWORD',pic:''},{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9',hsh:true},{av:'AV13sdt_sa',fld:'vSDT_SA',pic:''}]");
+         setEventMetadata("'REGISTRO'","{handler:'E130S2',iparms:[{av:'AV5UsuarioNombre',fld:'vUSUARIONOMBRE',pic:''},{av:'AV6UsuarioApellido',fld:'vUSUARIOAPELLIDO',pic:''},{av:'AV7UsuarioEmail',fld:'vUSUARIOEMAIL',pic:''},{av:'AV8UsuarioPassword',fld:'vUSUARIOPASSWORD',pic:''},{av:'AV9Password',fld:'vPASSWORD',pic:''},{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9',hsh:true},{av:'AV13sdt_sa',fld:'vSDT_SA',pic:''}]");
          setEventMetadata("'REGISTRO'",",oparms:[{av:'AV13sdt_sa',fld:'vSDT_SA',pic:''}]}");
+         setEventMetadata("'CANCELAR'","{handler:'E110S1',iparms:[]");
+         setEventMetadata("'CANCELAR'",",oparms:[]}");
          return  ;
       }
 

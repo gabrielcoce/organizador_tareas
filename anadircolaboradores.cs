@@ -132,6 +132,10 @@ namespace GeneXus.Programs {
                }
                gxfirstwebparm = gxfirstwebparm_bkp;
             }
+            if ( ! entryPointCalled && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+            {
+               A9TableroId = (short)(NumberUtil.Val( gxfirstwebparm, "."));
+            }
             if ( toggleJsOutput )
             {
                if ( context.isSpaRequest( ) )
@@ -331,9 +335,7 @@ namespace GeneXus.Programs {
          context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
          context.WriteHtmlText( FormProcess+">") ;
          context.skipLines(1);
-         GXKey = Crypto.GetSiteKey( );
-         GXEncryptionTmp = "anadircolaboradores.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
-         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("anadircolaboradores.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey)+"\">") ;
+         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("anadircolaboradores.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) +"\">") ;
          GxWebStd.gx_hidden_field( context, "_EventName", "");
          GxWebStd.gx_hidden_field( context, "_EventGridId", "");
          GxWebStd.gx_hidden_field( context, "_EventRowId", "");
@@ -349,7 +351,7 @@ namespace GeneXus.Programs {
       protected void send_integrity_footer_hashes( )
       {
          GxWebStd.gx_hidden_field( context, "gxhash_vUSUARIOS3", GetSecureSignedToken( "", AV32Usuarios3, context));
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -433,9 +435,7 @@ namespace GeneXus.Programs {
 
       public override string GetSelfLink( )
       {
-         GXKey = Crypto.GetSiteKey( );
-         GXEncryptionTmp = "anadircolaboradores.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
-         return formatLink("anadircolaboradores.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey) ;
+         return formatLink("anadircolaboradores.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"})  ;
       }
 
       public override string GetPgmname( )
@@ -923,49 +923,11 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            GXKey = Crypto.GetSiteKey( );
-            if ( ( StringUtil.StrCmp(context.GetRequestQueryString( ), "") != 0 ) && ( GxWebError == 0 ) && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
             {
-               GXDecQS = UriDecrypt64( context.GetRequestQueryString( ), GXKey);
-               if ( ( StringUtil.StrCmp(StringUtil.Right( GXDecQS, 6), Crypto.CheckSum( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), 6)) == 0 ) && ( StringUtil.StrCmp(StringUtil.Substring( GXDecQS, 1, StringUtil.Len( "anadircolaboradores.aspx")), "anadircolaboradores.aspx") == 0 ) )
-               {
-                  SetQueryString( StringUtil.Right( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), (short)(StringUtil.Len( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)))-StringUtil.Len( "anadircolaboradores.aspx")))) ;
-               }
-               else
-               {
-                  GxWebError = 1;
-                  context.HttpContext.Response.StatusDescription = 403.ToString();
-                  context.HttpContext.Response.StatusCode = 403;
-                  context.WriteHtmlText( "<title>403 Forbidden</title>") ;
-                  context.WriteHtmlText( "<h1>403 Forbidden</h1>") ;
-                  context.WriteHtmlText( "<p /><hr />") ;
-                  GXUtil.WriteLog("send_http_error_code " + 403.ToString());
-               }
+               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
             }
-            if ( ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-            {
-               if ( nGotPars == 0 )
-               {
-                  entryPointCalled = false;
-                  gxfirstwebparm = GetFirstPar( "TableroId");
-                  toggleJsOutput = isJsOutputEnabled( );
-                  if ( context.isSpaRequest( ) )
-                  {
-                     disableJsOutput();
-                  }
-                  if ( ! entryPointCalled && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-                  {
-                     A9TableroId = (short)(NumberUtil.Val( gxfirstwebparm, "."));
-                  }
-                  if ( toggleJsOutput )
-                  {
-                     if ( context.isSpaRequest( ) )
-                     {
-                        enableJsOutput();
-                     }
-                  }
-               }
-            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -1030,9 +992,9 @@ namespace GeneXus.Programs {
          GxWebStd.set_html_headers( context, 0, "", "");
          GRIDPARTICIPANTES_nCurrentRecord = 0;
          RF0Q2( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          send_integrity_footer_hashes( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          /* End function gxgrGridparticipantes_refresh */
       }
 
@@ -1043,9 +1005,9 @@ namespace GeneXus.Programs {
          GxWebStd.set_html_headers( context, 0, "", "");
          GRIDINVITADOS_nCurrentRecord = 0;
          RF0Q3( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          send_integrity_footer_hashes( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          /* End function gxgrGridinvitados_refresh */
       }
 
@@ -1267,7 +1229,7 @@ namespace GeneXus.Programs {
             AssignAttri("", false, "AV8UsuarioEmail", AV8UsuarioEmail);
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -1394,9 +1356,7 @@ namespace GeneXus.Programs {
                   if ( AV25Invitados.Success() )
                   {
                      context.CommitDataStores("anadircolaboradores",pr_default);
-                     GXKey = Crypto.GetSiteKey( );
-                     GXEncryptionTmp = "anadircolaboradores.aspx"+UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0));
-                     CallWebObject(formatLink("anadircolaboradores.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey));
+                     CallWebObject(formatLink("anadircolaboradores.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0))}, new string[] {"TableroId"}) );
                      context.wjLocDisableFrm = 1;
                   }
                   else
@@ -1420,12 +1380,10 @@ namespace GeneXus.Programs {
                   AV25Invitados.Insert();
                   if ( AV25Invitados.Success() )
                   {
-                     new enviocorreo(context ).execute( ref  A9TableroId, ref  AV8UsuarioEmail) ;
+                     new correoprueba(context ).execute( ref  A9TableroId, ref  AV8UsuarioEmail) ;
                      AssignAttri("", false, "AV8UsuarioEmail", AV8UsuarioEmail);
                      context.CommitDataStores("anadircolaboradores",pr_default);
-                     GXKey = Crypto.GetSiteKey( );
-                     GXEncryptionTmp = "anadircolaboradores.aspx"+UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0));
-                     CallWebObject(formatLink("anadircolaboradores.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey));
+                     CallWebObject(formatLink("anadircolaboradores.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0))}, new string[] {"TableroId"}) );
                      context.wjLocDisableFrm = 1;
                   }
                   else
@@ -1495,9 +1453,7 @@ namespace GeneXus.Programs {
          {
             context.RollbackDataStores("anadircolaboradores",pr_default);
          }
-         GXKey = Crypto.GetSiteKey( );
-         GXEncryptionTmp = "anadircolaboradores.aspx"+UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0));
-         CallWebObject(formatLink("anadircolaboradores.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey));
+         CallWebObject(formatLink("anadircolaboradores.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0))}, new string[] {"TableroId"}) );
          context.wjLocDisableFrm = 1;
          /*  Sending Event outputs  */
          context.httpAjaxContext.ajax_rsp_assign_sdt_attri("", false, "AV34sdt_sa", AV34sdt_sa);
@@ -1511,9 +1467,7 @@ namespace GeneXus.Programs {
          {
             new intercalarrol(context ).execute( ref  AV11TableroId, ref  A18ParticipanteTableroId, ref  A39ParticipanteRolId) ;
             AssignAttri("", false, "AV11TableroId", StringUtil.LTrimStr( (decimal)(AV11TableroId), 4, 0));
-            GXKey = Crypto.GetSiteKey( );
-            GXEncryptionTmp = "anadircolaboradores.aspx"+UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0));
-            CallWebObject(formatLink("anadircolaboradores.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey));
+            CallWebObject(formatLink("anadircolaboradores.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(AV11TableroId,4,0))}, new string[] {"TableroId"}) );
             context.wjLocDisableFrm = 1;
          }
          /*  Sending Event outputs  */
@@ -1606,7 +1560,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210201742117", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022102211441323", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1622,7 +1576,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("anadircolaboradores.js", "?202210201742117", false, true);
+         context.AddJavascriptSource("anadircolaboradores.js", "?2022102211441323", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -2429,7 +2383,6 @@ namespace GeneXus.Programs {
          FormProcess = "";
          bodyStyle = "";
          GXKey = "";
-         GXEncryptionTmp = "";
          A6UsuarioEmail = "";
          AV34sdt_sa = new SdtSDT_SweetAlert(context);
          GX_FocusControl = "";
@@ -2467,7 +2420,6 @@ namespace GeneXus.Programs {
          AV45Aceptar_GXI = "";
          AV35tieneusuario = "";
          AV46Tieneusuario_GXI = "";
-         GXDecQS = "";
          scmdbuf = "";
          H000Q2_A9TableroId = new short[1] ;
          H000Q2_A39ParticipanteRolId = new short[1] ;
@@ -2557,6 +2509,7 @@ namespace GeneXus.Programs {
       private short A43RegistroInvitadoUsuario ;
       private short A41InvitadoRolId ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short subGridparticipantes_Backcolorstyle ;
       private short subGridinvitados_Backcolorstyle ;
       private short AV33propietario ;
@@ -2623,7 +2576,6 @@ namespace GeneXus.Programs {
       private string FormProcess ;
       private string bodyStyle ;
       private string GXKey ;
-      private string GXEncryptionTmp ;
       private string GX_FocusControl ;
       private string sPrefix ;
       private string divMaintable_Internalname ;
@@ -2666,7 +2618,6 @@ namespace GeneXus.Programs {
       private string dynInvitadoRolId_Internalname ;
       private string edtavAceptar_Internalname ;
       private string edtavTieneusuario_Internalname ;
-      private string GXDecQS ;
       private string scmdbuf ;
       private string edtavQuitar2_Tooltiptext ;
       private string edtavCambiarrol_Tooltiptext ;

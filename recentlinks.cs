@@ -315,9 +315,7 @@ namespace GeneXus.Programs {
             context.skipLines(1);
             if ( nGXWrapped != 1 )
             {
-               GXKey = Crypto.GetSiteKey( );
-               GXEncryptionTmp = "recentlinks.aspx"+UrlEncode(StringUtil.RTrim(AV6FormCaption)) + "," + UrlEncode(StringUtil.RTrim(AV7FormPgmName));
-               context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"Form\" data-gx-class=\"Form\" novalidate action=\""+formatLink("recentlinks.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey)+"\">") ;
+               context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"Form\" data-gx-class=\"Form\" novalidate action=\""+formatLink("recentlinks.aspx", new object[] {UrlEncode(StringUtil.RTrim(AV6FormCaption)),UrlEncode(StringUtil.RTrim(AV7FormPgmName))}, new string[] {"FormCaption","FormPgmName"}) +"\">") ;
                GxWebStd.gx_hidden_field( context, "_EventName", "");
                GxWebStd.gx_hidden_field( context, "_EventGridId", "");
                GxWebStd.gx_hidden_field( context, "_EventRowId", "");
@@ -365,7 +363,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -523,10 +521,6 @@ namespace GeneXus.Programs {
          wbLoad = false;
          wbEnd = 0;
          wbStart = 0;
-         if ( StringUtil.Len( sPrefix) != 0 )
-         {
-            GXKey = Crypto.GetSiteKey( );
-         }
          if ( StringUtil.Len( sPrefix) == 0 )
          {
             if ( ! context.isSpaRequest( ) )
@@ -733,51 +727,14 @@ namespace GeneXus.Programs {
             {
                initialize_properties( ) ;
             }
-            GXKey = Crypto.GetSiteKey( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
-               if ( ( StringUtil.StrCmp(context.GetRequestQueryString( ), "") != 0 ) && ( GxWebError == 0 ) && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+               if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
                {
-                  GXDecQS = UriDecrypt64( context.GetRequestQueryString( ), GXKey);
-                  if ( ( StringUtil.StrCmp(StringUtil.Right( GXDecQS, 6), Crypto.CheckSum( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), 6)) == 0 ) && ( StringUtil.StrCmp(StringUtil.Substring( GXDecQS, 1, StringUtil.Len( "recentlinks.aspx")), "recentlinks.aspx") == 0 ) )
-                  {
-                     SetQueryString( StringUtil.Right( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), (short)(StringUtil.Len( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)))-StringUtil.Len( "recentlinks.aspx")))) ;
-                  }
-                  else
-                  {
-                     GxWebError = 1;
-                     context.HttpContext.Response.StatusDescription = 403.ToString();
-                     context.HttpContext.Response.StatusCode = 403;
-                     context.WriteHtmlText( "<title>403 Forbidden</title>") ;
-                     context.WriteHtmlText( "<h1>403 Forbidden</h1>") ;
-                     context.WriteHtmlText( "<p /><hr />") ;
-                     GXUtil.WriteLog("send_http_error_code " + 403.ToString());
-                  }
+                  gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
                }
             }
-            if ( ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-            {
-               if ( StringUtil.Len( sPrefix) == 0 )
-               {
-                  if ( nGotPars == 0 )
-                  {
-                     entryPointCalled = false;
-                     gxfirstwebparm = GetFirstPar( "FormCaption");
-                     toggleJsOutput = isJsOutputEnabled( );
-                     if ( context.isSpaRequest( ) )
-                     {
-                        disableJsOutput();
-                     }
-                     if ( toggleJsOutput )
-                     {
-                        if ( context.isSpaRequest( ) )
-                        {
-                           enableJsOutput();
-                        }
-                     }
-                  }
-               }
-            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
@@ -831,9 +788,9 @@ namespace GeneXus.Programs {
          GxWebStd.set_html_headers( context, 0, "", "");
          LINKS_nCurrentRecord = 0;
          RF022( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          send_integrity_footer_hashes( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          /* End function gxgrLinks_refresh */
       }
 
@@ -966,7 +923,7 @@ namespace GeneXus.Programs {
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -1351,7 +1308,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022101613104497", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20221022910593", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1368,7 +1325,7 @@ namespace GeneXus.Programs {
       {
          if ( nGXWrapped != 1 )
          {
-            context.AddJavascriptSource("recentlinks.js", "?2022101613104497", false, true);
+            context.AddJavascriptSource("recentlinks.js", "?20221022910593", false, true);
          }
          /* End function include_jscripts */
       }
@@ -1590,7 +1547,6 @@ namespace GeneXus.Programs {
          FormProcess = "";
          bodyStyle = "";
          GXKey = "";
-         GXEncryptionTmp = "";
          GX_FocusControl = "";
          LinksContainer = new GXWebGrid( context);
          sStyleString = "";
@@ -1600,7 +1556,6 @@ namespace GeneXus.Programs {
          EvtGridId = "";
          EvtRowId = "";
          sEvtType = "";
-         GXDecQS = "";
          AV11RecentLinksItems = new GXBaseCollection<SdtLinkList_LinkItem>( context, "LinkItem", "GeneXus");
          AV8Session = context.GetSession();
          AV12RecentLinksItem = new SdtLinkList_LinkItem(context);
@@ -1630,6 +1585,7 @@ namespace GeneXus.Programs {
       private short nDraw ;
       private short nDoneStart ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short subLinks_Backcolorstyle ;
       private short subLinks_Borderwidth ;
       private short subLinks_Backstyle ;
@@ -1662,7 +1618,6 @@ namespace GeneXus.Programs {
       private string FormProcess ;
       private string bodyStyle ;
       private string GXKey ;
-      private string GXEncryptionTmp ;
       private string GX_FocusControl ;
       private string sStyleString ;
       private string subLinks_Internalname ;
@@ -1671,7 +1626,6 @@ namespace GeneXus.Programs {
       private string EvtGridId ;
       private string EvtRowId ;
       private string sEvtType ;
-      private string GXDecQS ;
       private string lblPipe_Caption ;
       private string lblPipe_Internalname ;
       private string lblPlace_Caption ;

@@ -221,15 +221,15 @@ namespace GeneXus.Programs {
          {
             bodyStyle += "-moz-opacity:0;opacity:0;";
          }
-         context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
+         context.WriteHtmlText( " "+"class=\"form-horizontal FormLogin\""+" "+ "style='"+bodyStyle+"'") ;
          context.WriteHtmlText( FormProcess+">") ;
          context.skipLines(1);
-         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("ingreso.aspx") +"\">") ;
+         context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal FormLogin\" data-gx-class=\"form-horizontal FormLogin\" novalidate action=\""+formatLink("ingreso.aspx") +"\">") ;
          GxWebStd.gx_hidden_field( context, "_EventName", "");
          GxWebStd.gx_hidden_field( context, "_EventGridId", "");
          GxWebStd.gx_hidden_field( context, "_EventRowId", "");
          context.WriteHtmlText( "<input type=\"submit\" title=\"submit\" style=\"display:block;height:0;border:0;padding:0\" disabled>") ;
-         AssignProp("", false, "FORM", "Class", "form-horizontal Form", true);
+         AssignProp("", false, "FORM", "Class", "form-horizontal FormLogin", true);
          toggleJsOutput = isJsOutputEnabled( );
          if ( context.isSpaRequest( ) )
          {
@@ -239,7 +239,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -310,17 +310,17 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, divMaintable_Internalname, 1, 0, "px", 0, "px", "Table", "left", "top", "", "", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "min-height:25px;", "div");
-            GxWebStd.gx_div_end( context, "left", "top", "div");
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "left", "top", "", "", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, divTable2_Internalname, 1, 0, "px", 0, "px", "Table", "left", "top", "", "", "div");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-4", "left", "top", "", "", "div");
-            GxWebStd.gx_div_end( context, "left", "top", "div");
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "Center", "Middle", "", "", "div");
             /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-4", "left", "top", "", "", "div");
-            /* Div Control */
-            GxWebStd.gx_div_start( context, divTable1_Internalname, 1, 0, "px", 0, "px", "Table", "left", "top", "", "", "div");
+            GxWebStd.gx_div_start( context, divTable1_Internalname, 1, 0, "px", 0, "px", "TableLogin", "left", "top", "", "", "div");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             /* Div Control */
@@ -328,7 +328,7 @@ namespace GeneXus.Programs {
             /* Static images/pictures */
             ClassString = "Image";
             StyleString = "";
-            sImgUrl = (string)(context.GetImagePath( "1d978f96-c0d3-4428-a3d6-07fdda331491", "", context.GetTheme( )));
+            sImgUrl = (string)(context.GetImagePath( "3dc0224f-65be-4010-af81-9e7018b4f3d7", "", context.GetTheme( )));
             GxWebStd.gx_bitmap( context, imgImage1_Internalname, sImgUrl, "", "", "", context.GetTheme( ), 1, 1, "", "", 0, 0, 0, "px", 200, "px", 0, 0, 0, "", "", StyleString, ClassString, "", "", "", "", " "+"data-gx-image"+" ", "", "", 1, false, false, context.GetImageSrcSet( sImgUrl), "HLP_Ingreso.htm");
             GxWebStd.gx_div_end( context, "Center", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -350,12 +350,12 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "form-group gx-form-group", "left", "top", ""+" data-gx-for=\""+edtavUsuarioemail_Internalname+"\"", "", "div");
             /* Attribute/Variable Label */
-            GxWebStd.gx_label_element( context, edtavUsuarioemail_Internalname, "Usuario Email", "col-xs-12 AttributeLabel", 1, true, "");
+            GxWebStd.gx_label_element( context, edtavUsuarioemail_Internalname, "Correo electrónico", "col-xs-12 AttributeLabel", 1, true, "");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 gx-attribute", "left", "top", "", "", "div");
             /* Single line edit */
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 20,'',false,'',0)\"";
-            GxWebStd.gx_single_line_edit( context, edtavUsuarioemail_Internalname, AV5UsuarioEmail, StringUtil.RTrim( context.localUtil.Format( AV5UsuarioEmail, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,20);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuarioemail_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuarioemail_Enabled, 0, "text", "", 80, "chr", 1, "row", 100, 0, 0, 0, 1, -1, 0, true, "", "left", true, "", "HLP_Ingreso.htm");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 21,'',false,'',0)\"";
+            GxWebStd.gx_single_line_edit( context, edtavUsuarioemail_Internalname, AV5UsuarioEmail, StringUtil.RTrim( context.localUtil.Format( AV5UsuarioEmail, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,21);\"", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuarioemail_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuarioemail_Enabled, 0, "text", "", 80, "chr", 1, "row", 100, 0, 0, 0, 1, -1, 0, true, "", "left", true, "", "HLP_Ingreso.htm");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -367,12 +367,12 @@ namespace GeneXus.Programs {
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "form-group gx-form-group", "left", "top", ""+" data-gx-for=\""+edtavUsuariopassword_Internalname+"\"", "", "div");
             /* Attribute/Variable Label */
-            GxWebStd.gx_label_element( context, edtavUsuariopassword_Internalname, "Usuario Password", "col-xs-12 AttributeLabel", 1, true, "");
+            GxWebStd.gx_label_element( context, edtavUsuariopassword_Internalname, "Contraseña", "col-xs-12 AttributeLabel", 1, true, "");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 gx-attribute", "left", "top", "", "", "div");
             /* Single line edit */
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 25,'',false,'',0)\"";
-            GxWebStd.gx_single_line_edit( context, edtavUsuariopassword_Internalname, StringUtil.RTrim( AV6UsuarioPassword), StringUtil.RTrim( context.localUtil.Format( AV6UsuarioPassword, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,25);\""+" "+"idenableshowpasswordhint=\"False\""+" ", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuariopassword_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuariopassword_Enabled, 0, "text", "", 80, "chr", 1, "row", 200, -1, 0, 0, 1, 0, -1, true, "", "left", true, "", "HLP_Ingreso.htm");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 26,'',false,'',0)\"";
+            GxWebStd.gx_single_line_edit( context, edtavUsuariopassword_Internalname, StringUtil.RTrim( AV6UsuarioPassword), StringUtil.RTrim( context.localUtil.Format( AV6UsuarioPassword, "")), TempTags+" onchange=\""+""+";gx.evt.onchange(this, event)\" "+" onblur=\""+""+";gx.evt.onblur(this,26);\""+" "+"idenableshowpasswordhint=\"False\""+" ", "'"+""+"'"+",false,"+"'"+""+"'", "", "", "", "", edtavUsuariopassword_Jsonclick, 0, "Attribute", "", "", "", "", 1, edtavUsuariopassword_Enabled, 0, "text", "", 80, "chr", 1, "row", 200, -1, 0, 0, 1, 0, -1, true, "", "left", true, "", "HLP_Ingreso.htm");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
@@ -384,30 +384,27 @@ namespace GeneXus.Programs {
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "Center", "top", "", "", "div");
-            /* Div Control */
-            GxWebStd.gx_div_start( context, divSection1_Internalname, 1, 0, "px", 0, "px", "Section", "left", "top", "", "", "div");
             TempTags = "  onfocus=\"gx.evt.onfocus(this, 30,'',false,'',0)\"";
-            ClassString = "BtnEnter";
+            ClassString = "Aceptar";
             StyleString = "";
             GxWebStd.gx_button_ctrl( context, bttIngresar_Internalname, "", "Ingreso", bttIngresar_Jsonclick, 5, "Ingreso", "", StyleString, ClassString, 1, 1, "standard", "'"+""+"'"+",false,"+"'"+"E\\'INGRESO\\'."+"'", TempTags, "", context.GetButtonType( ), "HLP_Ingreso.htm");
-            TempTags = "  onfocus=\"gx.evt.onfocus(this, 31,'',false,'',0)\"";
-            ClassString = "BtnCancel";
-            StyleString = "";
-            GxWebStd.gx_button_ctrl( context, bttRegistro_Internalname, "", "Registro", bttRegistro_Jsonclick, 5, "Registro", "", StyleString, ClassString, 1, 1, "standard", "'"+""+"'"+",false,"+"'"+"E\\'REGISTRO\\'."+"'", TempTags, "", context.GetButtonType( ), "HLP_Ingreso.htm");
+            GxWebStd.gx_div_end( context, "Center", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
+            /* Div Control */
+            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12", "Center", "top", "", "", "div");
+            TempTags = "  onfocus=\"gx.evt.onfocus(this, 33,'',false,'',0)\"";
+            ClassString = "Registro";
+            StyleString = "";
+            GxWebStd.gx_button_ctrl( context, bttRegistro_Internalname, "", "Registro", bttRegistro_Jsonclick, 7, "Registro", "", StyleString, ClassString, 1, 1, "standard", "'"+""+"'"+",false,"+"'"+"e110i1_client"+"'", TempTags, "", 2, "HLP_Ingreso.htm");
             GxWebStd.gx_div_end( context, "Center", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
-            GxWebStd.gx_div_end( context, "left", "top", "div");
-            /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "col-xs-12 col-sm-4", "left", "top", "", "", "div");
+            GxWebStd.gx_div_end( context, "Center", "Middle", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
-            /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
-            /* Div Control */
-            GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
             GxWebStd.gx_div_end( context, "left", "top", "div");
             /* Div Control */
             GxWebStd.gx_div_start( context, "", 1, 0, "px", 0, "px", "row", "left", "top", "", "", "div");
@@ -482,21 +479,21 @@ namespace GeneXus.Programs {
                            context.wbHandled = 1;
                            dynload_actions( ) ;
                            /* Execute user event: Start */
-                           E110I2 ();
+                           E120I2 ();
                         }
                         else if ( StringUtil.StrCmp(sEvt, "'INGRESO'") == 0 )
                         {
                            context.wbHandled = 1;
                            dynload_actions( ) ;
                            /* Execute user event: 'Ingreso' */
-                           E120I2 ();
+                           E130I2 ();
                         }
                         else if ( StringUtil.StrCmp(sEvt, "LOAD") == 0 )
                         {
                            context.wbHandled = 1;
                            dynload_actions( ) ;
                            /* Execute user event: Load */
-                           E130I2 ();
+                           E140I2 ();
                         }
                         else if ( StringUtil.StrCmp(sEvt, "ENTER") == 0 )
                         {
@@ -510,11 +507,6 @@ namespace GeneXus.Programs {
                               dynload_actions( ) ;
                            }
                            /* No code required for Cancel button. It is implemented as the Reset button. */
-                        }
-                        else if ( StringUtil.StrCmp(sEvt, "'REGISTRO'") == 0 )
-                        {
-                           context.wbHandled = 1;
-                           dynload_actions( ) ;
                         }
                         else if ( StringUtil.StrCmp(sEvt, "LSCR") == 0 )
                         {
@@ -550,7 +542,11 @@ namespace GeneXus.Programs {
       {
          if ( nDonePA == 0 )
          {
-            GXKey = Crypto.GetSiteKey( );
+            if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
+            {
+               gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
+            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( context.isSpaRequest( ) )
             {
@@ -621,7 +617,7 @@ namespace GeneXus.Programs {
          if ( ! context.WillRedirect( ) && ( context.nUserReturn != 1 ) )
          {
             /* Execute user event: Load */
-            E130I2 ();
+            E140I2 ();
             WB0I0( ) ;
          }
       }
@@ -643,7 +639,7 @@ namespace GeneXus.Programs {
          /* Execute Start event if defined. */
          context.wbGlbDoneStart = 0;
          /* Execute user event: Start */
-         E110I2 ();
+         E120I2 ();
          context.wbGlbDoneStart = 1;
          /* After Start, stand alone formulas. */
          if ( StringUtil.StrCmp(context.GetRequestMethod( ), "POST") == 0 )
@@ -657,7 +653,7 @@ namespace GeneXus.Programs {
             AssignAttri("", false, "AV6UsuarioPassword", AV6UsuarioPassword);
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -668,11 +664,11 @@ namespace GeneXus.Programs {
       protected void GXStart( )
       {
          /* Execute user event: Start */
-         E110I2 ();
+         E120I2 ();
          if (returnInSub) return;
       }
 
-      protected void E110I2( )
+      protected void E120I2( )
       {
          /* Start Routine */
          returnInSub = false;
@@ -682,7 +678,7 @@ namespace GeneXus.Programs {
          AV7CryptoHash.Algorithm = "SHA1";
       }
 
-      protected void E120I2( )
+      protected void E130I2( )
       {
          /* 'Ingreso' Routine */
          returnInSub = false;
@@ -713,7 +709,7 @@ namespace GeneXus.Programs {
       {
       }
 
-      protected void E130I2( )
+      protected void E140I2( )
       {
          /* Load Routine */
          returnInSub = false;
@@ -761,7 +757,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20221020179479", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022102211373627", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -777,7 +773,7 @@ namespace GeneXus.Programs {
       protected void include_jscripts( )
       {
          context.AddJavascriptSource("messages.spa.js", "?"+GetCacheInvalidationToken( ), false, true);
-         context.AddJavascriptSource("ingreso.js", "?20221020179479", false, true);
+         context.AddJavascriptSource("ingreso.js", "?2022102211373627", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -799,8 +795,8 @@ namespace GeneXus.Programs {
          edtavUsuariopassword_Internalname = "vUSUARIOPASSWORD";
          bttIngresar_Internalname = "INGRESAR";
          bttRegistro_Internalname = "REGISTRO";
-         divSection1_Internalname = "SECTION1";
          divTable1_Internalname = "TABLE1";
+         divTable2_Internalname = "TABLE2";
          Ramp_addons_sweetalert1_Internalname = "RAMP_ADDONS_SWEETALERT1";
          divMaintable_Internalname = "MAINTABLE";
          Form.Internalname = "FORM";
@@ -834,8 +830,10 @@ namespace GeneXus.Programs {
       {
          setEventMetadata("REFRESH","{handler:'Refresh',iparms:[]");
          setEventMetadata("REFRESH",",oparms:[]}");
-         setEventMetadata("'INGRESO'","{handler:'E120I2',iparms:[{av:'AV6UsuarioPassword',fld:'vUSUARIOPASSWORD',pic:''},{av:'AV5UsuarioEmail',fld:'vUSUARIOEMAIL',pic:''},{av:'AV10sdt_sa',fld:'vSDT_SA',pic:''}]");
+         setEventMetadata("'INGRESO'","{handler:'E130I2',iparms:[{av:'AV6UsuarioPassword',fld:'vUSUARIOPASSWORD',pic:''},{av:'AV5UsuarioEmail',fld:'vUSUARIOEMAIL',pic:''},{av:'AV10sdt_sa',fld:'vSDT_SA',pic:''}]");
          setEventMetadata("'INGRESO'",",oparms:[{av:'AV10sdt_sa',fld:'vSDT_SA',pic:''}]}");
+         setEventMetadata("'REGISTRO'","{handler:'E110I1',iparms:[]");
+         setEventMetadata("'REGISTRO'",",oparms:[]}");
          setEventMetadata("VALIDV_USUARIOEMAIL","{handler:'Validv_Usuarioemail',iparms:[]");
          setEventMetadata("VALIDV_USUARIOEMAIL",",oparms:[]}");
          return  ;
@@ -896,6 +894,7 @@ namespace GeneXus.Programs {
       private short wbEnd ;
       private short wbStart ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short nGXWrapped ;
       private int edtavUsuarioemail_Enabled ;
       private int edtavUsuariopassword_Enabled ;
@@ -909,6 +908,7 @@ namespace GeneXus.Programs {
       private string GX_FocusControl ;
       private string sPrefix ;
       private string divMaintable_Internalname ;
+      private string divTable2_Internalname ;
       private string divTable1_Internalname ;
       private string ClassString ;
       private string StyleString ;
@@ -923,7 +923,6 @@ namespace GeneXus.Programs {
       private string edtavUsuariopassword_Internalname ;
       private string AV6UsuarioPassword ;
       private string edtavUsuariopassword_Jsonclick ;
-      private string divSection1_Internalname ;
       private string bttIngresar_Internalname ;
       private string bttIngresar_Jsonclick ;
       private string bttRegistro_Internalname ;

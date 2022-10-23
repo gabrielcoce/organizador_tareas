@@ -311,9 +311,7 @@ namespace GeneXus.Programs {
             context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
             context.WriteHtmlText( FormProcess+">") ;
             context.skipLines(1);
-            GXKey = Crypto.GetSiteKey( );
-            GXEncryptionTmp = "finalizadowc.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
-            context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("finalizadowc.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey)+"\">") ;
+            context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("finalizadowc.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) +"\">") ;
             GxWebStd.gx_hidden_field( context, "_EventName", "");
             GxWebStd.gx_hidden_field( context, "_EventGridId", "");
             GxWebStd.gx_hidden_field( context, "_EventRowId", "");
@@ -360,7 +358,7 @@ namespace GeneXus.Programs {
 
       protected void send_integrity_footer_hashes( )
       {
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -568,10 +566,6 @@ namespace GeneXus.Programs {
          wbLoad = false;
          wbEnd = 0;
          wbStart = 0;
-         if ( StringUtil.Len( sPrefix) != 0 )
-         {
-            GXKey = Crypto.GetSiteKey( );
-         }
          if ( StringUtil.Len( sPrefix) == 0 )
          {
             if ( ! context.isSpaRequest( ) )
@@ -671,7 +665,7 @@ namespace GeneXus.Programs {
                         {
                            sEvtType = StringUtil.Right( sEvt, 4);
                            sEvt = StringUtil.Left( sEvt, (short)(StringUtil.Len( sEvt)-4));
-                           if ( ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "START") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "GRIDTAREAS3.LOAD") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 20), "'MOSTRARCOMENTARIOS'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "ENTER") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 6), "CANCEL") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 9), "'INICIAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 20), "'MOSTRARCOMENTARIOS'") == 0 ) )
+                           if ( ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "START") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "GRIDTAREAS3.LOAD") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "ENTER") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 6), "CANCEL") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 9), "'INICIAR'") == 0 ) )
                            {
                               if ( ( StringUtil.Len( sPrefix) != 0 ) && ( nDoneStart == 0 ) )
                               {
@@ -716,19 +710,6 @@ namespace GeneXus.Programs {
                                        {
                                           dynload_actions( ) ;
                                           E120Y2 ();
-                                       }
-                                    }
-                                 }
-                                 else if ( StringUtil.StrCmp(sEvt, "'MOSTRARCOMENTARIOS'") == 0 )
-                                 {
-                                    if ( ! context.WillRedirect( ) && ( context.nUserReturn != 1 ) )
-                                    {
-                                       context.wbHandled = 1;
-                                       if ( ! wbErr )
-                                       {
-                                          dynload_actions( ) ;
-                                          /* Execute user event: 'MostrarComentarios' */
-                                          E130Y2 ();
                                        }
                                     }
                                  }
@@ -860,51 +841,14 @@ namespace GeneXus.Programs {
             {
                initialize_properties( ) ;
             }
-            GXKey = Crypto.GetSiteKey( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
-               if ( ( StringUtil.StrCmp(context.GetRequestQueryString( ), "") != 0 ) && ( GxWebError == 0 ) && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+               if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
                {
-                  GXDecQS = UriDecrypt64( context.GetRequestQueryString( ), GXKey);
-                  if ( ( StringUtil.StrCmp(StringUtil.Right( GXDecQS, 6), Crypto.CheckSum( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), 6)) == 0 ) && ( StringUtil.StrCmp(StringUtil.Substring( GXDecQS, 1, StringUtil.Len( "finalizadowc.aspx")), "finalizadowc.aspx") == 0 ) )
-                  {
-                     SetQueryString( StringUtil.Right( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), (short)(StringUtil.Len( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)))-StringUtil.Len( "finalizadowc.aspx")))) ;
-                  }
-                  else
-                  {
-                     GxWebError = 1;
-                     context.HttpContext.Response.StatusDescription = 403.ToString();
-                     context.HttpContext.Response.StatusCode = 403;
-                     context.WriteHtmlText( "<title>403 Forbidden</title>") ;
-                     context.WriteHtmlText( "<h1>403 Forbidden</h1>") ;
-                     context.WriteHtmlText( "<p /><hr />") ;
-                     GXUtil.WriteLog("send_http_error_code " + 403.ToString());
-                  }
+                  gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
                }
             }
-            if ( ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-            {
-               if ( StringUtil.Len( sPrefix) == 0 )
-               {
-                  if ( nGotPars == 0 )
-                  {
-                     entryPointCalled = false;
-                     gxfirstwebparm = GetFirstPar( "TableroId");
-                     toggleJsOutput = isJsOutputEnabled( );
-                     if ( context.isSpaRequest( ) )
-                     {
-                        disableJsOutput();
-                     }
-                     if ( toggleJsOutput )
-                     {
-                        if ( context.isSpaRequest( ) )
-                        {
-                           enableJsOutput();
-                        }
-                     }
-                  }
-               }
-            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
@@ -958,9 +902,9 @@ namespace GeneXus.Programs {
          GxWebStd.set_html_headers( context, 0, "", "");
          GRIDTAREAS3_nCurrentRecord = 0;
          RF0Y2( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          send_integrity_footer_hashes( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          /* End function gxgrGridtareas3_refresh */
       }
 
@@ -1140,10 +1084,12 @@ namespace GeneXus.Programs {
             /* Read saved values. */
             nRC_GXsfl_15 = (int)(context.localUtil.CToN( cgiGet( sPrefix+"nRC_GXsfl_15"), ",", "."));
             wcpOA9TableroId = (short)(context.localUtil.CToN( cgiGet( sPrefix+"wcpOA9TableroId"), ",", "."));
+            A9TableroId = (short)(context.localUtil.CToN( cgiGet( sPrefix+"TABLEROID"), ",", "."));
+            AV15estadoComentarios = StringUtil.StrToBool( cgiGet( sPrefix+"vESTADOCOMENTARIOS"));
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -1292,71 +1238,6 @@ namespace GeneXus.Programs {
          if ( isFullAjaxMode( ) && ! bGXsfl_15_Refreshing )
          {
             context.DoAjaxLoad(15, Gridtareas3Row);
-         }
-         /*  Sending Event outputs  */
-      }
-
-      protected void E130Y2( )
-      {
-         /* 'MostrarComentarios' Routine */
-         returnInSub = false;
-         if ( ! AV15estadoComentarios )
-         {
-            /* Object Property */
-            if ( StringUtil.Len( sPrefix) == 0 )
-            {
-               bDynCreated_Listadocomentarios = true;
-            }
-            if ( StringUtil.StrCmp(StringUtil.Lower( WebComp_Listadocomentarios_Component), StringUtil.Lower( "ComentariosWC")) != 0 )
-            {
-               WebComp_Listadocomentarios = getWebComponent(GetType(), "GeneXus.Programs", "comentarioswc", new Object[] {context} );
-               WebComp_Listadocomentarios.ComponentInit();
-               WebComp_Listadocomentarios.Name = "ComentariosWC";
-               WebComp_Listadocomentarios_Component = "ComentariosWC";
-            }
-            if ( StringUtil.Len( WebComp_Listadocomentarios_Component) != 0 )
-            {
-               WebComp_Listadocomentarios.setjustcreated();
-               WebComp_Listadocomentarios.componentprepare(new Object[] {(string)sPrefix+"W0045",(string)sGXsfl_15_idx,(short)A9TableroId,(short)A12TareaId});
-               WebComp_Listadocomentarios.componentbind(new Object[] {(string)"",(string)""});
-            }
-            if ( isFullAjaxMode( ) || isAjaxCallMode( ) && bDynCreated_Listadocomentarios )
-            {
-               context.httpAjaxContext.ajax_rspStartCmp(sPrefix+"gxHTMLWrpW0045"+sGXsfl_15_idx);
-               WebComp_Listadocomentarios.componentdraw();
-               context.httpAjaxContext.ajax_rspEndCmp();
-            }
-            AV15estadoComentarios = true;
-            AssignAttri(sPrefix, false, "AV15estadoComentarios", AV15estadoComentarios);
-         }
-         else if ( AV15estadoComentarios )
-         {
-            /* Object Property */
-            if ( StringUtil.Len( sPrefix) == 0 )
-            {
-               bDynCreated_Listadocomentarios = true;
-            }
-            if ( StringUtil.StrCmp(StringUtil.Lower( WebComp_Listadocomentarios_Component), StringUtil.Lower( "Vacio")) != 0 )
-            {
-               WebComp_Listadocomentarios = getWebComponent(GetType(), "GeneXus.Programs", "vacio", new Object[] {context} );
-               WebComp_Listadocomentarios.ComponentInit();
-               WebComp_Listadocomentarios.Name = "Vacio";
-               WebComp_Listadocomentarios_Component = "Vacio";
-            }
-            if ( StringUtil.Len( WebComp_Listadocomentarios_Component) != 0 )
-            {
-               WebComp_Listadocomentarios.setjustcreated();
-               WebComp_Listadocomentarios.componentprepare(new Object[] {(string)sPrefix+"W0045",(string)sGXsfl_15_idx});
-               WebComp_Listadocomentarios.componentbind(new Object[] {});
-            }
-            if ( isFullAjaxMode( ) || isAjaxCallMode( ) && bDynCreated_Listadocomentarios )
-            {
-               context.httpAjaxContext.ajax_rspStartCmp(sPrefix+"gxHTMLWrpW0045"+sGXsfl_15_idx);
-               WebComp_Listadocomentarios.componentdraw();
-               context.httpAjaxContext.ajax_rspEndCmp();
-            }
-            AV15estadoComentarios = false;
-            AssignAttri(sPrefix, false, "AV15estadoComentarios", AV15estadoComentarios);
          }
          /*  Sending Event outputs  */
       }
@@ -1590,7 +1471,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?202210161310481", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20221022911016", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1605,7 +1486,7 @@ namespace GeneXus.Programs {
 
       protected void include_jscripts( )
       {
-         context.AddJavascriptSource("finalizadowc.js", "?202210161310481", false, true);
+         context.AddJavascriptSource("finalizadowc.js", "?20221022911017", false, true);
          /* End function include_jscripts */
       }
 
@@ -1750,7 +1631,7 @@ namespace GeneXus.Programs {
          StyleString = "";
          AV6comentarios_IsBlob = (bool)((String.IsNullOrEmpty(StringUtil.RTrim( AV6comentarios))&&String.IsNullOrEmpty(StringUtil.RTrim( AV19Comentarios_GXI)))||!String.IsNullOrEmpty(StringUtil.RTrim( AV6comentarios)));
          sImgUrl = (String.IsNullOrEmpty(StringUtil.RTrim( AV6comentarios)) ? AV19Comentarios_GXI : context.PathToRelativeUrl( AV6comentarios));
-         Gridtareas3Row.AddColumnProperties("bitmap", 1, isAjaxCallMode( ), new Object[] {(string)edtavComentarios_Internalname,(string)sImgUrl,(string)"",(string)"",(string)"",context.GetTheme( ),(short)1,(short)1,(string)"",(string)edtavComentarios_Tooltiptext,(short)0,(short)1,(short)30,(string)"px",(short)30,(string)"px",(short)0,(short)0,(short)5,(string)edtavComentarios_Jsonclick,"'"+sPrefix+"'"+",false,"+"'"+sPrefix+"E\\'MOSTRARCOMENTARIOS\\'."+sGXsfl_15_idx+"'",(string)StyleString,(string)ClassString,(string)"",(string)"",(string)"",(string)"",(string)""+TempTags,(string)"",(string)"",(short)1,(bool)AV6comentarios_IsBlob,(bool)false,context.GetImageSrcSet( sImgUrl)});
+         Gridtareas3Row.AddColumnProperties("bitmap", 1, isAjaxCallMode( ), new Object[] {(string)edtavComentarios_Internalname,(string)sImgUrl,(string)"",(string)"",(string)"",context.GetTheme( ),(short)1,(short)1,(string)"",(string)edtavComentarios_Tooltiptext,(short)0,(short)1,(short)30,(string)"px",(short)30,(string)"px",(short)0,(short)0,(short)7,(string)edtavComentarios_Jsonclick,(string)"'"+sPrefix+"'"+",false,"+"'"+"e130y2_client"+"'",(string)StyleString,(string)ClassString,(string)"",(string)"",(string)"",(string)"",(string)""+TempTags,(string)"",(string)"",(short)1,(bool)AV6comentarios_IsBlob,(bool)false,context.GetImageSrcSet( sImgUrl)});
          Gridtareas3Row.AddColumnProperties("div_end", -1, isAjaxCallMode( ), new Object[] {(string)"left",(string)"top",(string)"div"});
          if ( Gridtareas3Container.GetWrapped() == 1 )
          {
@@ -2230,7 +2111,6 @@ namespace GeneXus.Programs {
          FormProcess = "";
          bodyStyle = "";
          GXKey = "";
-         GXEncryptionTmp = "";
          GX_FocusControl = "";
          ClassString = "";
          StyleString = "";
@@ -2253,7 +2133,6 @@ namespace GeneXus.Programs {
          sCmpCtrl = "";
          WebComp_GX_Process_Component = "";
          OldComponent1 = "";
-         GXDecQS = "";
          WebComp_Listadocomentarios_Component = "";
          WebComp_Component1_Component = "";
          scmdbuf = "";
@@ -2309,6 +2188,7 @@ namespace GeneXus.Programs {
       private short A12TareaId ;
       private short nCmpId ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short subGridtareas3_Backcolorstyle ;
       private short A46TareaEstado ;
       private short AV11contador ;
@@ -2348,7 +2228,6 @@ namespace GeneXus.Programs {
       private string FormProcess ;
       private string bodyStyle ;
       private string GXKey ;
-      private string GXEncryptionTmp ;
       private string GX_FocusControl ;
       private string divMaintable_Internalname ;
       private string divT3_Internalname ;
@@ -2375,7 +2254,6 @@ namespace GeneXus.Programs {
       private string WebComp_GX_Process_Component ;
       private string WebCompHandler="" ;
       private string OldComponent1 ;
-      private string GXDecQS ;
       private string WebComp_Listadocomentarios_Component ;
       private string WebComp_Component1_Component ;
       private string scmdbuf ;

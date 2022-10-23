@@ -1,2 +1,2 @@
-CREATE TABLE [Correo] ([CorreoId] smallint NOT NULL IDENTITY(1,1), [CorreoIdentificador] nchar(20) NOT NULL , [CorreoNombre] nchar(20) NOT NULL , [CorreoServidor] nchar(22) NOT NULL , [CorreoPuerto] smallint NOT NULL , [CorreoUsuario] nvarchar(100) NOT NULL , [CorreoContrasena] nchar(20) NOT NULL , PRIMARY KEY([CorreoId]))
+ALTER TABLE [Correo] ADD [CorreoPlantilla] NVARCHAR(MAX) NULL
 

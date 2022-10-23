@@ -266,7 +266,7 @@ namespace GeneXus.Programs {
           prmP00262 = new Object[] {
           };
           def= new CursorDef[] {
-              new CursorDef("P00262", "SELECT TOP 1 [CorreoId], [CorreoNombre], [CorreoUsuario], [CorreoContrasena], [CorreoPuerto], [CorreoServidor] FROM [Correo] WHERE [CorreoId] = 1 ORDER BY [CorreoId] ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmP00262,1, GxCacheFrequency.OFF ,false,true )
+              new CursorDef("P00262", "SELECT TOP 1 [CorreoId], [CorreoNombre], [CorreoUsuario], [CorreoContrasena], [CorreoPuerto], [CorreoServidor] FROM [Correo] WHERE [CorreoId] = 3 ORDER BY [CorreoId] ",false, GxErrorMask.GX_NOMASK | GxErrorMask.GX_MASKLOOPLOCK, false, this,prmP00262,1, GxCacheFrequency.OFF ,false,true )
           };
        }
     }

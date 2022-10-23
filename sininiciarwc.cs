@@ -323,9 +323,7 @@ namespace GeneXus.Programs {
             context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
             context.WriteHtmlText( FormProcess+">") ;
             context.skipLines(1);
-            GXKey = Crypto.GetSiteKey( );
-            GXEncryptionTmp = "sininiciarwc.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
-            context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("sininiciarwc.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey)+"\">") ;
+            context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("sininiciarwc.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) +"\">") ;
             GxWebStd.gx_hidden_field( context, "_EventName", "");
             GxWebStd.gx_hidden_field( context, "_EventGridId", "");
             GxWebStd.gx_hidden_field( context, "_EventRowId", "");
@@ -373,7 +371,7 @@ namespace GeneXus.Programs {
       protected void send_integrity_footer_hashes( )
       {
          GxWebStd.gx_hidden_field( context, sPrefix+"gxhash_vTODAY", GetSecureSignedToken( sPrefix, Gx_date, context));
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -600,10 +598,6 @@ namespace GeneXus.Programs {
          wbLoad = false;
          wbEnd = 0;
          wbStart = 0;
-         if ( StringUtil.Len( sPrefix) != 0 )
-         {
-            GXKey = Crypto.GetSiteKey( );
-         }
          if ( StringUtil.Len( sPrefix) == 0 )
          {
             if ( ! context.isSpaRequest( ) )
@@ -967,51 +961,14 @@ namespace GeneXus.Programs {
             {
                initialize_properties( ) ;
             }
-            GXKey = Crypto.GetSiteKey( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
-               if ( ( StringUtil.StrCmp(context.GetRequestQueryString( ), "") != 0 ) && ( GxWebError == 0 ) && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+               if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
                {
-                  GXDecQS = UriDecrypt64( context.GetRequestQueryString( ), GXKey);
-                  if ( ( StringUtil.StrCmp(StringUtil.Right( GXDecQS, 6), Crypto.CheckSum( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), 6)) == 0 ) && ( StringUtil.StrCmp(StringUtil.Substring( GXDecQS, 1, StringUtil.Len( "sininiciarwc.aspx")), "sininiciarwc.aspx") == 0 ) )
-                  {
-                     SetQueryString( StringUtil.Right( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), (short)(StringUtil.Len( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)))-StringUtil.Len( "sininiciarwc.aspx")))) ;
-                  }
-                  else
-                  {
-                     GxWebError = 1;
-                     context.HttpContext.Response.StatusDescription = 403.ToString();
-                     context.HttpContext.Response.StatusCode = 403;
-                     context.WriteHtmlText( "<title>403 Forbidden</title>") ;
-                     context.WriteHtmlText( "<h1>403 Forbidden</h1>") ;
-                     context.WriteHtmlText( "<p /><hr />") ;
-                     GXUtil.WriteLog("send_http_error_code " + 403.ToString());
-                  }
+                  gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
                }
             }
-            if ( ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-            {
-               if ( StringUtil.Len( sPrefix) == 0 )
-               {
-                  if ( nGotPars == 0 )
-                  {
-                     entryPointCalled = false;
-                     gxfirstwebparm = GetFirstPar( "TableroId");
-                     toggleJsOutput = isJsOutputEnabled( );
-                     if ( context.isSpaRequest( ) )
-                     {
-                        disableJsOutput();
-                     }
-                     if ( toggleJsOutput )
-                     {
-                        if ( context.isSpaRequest( ) )
-                        {
-                           enableJsOutput();
-                        }
-                     }
-                  }
-               }
-            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
@@ -1070,9 +1027,9 @@ namespace GeneXus.Programs {
          E160Z2 ();
          GRIDTAREAS1_nCurrentRecord = 0;
          RF0Z2( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          send_integrity_footer_hashes( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          /* End function gxgrGridtareas1_refresh */
       }
 
@@ -1246,7 +1203,7 @@ namespace GeneXus.Programs {
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -1607,9 +1564,7 @@ namespace GeneXus.Programs {
             if ( AV15T4.Success() )
             {
                context.CommitDataStores("sininiciarwc",pr_default);
-               GXKey = Crypto.GetSiteKey( );
-               GXEncryptionTmp = "listadotareas.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
-               CallWebObject(formatLink("listadotareas.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey));
+               CallWebObject(formatLink("listadotareas.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) );
                context.wjLocDisableFrm = 1;
             }
             else
@@ -1951,7 +1906,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022101613105120", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?20221022911190", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -1966,7 +1921,7 @@ namespace GeneXus.Programs {
 
       protected void include_jscripts( )
       {
-         context.AddJavascriptSource("sininiciarwc.js", "?2022101613105121", false, true);
+         context.AddJavascriptSource("sininiciarwc.js", "?20221022911191", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -2702,7 +2657,6 @@ namespace GeneXus.Programs {
          FormProcess = "";
          bodyStyle = "";
          GXKey = "";
-         GXEncryptionTmp = "";
          AV10sdt_sa = new SdtSDT_SweetAlert(context);
          GX_FocusControl = "";
          ClassString = "";
@@ -2730,7 +2684,6 @@ namespace GeneXus.Programs {
          OldTareas1 = "";
          sCmpCtrl = "";
          WebComp_GX_Process_Component = "";
-         GXDecQS = "";
          WebComp_Tareas1_Component = "";
          scmdbuf = "";
          H000Z2_A9TableroId = new short[1] ;
@@ -2813,6 +2766,7 @@ namespace GeneXus.Programs {
       private short A12TareaId ;
       private short nCmpId ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short subGridtareas1_Backcolorstyle ;
       private short A46TareaEstado ;
       private short AV7contador ;
@@ -2859,7 +2813,6 @@ namespace GeneXus.Programs {
       private string FormProcess ;
       private string bodyStyle ;
       private string GXKey ;
-      private string GXEncryptionTmp ;
       private string GX_FocusControl ;
       private string divMaintable_Internalname ;
       private string divT1_Internalname ;
@@ -2889,7 +2842,6 @@ namespace GeneXus.Programs {
       private string sCmpCtrl ;
       private string WebComp_GX_Process_Component ;
       private string WebCompHandler="" ;
-      private string GXDecQS ;
       private string WebComp_Tareas1_Component ;
       private string scmdbuf ;
       private string tblAsignacion_Internalname ;

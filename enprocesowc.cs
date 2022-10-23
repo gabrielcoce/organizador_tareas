@@ -323,9 +323,7 @@ namespace GeneXus.Programs {
             context.WriteHtmlText( " "+"class=\"form-horizontal Form\""+" "+ "style='"+bodyStyle+"'") ;
             context.WriteHtmlText( FormProcess+">") ;
             context.skipLines(1);
-            GXKey = Crypto.GetSiteKey( );
-            GXEncryptionTmp = "enprocesowc.aspx"+UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0));
-            context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("enprocesowc.aspx") + "?" + UriEncrypt64( GXEncryptionTmp+Crypto.CheckSum( GXEncryptionTmp, 6), GXKey)+"\">") ;
+            context.WriteHtmlTextNl( "<form id=\"MAINFORM\" autocomplete=\"off\" name=\"MAINFORM\" method=\"post\" tabindex=-1  class=\"form-horizontal Form\" data-gx-class=\"form-horizontal Form\" novalidate action=\""+formatLink("enprocesowc.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) +"\">") ;
             GxWebStd.gx_hidden_field( context, "_EventName", "");
             GxWebStd.gx_hidden_field( context, "_EventGridId", "");
             GxWebStd.gx_hidden_field( context, "_EventRowId", "");
@@ -373,7 +371,7 @@ namespace GeneXus.Programs {
       protected void send_integrity_footer_hashes( )
       {
          GxWebStd.gx_hidden_field( context, sPrefix+"gxhash_vTODAY", GetSecureSignedToken( sPrefix, Gx_date, context));
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
       }
 
       protected void SendCloseFormHiddens( )
@@ -605,10 +603,6 @@ namespace GeneXus.Programs {
          wbLoad = false;
          wbEnd = 0;
          wbStart = 0;
-         if ( StringUtil.Len( sPrefix) != 0 )
-         {
-            GXKey = Crypto.GetSiteKey( );
-         }
          if ( StringUtil.Len( sPrefix) == 0 )
          {
             if ( ! context.isSpaRequest( ) )
@@ -710,7 +704,7 @@ namespace GeneXus.Programs {
                         {
                            sEvtType = StringUtil.Right( sEvt, 4);
                            sEvt = StringUtil.Left( sEvt, (short)(StringUtil.Len( sEvt)-4));
-                           if ( ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "START") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 7), "REFRESH") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "GRIDTAREAS2.LOAD") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 19), "GRIDTAREAS2.REFRESH") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 9), "'ASIGNAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 18), "'ANADIRASIGNACION'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "'FINALIZARTAREA'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 10), "'CANCELAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 20), "'MOSTRARCOMENTARIOS'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "ENTER") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 6), "CANCEL") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "'FINALIZARTAREA'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 9), "'ASIGNAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 20), "'MOSTRARCOMENTARIOS'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 18), "'ANADIRASIGNACION'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 10), "'CANCELAR'") == 0 ) )
+                           if ( ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "START") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 7), "REFRESH") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "GRIDTAREAS2.LOAD") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 19), "GRIDTAREAS2.REFRESH") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 9), "'ASIGNAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 18), "'ANADIRASIGNACION'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "'FINALIZARTAREA'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 10), "'CANCELAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 5), "ENTER") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 6), "CANCEL") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 16), "'FINALIZARTAREA'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 9), "'ASIGNAR'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 18), "'ANADIRASIGNACION'") == 0 ) || ( StringUtil.StrCmp(StringUtil.Left( sEvt, 10), "'CANCELAR'") == 0 ) )
                            {
                               if ( ( StringUtil.Len( sPrefix) != 0 ) && ( nDoneStart == 0 ) )
                               {
@@ -855,21 +849,6 @@ namespace GeneXus.Programs {
                                        }
                                     }
                                  }
-                                 else if ( StringUtil.StrCmp(sEvt, "'MOSTRARCOMENTARIOS'") == 0 )
-                                 {
-                                    if ( ! context.WillRedirect( ) && ( context.nUserReturn != 1 ) )
-                                    {
-                                       context.wbHandled = 1;
-                                       if ( ! wbErr )
-                                       {
-                                          dynload_actions( ) ;
-                                          GX_FocusControl = cmbavParticipantetableroid_Internalname;
-                                          AssignAttri(sPrefix, false, "GX_FocusControl", GX_FocusControl);
-                                          /* Execute user event: 'MostrarComentarios' */
-                                          E19102 ();
-                                       }
-                                    }
-                                 }
                                  else if ( StringUtil.StrCmp(sEvt, "ENTER") == 0 )
                                  {
                                     if ( ! context.WillRedirect( ) && ( context.nUserReturn != 1 ) )
@@ -989,51 +968,14 @@ namespace GeneXus.Programs {
             {
                initialize_properties( ) ;
             }
-            GXKey = Crypto.GetSiteKey( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
-               if ( ( StringUtil.StrCmp(context.GetRequestQueryString( ), "") != 0 ) && ( GxWebError == 0 ) && ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
+               if ( String.IsNullOrEmpty(StringUtil.RTrim( context.GetCookie( "GX_SESSION_ID"))) )
                {
-                  GXDecQS = UriDecrypt64( context.GetRequestQueryString( ), GXKey);
-                  if ( ( StringUtil.StrCmp(StringUtil.Right( GXDecQS, 6), Crypto.CheckSum( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), 6)) == 0 ) && ( StringUtil.StrCmp(StringUtil.Substring( GXDecQS, 1, StringUtil.Len( "enprocesowc.aspx")), "enprocesowc.aspx") == 0 ) )
-                  {
-                     SetQueryString( StringUtil.Right( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)), (short)(StringUtil.Len( StringUtil.Left( GXDecQS, (short)(StringUtil.Len( GXDecQS)-6)))-StringUtil.Len( "enprocesowc.aspx")))) ;
-                  }
-                  else
-                  {
-                     GxWebError = 1;
-                     context.HttpContext.Response.StatusDescription = 403.ToString();
-                     context.HttpContext.Response.StatusCode = 403;
-                     context.WriteHtmlText( "<title>403 Forbidden</title>") ;
-                     context.WriteHtmlText( "<h1>403 Forbidden</h1>") ;
-                     context.WriteHtmlText( "<p /><hr />") ;
-                     GXUtil.WriteLog("send_http_error_code " + 403.ToString());
-                  }
+                  gxcookieaux = context.SetCookie( "GX_SESSION_ID", Encrypt64( Crypto.GetEncryptionKey( ), Crypto.GetServerKey( )), "", (DateTime)(DateTime.MinValue), "", (short)(context.GetHttpSecure( )));
                }
             }
-            if ( ! ( isAjaxCallMode( ) || isFullAjaxMode( ) ) )
-            {
-               if ( StringUtil.Len( sPrefix) == 0 )
-               {
-                  if ( nGotPars == 0 )
-                  {
-                     entryPointCalled = false;
-                     gxfirstwebparm = GetFirstPar( "TableroId");
-                     toggleJsOutput = isJsOutputEnabled( );
-                     if ( context.isSpaRequest( ) )
-                     {
-                        disableJsOutput();
-                     }
-                     if ( toggleJsOutput )
-                     {
-                        if ( context.isSpaRequest( ) )
-                        {
-                           enableJsOutput();
-                        }
-                     }
-                  }
-               }
-            }
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
             toggleJsOutput = isJsOutputEnabled( );
             if ( StringUtil.Len( sPrefix) == 0 )
             {
@@ -1092,9 +1034,9 @@ namespace GeneXus.Programs {
          E12102 ();
          GRIDTAREAS2_nCurrentRecord = 0;
          RF102( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          send_integrity_footer_hashes( ) ;
-         GXKey = Crypto.GetSiteKey( );
+         GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          /* End function gxgrGridtareas2_refresh */
       }
 
@@ -1288,10 +1230,12 @@ namespace GeneXus.Programs {
             /* Read saved values. */
             nRC_GXsfl_15 = (int)(context.localUtil.CToN( cgiGet( sPrefix+"nRC_GXsfl_15"), ",", "."));
             wcpOA9TableroId = (short)(context.localUtil.CToN( cgiGet( sPrefix+"wcpOA9TableroId"), ",", "."));
+            A9TableroId = (short)(context.localUtil.CToN( cgiGet( sPrefix+"TABLEROID"), ",", "."));
+            AV19estadoComentarios = StringUtil.StrToBool( cgiGet( sPrefix+"vESTADOCOMENTARIOS"));
             /* Read variables values. */
             /* Read subfile selected row values. */
             /* Read hidden variables. */
-            GXKey = Crypto.GetSiteKey( );
+            GXKey = Decrypt64( context.GetCookie( "GX_SESSION_ID"), Crypto.GetServerKey( ));
          }
          else
          {
@@ -1754,7 +1698,8 @@ namespace GeneXus.Programs {
                   AV16sdt_sa.gxTpr_Allowoutsideclick = true;
                   AV16sdt_sa.gxTpr_Type = "success";
                   this.executeUsercontrolMethod(sPrefix, false, "RAMP_ADDONS_SWEETALERT1Container", "msgSW", "", new Object[] {(SdtSDT_SweetAlert)AV16sdt_sa});
-                  context.DoAjaxRefreshCmp(sPrefix);
+                  CallWebObject(formatLink("listadotareas.aspx", new object[] {UrlEncode(StringUtil.LTrimStr(A9TableroId,4,0))}, new string[] {"TableroId"}) );
+                  context.wjLocDisableFrm = 1;
                }
                else
                {
@@ -1770,8 +1715,6 @@ namespace GeneXus.Programs {
          }
          /*  Sending Event outputs  */
          context.httpAjaxContext.ajax_rsp_assign_sdt_attri(sPrefix, false, "AV16sdt_sa", AV16sdt_sa);
-         cmbavParticipantetableroid.CurrentValue = StringUtil.Trim( StringUtil.Str( (decimal)(AV9ParticipanteTableroId), 4, 0));
-         AssignProp(sPrefix, false, cmbavParticipantetableroid_Internalname, "Values", cmbavParticipantetableroid.ToJavascriptSource(), true);
       }
 
       protected void E18102( )
@@ -1782,71 +1725,6 @@ namespace GeneXus.Programs {
          /*  Sending Event outputs  */
          cmbavParticipantetableroid.CurrentValue = StringUtil.Trim( StringUtil.Str( (decimal)(AV9ParticipanteTableroId), 4, 0));
          AssignProp(sPrefix, false, cmbavParticipantetableroid_Internalname, "Values", cmbavParticipantetableroid.ToJavascriptSource(), true);
-      }
-
-      protected void E19102( )
-      {
-         /* 'MostrarComentarios' Routine */
-         returnInSub = false;
-         if ( ! AV19estadoComentarios )
-         {
-            /* Object Property */
-            if ( StringUtil.Len( sPrefix) == 0 )
-            {
-               bDynCreated_Listadocomentarios = true;
-            }
-            if ( StringUtil.StrCmp(StringUtil.Lower( WebComp_Listadocomentarios_Component), StringUtil.Lower( "ComentariosWC")) != 0 )
-            {
-               WebComp_Listadocomentarios = getWebComponent(GetType(), "GeneXus.Programs", "comentarioswc", new Object[] {context} );
-               WebComp_Listadocomentarios.ComponentInit();
-               WebComp_Listadocomentarios.Name = "ComentariosWC";
-               WebComp_Listadocomentarios_Component = "ComentariosWC";
-            }
-            if ( StringUtil.Len( WebComp_Listadocomentarios_Component) != 0 )
-            {
-               WebComp_Listadocomentarios.setjustcreated();
-               WebComp_Listadocomentarios.componentprepare(new Object[] {(string)sPrefix+"W0058",(string)sGXsfl_15_idx,(short)A9TableroId,(short)A12TareaId});
-               WebComp_Listadocomentarios.componentbind(new Object[] {(string)"",(string)""});
-            }
-            if ( isFullAjaxMode( ) || isAjaxCallMode( ) && bDynCreated_Listadocomentarios )
-            {
-               context.httpAjaxContext.ajax_rspStartCmp(sPrefix+"gxHTMLWrpW0058"+sGXsfl_15_idx);
-               WebComp_Listadocomentarios.componentdraw();
-               context.httpAjaxContext.ajax_rspEndCmp();
-            }
-            AV19estadoComentarios = true;
-            AssignAttri(sPrefix, false, "AV19estadoComentarios", AV19estadoComentarios);
-         }
-         else if ( AV19estadoComentarios )
-         {
-            /* Object Property */
-            if ( StringUtil.Len( sPrefix) == 0 )
-            {
-               bDynCreated_Listadocomentarios = true;
-            }
-            if ( StringUtil.StrCmp(StringUtil.Lower( WebComp_Listadocomentarios_Component), StringUtil.Lower( "Vacio")) != 0 )
-            {
-               WebComp_Listadocomentarios = getWebComponent(GetType(), "GeneXus.Programs", "vacio", new Object[] {context} );
-               WebComp_Listadocomentarios.ComponentInit();
-               WebComp_Listadocomentarios.Name = "Vacio";
-               WebComp_Listadocomentarios_Component = "Vacio";
-            }
-            if ( StringUtil.Len( WebComp_Listadocomentarios_Component) != 0 )
-            {
-               WebComp_Listadocomentarios.setjustcreated();
-               WebComp_Listadocomentarios.componentprepare(new Object[] {(string)sPrefix+"W0058",(string)sGXsfl_15_idx});
-               WebComp_Listadocomentarios.componentbind(new Object[] {});
-            }
-            if ( isFullAjaxMode( ) || isAjaxCallMode( ) && bDynCreated_Listadocomentarios )
-            {
-               context.httpAjaxContext.ajax_rspStartCmp(sPrefix+"gxHTMLWrpW0058"+sGXsfl_15_idx);
-               WebComp_Listadocomentarios.componentdraw();
-               context.httpAjaxContext.ajax_rspEndCmp();
-            }
-            AV19estadoComentarios = false;
-            AssignAttri(sPrefix, false, "AV19estadoComentarios", AV19estadoComentarios);
-         }
-         /*  Sending Event outputs  */
       }
 
       public override void setparameters( Object[] obj )
@@ -2085,7 +1963,7 @@ namespace GeneXus.Programs {
          idxLst = 1;
          while ( idxLst <= Form.Jscriptsrc.Count )
          {
-            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022101613105433", true, true);
+            context.AddJavascriptSource(StringUtil.RTrim( ((string)Form.Jscriptsrc.Item(idxLst))), "?2022102211561186", true, true);
             idxLst = (int)(idxLst+1);
          }
          if ( ! outputEnabled )
@@ -2100,7 +1978,7 @@ namespace GeneXus.Programs {
 
       protected void include_jscripts( )
       {
-         context.AddJavascriptSource("enprocesowc.js", "?2022101613105433", false, true);
+         context.AddJavascriptSource("enprocesowc.js", "?2022102211561186", false, true);
          context.AddJavascriptSource("RAMP/sweetAlert/js/sweetalert2.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/jquery-3.5.1.min.js", "", false, true);
          context.AddJavascriptSource("RAMP/shared/js/popper.js", "", false, true);
@@ -2257,7 +2135,7 @@ namespace GeneXus.Programs {
          StyleString = "";
          AV6comentarios_IsBlob = (bool)((String.IsNullOrEmpty(StringUtil.RTrim( AV6comentarios))&&String.IsNullOrEmpty(StringUtil.RTrim( AV25Comentarios_GXI)))||!String.IsNullOrEmpty(StringUtil.RTrim( AV6comentarios)));
          sImgUrl = (String.IsNullOrEmpty(StringUtil.RTrim( AV6comentarios)) ? AV25Comentarios_GXI : context.PathToRelativeUrl( AV6comentarios));
-         Gridtareas2Row.AddColumnProperties("bitmap", 1, isAjaxCallMode( ), new Object[] {(string)edtavComentarios_Internalname,(string)sImgUrl,(string)"",(string)"",(string)"",context.GetTheme( ),(short)1,(short)1,(string)"",(string)edtavComentarios_Tooltiptext,(short)0,(short)1,(short)30,(string)"px",(short)30,(string)"px",(short)0,(short)0,(short)5,(string)edtavComentarios_Jsonclick,"'"+sPrefix+"'"+",false,"+"'"+sPrefix+"E\\'MOSTRARCOMENTARIOS\\'."+sGXsfl_15_idx+"'",(string)StyleString,(string)ClassString,(string)"",(string)"",(string)"",(string)"",(string)""+TempTags,(string)"",(string)"",(short)1,(bool)AV6comentarios_IsBlob,(bool)false,context.GetImageSrcSet( sImgUrl)});
+         Gridtareas2Row.AddColumnProperties("bitmap", 1, isAjaxCallMode( ), new Object[] {(string)edtavComentarios_Internalname,(string)sImgUrl,(string)"",(string)"",(string)"",context.GetTheme( ),(short)1,(short)1,(string)"",(string)edtavComentarios_Tooltiptext,(short)0,(short)1,(short)30,(string)"px",(short)30,(string)"px",(short)0,(short)0,(short)7,(string)edtavComentarios_Jsonclick,(string)"'"+sPrefix+"'"+",false,"+"'"+"e19102_client"+"'",(string)StyleString,(string)ClassString,(string)"",(string)"",(string)"",(string)"",(string)""+TempTags,(string)"",(string)"",(short)1,(bool)AV6comentarios_IsBlob,(bool)false,context.GetImageSrcSet( sImgUrl)});
          Gridtareas2Row.AddColumnProperties("div_end", -1, isAjaxCallMode( ), new Object[] {(string)"left",(string)"top",(string)"div"});
          if ( Gridtareas2Container.GetWrapped() == 1 )
          {
@@ -2834,8 +2712,8 @@ namespace GeneXus.Programs {
          setEventMetadata("'ASIGNAR'",",oparms:[{av:'tblAsignacion_Visible',ctrl:'ASIGNACION',prop:'Visible'},{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''}]}");
          setEventMetadata("'ANADIRASIGNACION'","{handler:'E16102',iparms:[{av:'GRIDTAREAS2_nFirstRecordOnPage'},{av:'GRIDTAREAS2_nEOF'},{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9'},{av:'A18ParticipanteTableroId',fld:'PARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'Gx_date',fld:'vTODAY',pic:'',hsh:true},{av:'sPrefix'},{av:'A12TareaId',fld:'TAREAID',pic:'ZZZ9',hsh:true},{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''}]");
          setEventMetadata("'ANADIRASIGNACION'",",oparms:[{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''}]}");
-         setEventMetadata("'FINALIZARTAREA'","{handler:'E17102',iparms:[{av:'GRIDTAREAS2_nFirstRecordOnPage'},{av:'GRIDTAREAS2_nEOF'},{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9'},{av:'A18ParticipanteTableroId',fld:'PARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'Gx_date',fld:'vTODAY',pic:'',hsh:true},{av:'sPrefix'},{av:'A12TareaId',fld:'TAREAID',pic:'ZZZ9',hsh:true},{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''}]");
-         setEventMetadata("'FINALIZARTAREA'",",oparms:[{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''},{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'}]}");
+         setEventMetadata("'FINALIZARTAREA'","{handler:'E17102',iparms:[{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9'},{av:'A12TareaId',fld:'TAREAID',pic:'ZZZ9',hsh:true},{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''}]");
+         setEventMetadata("'FINALIZARTAREA'",",oparms:[{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9'},{av:'AV16sdt_sa',fld:'vSDT_SA',pic:''}]}");
          setEventMetadata("'CANCELAR'","{handler:'E18102',iparms:[{av:'GRIDTAREAS2_nFirstRecordOnPage'},{av:'GRIDTAREAS2_nEOF'},{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9'},{av:'A18ParticipanteTableroId',fld:'PARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'},{av:'Gx_date',fld:'vTODAY',pic:'',hsh:true},{av:'sPrefix'}]");
          setEventMetadata("'CANCELAR'",",oparms:[{av:'cmbavParticipantetableroid'},{av:'AV9ParticipanteTableroId',fld:'vPARTICIPANTETABLEROID',pic:'ZZZ9'}]}");
          setEventMetadata("'MOSTRARCOMENTARIOS'","{handler:'E19102',iparms:[{av:'AV19estadoComentarios',fld:'vESTADOCOMENTARIOS',pic:''},{av:'A9TableroId',fld:'TABLEROID',pic:'ZZZ9'},{av:'A12TareaId',fld:'TAREAID',pic:'ZZZ9',hsh:true}]");
@@ -2869,7 +2747,6 @@ namespace GeneXus.Programs {
          FormProcess = "";
          bodyStyle = "";
          GXKey = "";
-         GXEncryptionTmp = "";
          AV16sdt_sa = new SdtSDT_SweetAlert(context);
          GX_FocusControl = "";
          ClassString = "";
@@ -2894,7 +2771,6 @@ namespace GeneXus.Programs {
          sCmpCtrl = "";
          WebComp_GX_Process_Component = "";
          OldComponent1 = "";
-         GXDecQS = "";
          WebComp_Listadocomentarios_Component = "";
          WebComp_Component1_Component = "";
          scmdbuf = "";
@@ -2982,6 +2858,7 @@ namespace GeneXus.Programs {
       private short A12TareaId ;
       private short nCmpId ;
       private short nDonePA ;
+      private short gxcookieaux ;
       private short subGridtareas2_Backcolorstyle ;
       private short A46TareaEstado ;
       private short GRIDTAREAS2_nEOF ;
@@ -3032,7 +2909,6 @@ namespace GeneXus.Programs {
       private string FormProcess ;
       private string bodyStyle ;
       private string GXKey ;
-      private string GXEncryptionTmp ;
       private string GX_FocusControl ;
       private string divMaintable_Internalname ;
       private string divT2_Internalname ;
@@ -3061,7 +2937,6 @@ namespace GeneXus.Programs {
       private string WebComp_GX_Process_Component ;
       private string WebCompHandler="" ;
       private string OldComponent1 ;
-      private string GXDecQS ;
       private string WebComp_Listadocomentarios_Component ;
       private string WebComp_Component1_Component ;
       private string scmdbuf ;

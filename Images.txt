@@ -63,6 +63,9 @@ e97153e5-fdfe-4896-8af9-b327afd8b4ca=nocompletado
 ec15b36c-8f5a-4ad5-be9c-712eec67d653=cancelar
 949e9232-fe17-4603-8cb8-0a57d2612676=desasignar
 58281953-c813-4fd1-8cc5-439184a5a0fe=Guardar
+3dc0224f-65be-4010-af81-9e7018b4f3d7=umglogo
+6933e0a7-4fa9-4bb5-a1ce-3209103b70a5=fondopoligonal
+83c380d3-2feb-4896-a6ad-864d4c18f119=etiqueta
 [Location]
 90274dae-49c6-47ae-98c4-7a8f5eb82c12=Spanish,Carmine,I,Carmine/PageFirst.png,
 eb16c005-5a7d-48a8-a16c-d7dcc1909b6e=Spanish,Carmine,I,Carmine/PageLast.png,
@@ -128,3 +131,6 @@ e97153e5-fdfe-4896-8af9-b327afd8b4ca=Spanish,Carmine,I,nocompletado.png,
 ec15b36c-8f5a-4ad5-be9c-712eec67d653=Spanish,Carmine,I,cancelar.svg,
 949e9232-fe17-4603-8cb8-0a57d2612676=Spanish,Carmine,I,desasignar.svg,
 58281953-c813-4fd1-8cc5-439184a5a0fe=Spanish,Carmine,I,Guardar.svg,
+3dc0224f-65be-4010-af81-9e7018b4f3d7=Spanish,Carmine,I,umglogo.png,
+6933e0a7-4fa9-4bb5-a1ce-3209103b70a5=Spanish,Carmine,I,Carmine/fondopoligonal.jpg,
+83c380d3-2feb-4896-a6ad-864d4c18f119=Spanish,Carmine,I,etiqueta.svg,

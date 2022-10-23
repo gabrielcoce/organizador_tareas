@@ -79,6 +79,7 @@ namespace GeneXus.Programs {
          state.Add("gxTpr_Correopuerto_Z");
          state.Add("gxTpr_Correousuario_Z");
          state.Add("gxTpr_Correocontrasena_Z");
+         state.Add("gxTpr_Correoplantilla_N");
          return state ;
       }
 
@@ -93,6 +94,7 @@ namespace GeneXus.Programs {
          gxTv_SdtCorreo_Correopuerto = sdt.gxTv_SdtCorreo_Correopuerto ;
          gxTv_SdtCorreo_Correousuario = sdt.gxTv_SdtCorreo_Correousuario ;
          gxTv_SdtCorreo_Correocontrasena = sdt.gxTv_SdtCorreo_Correocontrasena ;
+         gxTv_SdtCorreo_Correoplantilla = sdt.gxTv_SdtCorreo_Correoplantilla ;
          gxTv_SdtCorreo_Mode = sdt.gxTv_SdtCorreo_Mode ;
          gxTv_SdtCorreo_Initialized = sdt.gxTv_SdtCorreo_Initialized ;
          gxTv_SdtCorreo_Correoid_Z = sdt.gxTv_SdtCorreo_Correoid_Z ;
@@ -102,6 +104,7 @@ namespace GeneXus.Programs {
          gxTv_SdtCorreo_Correopuerto_Z = sdt.gxTv_SdtCorreo_Correopuerto_Z ;
          gxTv_SdtCorreo_Correousuario_Z = sdt.gxTv_SdtCorreo_Correousuario_Z ;
          gxTv_SdtCorreo_Correocontrasena_Z = sdt.gxTv_SdtCorreo_Correocontrasena_Z ;
+         gxTv_SdtCorreo_Correoplantilla_N = sdt.gxTv_SdtCorreo_Correoplantilla_N ;
          return  ;
       }
 
@@ -127,6 +130,8 @@ namespace GeneXus.Programs {
          AddObjectProperty("CorreoPuerto", gxTv_SdtCorreo_Correopuerto, false, includeNonInitialized);
          AddObjectProperty("CorreoUsuario", gxTv_SdtCorreo_Correousuario, false, includeNonInitialized);
          AddObjectProperty("CorreoContrasena", gxTv_SdtCorreo_Correocontrasena, false, includeNonInitialized);
+         AddObjectProperty("CorreoPlantilla", gxTv_SdtCorreo_Correoplantilla, false, includeNonInitialized);
+         AddObjectProperty("CorreoPlantilla_N", gxTv_SdtCorreo_Correoplantilla_N, false, includeNonInitialized);
          if ( includeState )
          {
             AddObjectProperty("Mode", gxTv_SdtCorreo_Mode, false, includeNonInitialized);
@@ -138,6 +143,7 @@ namespace GeneXus.Programs {
             AddObjectProperty("CorreoPuerto_Z", gxTv_SdtCorreo_Correopuerto_Z, false, includeNonInitialized);
             AddObjectProperty("CorreoUsuario_Z", gxTv_SdtCorreo_Correousuario_Z, false, includeNonInitialized);
             AddObjectProperty("CorreoContrasena_Z", gxTv_SdtCorreo_Correocontrasena_Z, false, includeNonInitialized);
+            AddObjectProperty("CorreoPlantilla_N", gxTv_SdtCorreo_Correoplantilla_N, false, includeNonInitialized);
          }
          return  ;
       }
@@ -178,6 +184,12 @@ namespace GeneXus.Programs {
          {
             gxTv_SdtCorreo_N = 0;
             gxTv_SdtCorreo_Correocontrasena = sdt.gxTv_SdtCorreo_Correocontrasena ;
+         }
+         if ( sdt.IsDirty("CorreoPlantilla") )
+         {
+            gxTv_SdtCorreo_Correoplantilla_N = (short)(sdt.gxTv_SdtCorreo_Correoplantilla_N);
+            gxTv_SdtCorreo_N = 0;
+            gxTv_SdtCorreo_Correoplantilla = sdt.gxTv_SdtCorreo_Correoplantilla ;
          }
          return  ;
       }
@@ -303,6 +315,36 @@ namespace GeneXus.Programs {
             SetDirty("Correocontrasena");
          }
 
+      }
+
+      [  SoapElement( ElementName = "CorreoPlantilla" )]
+      [  XmlElement( ElementName = "CorreoPlantilla"   )]
+      public string gxTpr_Correoplantilla
+      {
+         get {
+            return gxTv_SdtCorreo_Correoplantilla ;
+         }
+
+         set {
+            gxTv_SdtCorreo_Correoplantilla_N = 0;
+            gxTv_SdtCorreo_N = 0;
+            gxTv_SdtCorreo_Correoplantilla = value;
+            SetDirty("Correoplantilla");
+         }
+
+      }
+
+      public void gxTv_SdtCorreo_Correoplantilla_SetNull( )
+      {
+         gxTv_SdtCorreo_Correoplantilla_N = 1;
+         gxTv_SdtCorreo_Correoplantilla = "";
+         SetDirty("Correoplantilla");
+         return  ;
+      }
+
+      public bool gxTv_SdtCorreo_Correoplantilla_IsNull( )
+      {
+         return (gxTv_SdtCorreo_Correoplantilla_N==1) ;
       }
 
       [  SoapElement( ElementName = "Mode" )]
@@ -557,6 +599,34 @@ namespace GeneXus.Programs {
          return false ;
       }
 
+      [  SoapElement( ElementName = "CorreoPlantilla_N" )]
+      [  XmlElement( ElementName = "CorreoPlantilla_N"   )]
+      public short gxTpr_Correoplantilla_N
+      {
+         get {
+            return gxTv_SdtCorreo_Correoplantilla_N ;
+         }
+
+         set {
+            gxTv_SdtCorreo_N = 0;
+            gxTv_SdtCorreo_Correoplantilla_N = value;
+            SetDirty("Correoplantilla_N");
+         }
+
+      }
+
+      public void gxTv_SdtCorreo_Correoplantilla_N_SetNull( )
+      {
+         gxTv_SdtCorreo_Correoplantilla_N = 0;
+         SetDirty("Correoplantilla_N");
+         return  ;
+      }
+
+      public bool gxTv_SdtCorreo_Correoplantilla_N_IsNull( )
+      {
+         return false ;
+      }
+
       public void initialize( )
       {
          gxTv_SdtCorreo_N = 1;
@@ -565,6 +635,7 @@ namespace GeneXus.Programs {
          gxTv_SdtCorreo_Correoservidor = "";
          gxTv_SdtCorreo_Correousuario = "";
          gxTv_SdtCorreo_Correocontrasena = "";
+         gxTv_SdtCorreo_Correoplantilla = "";
          gxTv_SdtCorreo_Mode = "";
          gxTv_SdtCorreo_Correoidentificador_Z = "";
          gxTv_SdtCorreo_Correonombre_Z = "";
@@ -591,6 +662,7 @@ namespace GeneXus.Programs {
       private short gxTv_SdtCorreo_Initialized ;
       private short gxTv_SdtCorreo_Correoid_Z ;
       private short gxTv_SdtCorreo_Correopuerto_Z ;
+      private short gxTv_SdtCorreo_Correoplantilla_N ;
       private string gxTv_SdtCorreo_Correoidentificador ;
       private string gxTv_SdtCorreo_Correonombre ;
       private string gxTv_SdtCorreo_Correoservidor ;
@@ -600,6 +672,7 @@ namespace GeneXus.Programs {
       private string gxTv_SdtCorreo_Correonombre_Z ;
       private string gxTv_SdtCorreo_Correoservidor_Z ;
       private string gxTv_SdtCorreo_Correocontrasena_Z ;
+      private string gxTv_SdtCorreo_Correoplantilla ;
       private string gxTv_SdtCorreo_Correousuario ;
       private string gxTv_SdtCorreo_Correousuario_Z ;
    }
@@ -713,6 +786,19 @@ namespace GeneXus.Programs {
 
       }
 
+      [DataMember( Name = "CorreoPlantilla" , Order = 7 )]
+      public string gxTpr_Correoplantilla
+      {
+         get {
+            return sdt.gxTpr_Correoplantilla ;
+         }
+
+         set {
+            sdt.gxTpr_Correoplantilla = value;
+         }
+
+      }
+
       public SdtCorreo sdt
       {
          get {
@@ -734,7 +820,7 @@ namespace GeneXus.Programs {
          }
       }
 
-      [DataMember( Name = "gx_md5_hash", Order = 7 )]
+      [DataMember( Name = "gx_md5_hash", Order = 8 )]
       public string Hash
       {
          get {
